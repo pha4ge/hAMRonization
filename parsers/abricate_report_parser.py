@@ -10,7 +10,7 @@ FIELD_MAP_ABRICATE = {
     'file': 'input_file_name',
     'sequence': 'contig',
     'start': 'start',
-    'end': 'start',
+    'end': 'stop',
     'strand': 'strand_orientation',
     'gene': 'resistance_gene_symbol',
     'coverage': 'coverage_positions',
