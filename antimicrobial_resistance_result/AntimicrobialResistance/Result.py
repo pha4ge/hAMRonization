@@ -61,25 +61,32 @@ class AntimicrobialResistanceResult():
             self.read(DEFAULTAMRRESULT)
 
     def read(self, input):
-        self.input_file_name = input['input_file_name']
-        self.contig = input['contig']
-        self.start = input['start']
-        self.stop = input['stop']
-        self.strand_orientation = input['strand_orientation']
-        self.resistance_gene_symbol = input['resistance_gene_symbol']
-        self.resistance_gene_name = input['resistance_gene_name'],
-        self.resistance_gene_allele = input['resistance_gene_allele'],
-        self.coverage_positions = input['coverage_positions'],
-        self.coverage_depth = input['coverage_depth'],
-        self.coverage_percent = input['coverage_percent'],
-        self.sequence_identity = input['sequence_identity'],
-        self.reference_database = input['reference_database'],
-        self.reference_database_version = input['reference_database_version'],
-        self.reference_accession = input['reference_accession'],
-        self.reference_length = input['reference_length'],
-        self.target_length = input['target_length'],
-        self.drug_class = input['drug_class'],
-        self.antimicrobial_agent = input['antimicrobial_agent'],
-        self.analysis_software_name =  input['analysis_software_name'],
-        self.analysis_software_version = input['analysis_software_version'],
-        self.resistance_mechanism = input['resistance_mechanism'],
+        attribute_key_pairs = [
+            (self.input_file_name, 'input_file_name'),
+            (self.start, 'start'),
+            (self.stop, 'stop'),
+            (self.contig, 'contig'),
+            (self.strand_orientation, 'strand_orientation'),
+            (self.resistance_gene_symbol, 'resistance_gene_symbol'),
+            (self.resistance_gene_name, 'resistance_gene_name'),
+            (self.resistance_gene_allele, 'resistance_gene_allele'),
+            (self.coverage_positions, 'coverage_positions'),
+            (self.coverage_depth, 'coverage_depth'),
+            (self.coverage_percent, 'coverage_percent'),
+            (self.sequence_identity, 'sequence_identity'),
+            (self.reference_database, 'reference_database'),
+            (self.reference_database_version, 'reference_database_version'),
+            (self.reference_accession, 'reference_accession'),
+            (self.reference_length, 'reference_length'),
+            (self.target_length, 'target_length'),
+            (self.drug_class, 'drug_class'),
+            (self.antimicrobial_agent, 'antimicrobial_agent'),
+            (self.analysis_software_name, 'analysis_software_name'),
+            (self.analysis_software_version, 'analysis_software_version'),
+            (self.resistance_mechanism, 'resistance_mechanism'),
+        ]
+        for attribute, key in attribute_key_pairs:
+            try:
+                attribute = input[key]
+            except KeyError as e:
+                pass
