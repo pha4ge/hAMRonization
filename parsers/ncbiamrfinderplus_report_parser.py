@@ -109,8 +109,8 @@ def parse_ncbi_amrfinderplus_report(path_to_ncbi_amrfinderplus_report):
 
 def prepare_for_amr_class(parsed_ncbi_amrfinderplus_report, additional_fields={}):
     input_for_amr_class = {}
-    input_for_amr_class['analysis_software_name'] = "AMRFinderPlus"
-    for key, value in additional_fields:
+
+    for key, value in additional_fields.items():
         input_for_amr_class[key] = value
 
     for ncbi_amrfinderplus_field, amr_result_field in FIELD_MAP_NCBIAMRFINDERPLUS.items():
@@ -124,6 +124,7 @@ def main(args):
     parsed_ncbi_amrfinderplus_report = parse_ncbi_amrfinderplus_report(args.ncbi_amrfinderplus_report)
 
     additional_fields = {}
+    additional_fileds['analysis_software_name'] = "AMRFinderPlus"
     if args.analysis_software_version:
         additional_fields['analysis_software_version'] = args.analysis_software_version
     if args.database_version:
