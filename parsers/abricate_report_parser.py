@@ -7,9 +7,21 @@ import json
 from AntimicrobialResistance.Result import AntimicrobialResistanceResult
 
 FIELD_MAP_ABRICATE = {
-    'start': 'gene_detection_start',
-    'end': 'gene_detection_end',
-    'strand': 'gene_detection_strand',
+    'file': 'input_file_name',
+    'sequence': 'contig',
+    'start': 'start',
+    'end': 'start',
+    'strand': 'strand_orientation',
+    'gene': 'resistance_gene_symbol',
+    'coverage': 'coverage_positions',
+    'coverage_map': None,
+    'gaps': None,
+    'percent_coverage': 'coverage_percent',
+    'percent_identity': 'sequence_identity',
+    'database': 'reference_database',
+    'accession': 'reference_accession',
+    'product': 'resistance_gene_name',
+    'resistance': 'drug_class',
 }
 
 def parse_abricate_report(path_to_abricate_report):
@@ -74,11 +86,15 @@ def parse_abricate_report(path_to_abricate_report):
     return abricate_report
 
 
-def prepare_for_amr_class(parsed_abricate_report):
+def prepare_for_amr_class(parsed_abricate_report, additional_fields={}):
     input_for_amr_class = {}
     
+    for key, value in additional_fields.items():
+        input_for_amr_class[key] = value
+
     for abricate_field, amr_result_field in FIELD_MAP_ABRICATE.items():
-        input_for_amr_class[str(amr_result_field)] = parsed_abricate_report[str(abricate_field)]
+        if amr_result_field:
+            input_for_amr_class[str(amr_result_field)] = parsed_abricate_report[str(abricate_field)]
 
     return input_for_amr_class
 
@@ -86,15 +102,25 @@ def prepare_for_amr_class(parsed_abricate_report):
 def main(args):
     parsed_abricate_report = parse_abricate_report(args.abricate_report)
 
-    for result in parsed_abricate_report:
-        amr_class_input = prepare_for_amr_class(result)
-        amr_result = AntimicrobialResistanceResult(amr_class_input)
-        #print(json.dumps(parsed_abricate_report))
+    additional_fields = {}
+    additional_fields['analysis_software_name'] = "Abricate"
+    if args.analysis_software_version:
+        additional_fields['analysis_software_version'] = args.analysis_software_version
+    if args.database_version:
+        additional_fields['database_version'] = args.database_version
 
-        print(amr_result)
+    amr_results = []
+    for result in parsed_abricate_report:
+        amr_class_input = prepare_for_amr_class(result, additional_fields)
+        amr_result = AntimicrobialResistanceResult(amr_class_input)
+        amr_results.append(amr_result)
+
+    print(amr_results)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("abricate_report", help="Input abricate report")
+    parser.add_argument("--analysis_software_version", help="Version of Abricate used to generate the report")
+    parser.add_argument("--database_version", help="Database version used to generate the report")
     args = parser.parse_args()
     main(args)
