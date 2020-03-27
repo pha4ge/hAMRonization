@@ -4,6 +4,35 @@ import argparse
 import csv
 import json
 
+from AntimicrobialResistance.Result import AntimicrobialResistanceResult
+
+FIELD_MAP_RGI = {
+    'orf_id': '',
+    'contig': 'contig',
+    'start': 'start',
+    'stop': 'stop',
+    'orientation': 'strand_orientation',
+    'cut_off': None,
+    'pass_bitscore': None,
+    'best_hit_bitscore': None,
+    'best_hit_aro': 'gene_symbol',
+    'best_identities': 'sequence_identity',
+    'aro': None,
+    'model_type': None,
+    'snps_in_best_hit_aro': None,
+    'other_snps': None,
+    'drug_class': 'drug_class',
+    'resistance_mechanism': 'resistance_mechanism',
+    'amr_gene_family': 'gene_name',
+    'predicted_dna': None,
+    'predicted_protein': None,
+    'card_protein_sequence': None,
+    'percentage_length_of_reference_sequence': 'percent_coverage',
+    'id': None,
+    'model_id': None,
+    'nudged': None,
+    'note': None,
+}
 
 def parse_rgi_report_txt(path_to_rgi_result):
     """
@@ -39,7 +68,9 @@ def parse_rgi_report_txt(path_to_rgi_result):
                 'card_protein_sequence': 'MQVLPPSSTGGPSRLFIMRPVATTLLMVAILL...',
                 'percentage_length_of_reference_sequence': 100.00,
                 'id': 'gnl|BL_ORD_ID|776|hsp_num:0',
-                'model_id': '820'
+                'model_id': '820',
+                'nudged': 'True',
+                'note': "",
             },
             ...
         ]
@@ -60,23 +91,26 @@ def parse_rgi_report_txt(path_to_rgi_result):
         'snps_in_best_hit_aro',
         'other_snps',
         'drug_class',
-        'resistance mechanism',
+        'resistance_mechanism',
         'amr_gene_family',
         'predicted_dna',
         'predicted_protein',
         'card_protein_sequence',
         'percentage_length_of_reference_sequence',
         'id',
-        'model_id'
+        'model_id',
+        'nudged',
+        'note',
     ]
+
     rgi_report_results = []
-    
+
     def parse_value_maybe(value):
         if value == "n/a":
             return None
         else:
             return value
-        
+
     with open(path_to_rgi_result) as rgi_report_file:
         reader = csv.DictReader(rgi_report_file, fieldnames=rgi_report_fieldnames, delimiter='\t')
         next(reader) # skip header
@@ -109,13 +143,43 @@ def parse_rgi_report_txt(path_to_rgi_result):
     return rgi_report_results
 
 
+def prepare_for_amr_class(parsed_rgi_report, additional_fields={}):
+    input_for_amr_class = {}
+    
+    for key, value in additional_fields.items():
+        input_for_amr_class[key] = value
+
+    for rgi_field, amr_result_field in FIELD_MAP_RGI.items():
+        if amr_result_field:
+            input_for_amr_class[str(amr_result_field)] = parsed_rgi_report[str(rgi_field)]
+
+    return input_for_amr_class
+
+
 def main(args):
     parsed_rgi_report = parse_rgi_report_txt(args.rgi_report)
-    print(json.dumps(parsed_rgi_report))
+
+    additional_fields = {}
+    additional_fields['analysis_software_name'] = "RGI"
+    additional_fields['reference_database'] = "card"
+    if args.analysis_software_version:
+        additional_fields['analysis_software_version'] = args.analysis_software_version
+    if args.database_version:
+        additional_fields['database_version'] = args.database_version
+
+    amr_results = []
+    for result in parsed_rgi_report:
+        amr_class_input = prepare_for_amr_class(result, additional_fields)
+        amr_result = AntimicrobialResistanceResult(amr_class_input)
+        amr_results.append(amr_result)
+
+    print(amr_results)
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("rgi_report", help="Input rgi report (txt)")
+    parser.add_argument("--analysis_software_version", help="Version of Abricate used to generate the report")
+    parser.add_argument("--database_version", help="Database version used to generate the report")
     args = parser.parse_args()
     main(args)
