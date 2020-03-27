@@ -3,6 +3,8 @@
 import argparse
 import csv
 import json
+import os
+import sys
 
 from AntimicrobialResistance.Result import AntimicrobialResistanceResult
 
@@ -115,11 +117,22 @@ def main(args):
         amr_result = AntimicrobialResistanceResult(amr_class_input)
         amr_results.append(amr_result)
 
-    print(amr_results)
+    if args.format == 'tsv':
+        fieldnames = amr_results[0].__dict__.keys()
+        writer = csv.DictWriter(sys.stdout, delimiter='\t', fieldnames=fieldnames, lineterminator=os.linesep)
+        writer.writeheader()
+        for result in amr_results:
+            writer.writerow(result.__dict__)
+    elif args.format == 'json':
+        print(amr_results)
+    else:
+        print("Unknown output format. Valid options are: csv or json")
+        exit(1)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("abricate_report", help="Input abricate report")
+    parser.add_argument("--format", default="tsv", help="Output format (tsv or json)")
     parser.add_argument("--analysis_software_version", help="Version of Abricate used to generate the report")
     parser.add_argument("--database_version", help="Database version used to generate the report")
     args = parser.parse_args()
