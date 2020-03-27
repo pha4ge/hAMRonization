@@ -8,7 +8,7 @@ DEFAULTAMRRESULT = {
     'contig': '',
     'start': 0,
     'stop': 0,
-    'strand_orientation': 0,
+    'strand_orientation': '',
     'resistance_gene_symbol': '',
     'resistance_gene_name': '',
     'resistance_gene_allele': '',
