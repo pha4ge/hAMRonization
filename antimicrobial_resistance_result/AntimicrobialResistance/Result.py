@@ -39,7 +39,7 @@ class AntimicrobialResistanceResult():
         self.stop = 0
         self.strand_orientation = 0
         self.resistance_gene_symbol = ''
-        self.resistance_gene_name = '',
+        self.resistance_gene_name = ''
         self.resistance_gene_allele = ''
         self.coverage_positions = ''
         self.coverage_depth = 0.0
