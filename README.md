@@ -1,5 +1,7 @@
 # Harmonized AMR Parsers
 
+![Python package](https://github.com/dfornika/harmonized-amr-parsers/workflows/Python%20package/badge.svg)
+
 This repo is intended as a place to prototype and experiment with a set of parsers for reports/outputs from several
 antimicrobial resistance tools.
 
