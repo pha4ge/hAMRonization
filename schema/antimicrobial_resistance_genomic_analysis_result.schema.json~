@@ -1,0 +1,253 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://raw.githubusercontent.com/dfornika/harmonized-amr-parsers/master/schema/antimicrobial_resistance_genomic_analysis_result.schema.json",
+    "type": "object",
+    "title": "Antimicrobial Resistance Genomic Analysis Result Schema",
+    "description": "An Antimicrobial Resistance Genomic Analysis Result.",
+    "required": [
+        "input_file_name",
+        "contig",
+        "start",
+        "stop",
+        "strand_orientation",
+        "resistance_gene_symbol",
+        "resistance_gene_name",
+        "resistance_gene_allele",
+        "coverage_positions",
+        "coverage_depth",
+        "coverage_percent",
+        "sequence_identity",
+        "reference_database",
+        "reference_database_version",
+        "reference_accession",
+        "reference_length",
+        "target_length",
+        "drug_class",
+        "antimicrobial_agent",
+        "analysis_software_name",
+        "analysis_software_version",
+        "resistance_mechanism"
+    ],
+    "properties": {
+        "input_file_name": {
+            "$id": "#/properties/input_file_name",
+            "type": "string",
+            "title": "The Input_file_name Schema",
+            "description": "",
+            "default": "",
+            "examples": [
+                "sample-01.fasta"
+            ]
+        },
+        "contig": {
+            "$id": "#/properties/contig",
+            "type": "string",
+            "title": "The Contig Schema",
+            "description": "",
+            "default": "",
+            "examples": [
+                "DAAGAT010000041.1"
+            ]
+        },
+        "start": {
+            "$id": "#/properties/start",
+            "type": "integer",
+            "title": "The Start Schema",
+            "description": "",
+            "default": 0,
+            "examples": [
+                222
+            ]
+        },
+        "stop": {
+            "$id": "#/properties/stop",
+            "type": "integer",
+            "title": "stop schema",
+            "description": "",
+            "default": 0,
+            "examples": [
+                878
+            ]
+        },
+        "strand_orientation": {
+            "$id": "#/properties/strand_orientation",
+            "type": "string",
+            "title": "strand_orientation schema",
+            "description": ""
+            "default": "",
+            "examples": [
+                "+"
+            ]
+        },
+        "resistance_gene_symbol": {
+            "$id": "#/properties/resistance_gene_symbol",
+            "type": "string",
+            "title": "resistance_gene_symbol schema",
+            "description": "",
+            "default": "",
+            "examples": [
+                "catA1"
+            ]
+        },
+        "resistance_gene_name": {
+            "$id": "#/properties/resistance_gene_name",
+            "type": "string",
+            "title": "resistance_gene_name schema",
+            "description": "",
+            "default": "",
+            "examples": [
+                "type A-1 chloramphenicol O-acetyltransferase"
+            ]
+        },
+        "resistance_gene_allele": {
+            "$id": "#/properties/resistance_gene_allele",
+            "type": "string",
+            "title": "resistance_gene_allele schema",
+            "description": "",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "coverage_positions": {
+            "$id": "#/properties/coverage_positions",
+            "type": "string",
+            "title": "coverage_positions schema",
+            "description": "",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "coverage_depth": {
+            "$id": "#/properties/coverage_depth",
+            "type": "number",
+            "title": "coverage_depth schema",
+            "description": "",
+            "default": 0,
+            "examples": [
+                0
+            ]
+        },
+        "coverage_percent": {
+            "$id": "#/properties/coverage_percent",
+            "type": "number",
+            "title": "coverage_percent schema",
+            "description": "",
+            "default": 0,
+            "examples": [
+                100
+            ]
+        },
+        "sequence_identity": {
+            "$id": "#/properties/sequence_identity",
+            "type": "number",
+            "title": "sequence_identity schema",
+            "description": "",
+            "default": 0,
+            "examples": [
+                100
+            ]
+        },
+        "reference_database": {
+            "$id": "#/properties/reference_database",
+            "type": "string",
+            "title": "reference_database schema",
+            "description": "",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "reference_database_version": {
+            "$id": "#/properties/reference_database_version",
+            "type": "string",
+            "title": "reference_database_version schema",
+            "description": "",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "reference_accession": {
+            "$id": "#/properties/reference_accession",
+            "type": "string",
+            "title": "reference_accession schema",
+            "description": "",
+            "default": "",
+            "examples": [
+                "WP_000412211.1"
+            ]
+        },
+        "reference_length": {
+            "$id": "#/properties/reference_length",
+            "type": "integer",
+            "title": "reference_length schema",
+            "description": "",
+            "default": 0,
+            "examples": [
+                0
+            ]
+        },
+        "target_length": {
+            "$id": "#/properties/target_length",
+            "type": "integer",
+            "title": "target_length schema",
+            "description": "",
+            "default": 0,
+            "examples": [
+                219
+            ]
+        },
+        "drug_class": {
+            "$id": "#/properties/drug_class",
+            "type": "string",
+            "title": "drug_class schema",
+            "description": "",
+            "default": "",
+            "examples": [
+                "PHENICOL"
+            ]
+        },
+        "antimicrobial_agent": {
+            "$id": "#/properties/antimicrobial_agent",
+            "type": "string",
+            "title": "antimicrobial_agent schema",
+            "description": "",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+	"resistance_mechanism": {
+            "$id": "#/properties/resistance_mechanism",
+            "type": "string",
+            "title": "resistance_mechanism schema",
+            "description": "",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "analysis_software_name": {
+            "$id": "#/properties/analysis_software_name",
+            "type": "string",
+            "title": "analysis_software_name schema",
+            "description": "",
+            "default": "",
+            "examples": [
+                "AMRFinderPlus"
+            ]
+        },
+        "analysis_software_version": {
+            "$id": "#/properties/analysis_software_version",
+            "type": "string",
+            "title": "analysis_software_version schema",
+            "description": "",
+            "default": "",
+            "examples": [
+                "0.1.0"
+            ]
+        }
+    }
+}
