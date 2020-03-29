@@ -6,7 +6,7 @@ import json
 import os
 import sys
 
-from AntimicrobialResistance.Result import AntimicrobialResistanceResult
+from AntimicrobialResistance.Result import AntimicrobialResistanceGenomicAnalysisResult
 
 FIELD_MAP_ABRICATE = {
     'file': 'input_file_name',
@@ -114,7 +114,7 @@ def main(args):
     amr_results = []
     for result in parsed_abricate_report:
         amr_class_input = prepare_for_amr_class(result, additional_fields)
-        amr_result = AntimicrobialResistanceResult(amr_class_input)
+        amr_result = AntimicrobialResistanceGenomicAnalysisResult(amr_class_input)
         amr_results.append(amr_result)
 
     if args.format == 'tsv':

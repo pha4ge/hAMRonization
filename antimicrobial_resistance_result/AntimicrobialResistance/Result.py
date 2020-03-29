@@ -28,7 +28,7 @@ DEFAULTAMRRESULT = {
     'resistance_mechanism': '',
 }
 
-class AntimicrobialResistanceResult():
+class AntimicrobialResistanceGenomicAnalysisResult():
     """Class for the management of antimicrobial resistance analysis results."""
 
     def __init__(self, input=None):
