@@ -66,6 +66,6 @@ For each tool, the [`test/data`](test/data) directory contains:
 ## FAQ
 
 * What's the difference between an Antimicrobial Resistance 'Result' and 'Report'?
-* For the purposes of this project, a 'Report' is an output file (or collection of files) from an AMR analysis tool.
-  A 'Result' is a single entry in a report. For example, a single line in an abricate report file is a single Antimicrobial
-  Resistance 'Result'.
+  * For the purposes of this project, a 'Report' is an output file (or collection of files) from an AMR analysis tool.
+    A 'Result' is a single entry in a report. For example, a single line in an abricate report file is a single Antimicrobial
+    Resistance 'Result'.
