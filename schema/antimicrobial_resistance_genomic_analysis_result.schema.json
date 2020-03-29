@@ -73,7 +73,7 @@
             "$id": "#/properties/strand_orientation",
             "type": "string",
             "title": "strand_orientation schema",
-            "description": "The orientation of a genomic element on the double stranded molecule. "
+            "description": "The orientation of a genomic element on the double stranded molecule. ",
             "default": "",
             "examples": [
                 "+",
