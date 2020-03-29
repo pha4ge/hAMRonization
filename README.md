@@ -1,5 +1,7 @@
 # Harmonized AMR Parsers
 
+![Python package](https://github.com/dfornika/harmonized-amr-parsers/workflows/Python%20package/badge.svg)
+
 This repo is intended as a place to prototype and experiment with a set of parsers for reports/outputs from several
 antimicrobial resistance tools.
 
@@ -60,3 +62,10 @@ For each tool, the [`test/data`](test/data) directory contains:
 2. A simple json conversion of the report (preserving original field names)
 3. A 'harmonized' `.json` conversion of the report, where field names have been mapped to their 'harmonized' counterparts
 4. A 'harmonized' `.tsv` output
+
+## FAQ
+
+* What's the difference between an Antimicrobial Resistance 'Result' and 'Report'?
+  * For the purposes of this project, a 'Report' is an output file (or collection of files) from an AMR analysis tool.
+    A 'Result' is a single entry in a report. For example, a single line in an abricate report file is a single Antimicrobial
+    Resistance 'Result'.
