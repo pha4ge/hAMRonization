@@ -10,11 +10,12 @@ from AntimicrobialResistance.Result import AntimicrobialResistanceGenomicAnalysi
 
 FIELD_MAP_ABRICATE = {
     'file': 'input_file_name',
-    'sequence': 'contig',
+    'sequence': 'contig_id',
     'start': 'start',
     'end': 'stop',
     'strand': 'strand_orientation',
-    'gene': 'gene_symbol',
+    'gene_symbol': 'gene_symbol',
+    'gene_name': 'gene_name',
     'coverage': 'coverage_positions',
     'coverage_map': None,
     'gaps': None,
@@ -22,7 +23,7 @@ FIELD_MAP_ABRICATE = {
     'percent_identity': 'sequence_identity',
     'database': 'reference_database_id',
     'accession': 'reference_accession',
-    'product': 'gene_name',
+    'product': None,
     'resistance': 'drug_class',
 }
 
@@ -83,8 +84,12 @@ def parse_report(path_to_report):
                 row[key] = int(row[key])
             for key in float_fields:
                 row[key] = float(row[key])
+            # the
+            gene_string = row['gene']
+            row['gene_symbol'] = gene_string.split('|')[5]
+            row['gene_name'] = gene_string.split('|')[8].replace('_', ' ')
             parsed_report.append(row)
-
+        
     return parsed_report
 
 
