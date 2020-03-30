@@ -1,26 +1,26 @@
-sample_id	input_file_name	contig_id	start	stop	strand_orientation	gene_symbol	gene_name	coverage_positions	coverage_depth	coverage_percent	sequence_identity	reference_database_id	reference_database_version	reference_accession	reference_length	target_length	drug_class	antimicrobial_agent	analysis_software_name	analysis_software_version	resistance_mechanism
-SAMEA6058467		DAAGAT010000041.1	222	878	+	catA1	type A-1 chloramphenicol O-acetyltransferase			100.0	100.0	ncbi	2020-01-22.1	WP_000412211.1	219	219	PHENICOL		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000042.1	107	940	-	aph(6)-Id	aminoglycoside O-phosphotransferase APH(6)-Id			100.0	100.0	ncbi	2020-01-22.1	WP_000480968.1	278	278	AMINOGLYCOSIDE		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000042.1	943	1767	-	aph(3'')-Ib	aminoglycoside O-phosphotransferase APH(3'')-Ib			100.0	100.0	ncbi	2020-01-22.1	WP_109545041.1	275	275	AMINOGLYCOSIDE		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000045.1	132	1748	+	mcr-9.1	phosphoethanolamine--lipid A transferase MCR-9.1			100.0	100.0	ncbi	2020-01-22.1	WP_001572373.1	539	539	COLISTIN		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000053.1	453	1004	-	aac(6')-Ib4	aminoglycoside N-acetyltransferase AAC(6')-Ib4			100.0	100.0	ncbi	2020-01-22.1	WP_003159191.1	184	184	AMINOGLYCOSIDE		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000053.1	1115	1912	-	blaVIM-1	subclass B1 metallo-beta-lactamase VIM-1			100.0	100.0	ncbi	2020-01-22.1	WP_013263789.1	266	266	BETA-LACTAM		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000055.1	468	1685	-	ere(A)	EreA family erythromycin esterase			100.0	99.75	ncbi	2020-01-22.1	WP_032490532.1	406	406	MACROLIDE		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000059.1	72	1241	+	blaACC-1	cephalosporin-hydrolyzing class C beta-lactamase ACC-1			100.0	100.0	ncbi	2020-01-22.1	WP_032491956.1	390	390	BETA-LACTAM		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000060.1	718	1395	-	sul1	sulfonamide-resistant dihydropteroate synthase Sul1			81.0	100.0	ncbi	2020-01-22.1	WP_000259018.1	279	226	SULFONAMIDE		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000074.1	1	342	-	qacE	quaternary ammonium compound efflux SMR transporter QacE			99.13	100.0	ncbi	2020-01-22.1	WP_000679427.1	115	114	QUATERNARY AMMONIUM		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000079.1	3417	4241	+	aph(3'')-Ib	aminoglycoside O-phosphotransferase APH(3'')-Ib			100.0	100.0	ncbi	2020-01-22.1	WP_109545041.1	275	275	AMINOGLYCOSIDE		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000079.1	4244	5077	+	aph(6)-Id	aminoglycoside O-phosphotransferase APH(6)-Id			100.0	100.0	ncbi	2020-01-22.1	WP_000480968.1	278	278	AMINOGLYCOSIDE		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000080.1	133	1749	+	mcr-9.1	phosphoethanolamine--lipid A transferase MCR-9.1			100.0	100.0	ncbi	2020-01-22.1	WP_001572373.1	539	539	COLISTIN		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000081.1	111	455	+	qacEdelta1	quaternary ammonium compound efflux SMR transporter QacE delta 1			100.0	100.0	ncbi	2020-01-22.1	WP_000679427.1	115	115	QUATERNARY AMMONIUM		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000081.1	452	1288	+	sul1	sulfonamide-resistant dihydropteroate synthase Sul1			100.0	100.0	ncbi	2020-01-22.1	WP_000259031.1	279	279	SULFONAMIDE		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000082.1	111	455	+	qacEdelta1	quaternary ammonium compound efflux SMR transporter QacE delta 1			100.0	100.0	ncbi	2020-01-22.1	WP_000679427.1	115	115	QUATERNARY AMMONIUM		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000082.1	452	1288	+	sul1	sulfonamide-resistant dihydropteroate synthase Sul1			100.0	99.64	ncbi	2020-01-22.1	WP_000259031.1	279	279	SULFONAMIDE		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000083.1	1	849	+	sul1	sulfonamide-resistant dihydropteroate synthase Sul1			100.0	100.0	ncbi	2020-01-22.1	WP_000946487.1	283	283	SULFONAMIDE		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000084.1	25	822	+	blaVIM-1	subclass B1 metallo-beta-lactamase VIM-1			100.0	100.0	ncbi	2020-01-22.1	WP_013263789.1	266	266	BETA-LACTAM		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000084.1	933	1484	+	aac(6')-Ib4	aminoglycoside N-acetyltransferase AAC(6')-Ib4			100.0	100.0	ncbi	2020-01-22.1	WP_003159191.1	184	184	AMINOGLYCOSIDE		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000085.1	43	699	+	catA1	type A-1 chloramphenicol O-acetyltransferase			100.0	100.0	ncbi	2020-01-22.1	WP_000412211.1	219	219	PHENICOL		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000086.1	73	1242	+	blaACC-1	cephalosporin-hydrolyzing class C beta-lactamase ACC-1			100.0	100.0	ncbi	2020-01-22.1	WP_032491956.1	390	390	BETA-LACTAM		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000087.1	66	1283	+	ere(A)	EreA family erythromycin esterase			100.0	99.75	ncbi	2020-01-22.1	WP_032490532.1	406	406	MACROLIDE		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000088.1	12	800	+	aadA1	ANT(3'')-Ia family aminoglycoside nucleotidyltransferase AadA1			100.0	100.0	ncbi	2020-01-22.1	WP_001206317.1	263	263	AMINOGLYCOSIDE		AMRFinderPlus	3.6.10	
-SAMEA6058467		DAAGAT010000089.1	12	800	+	aadA1	ANT(3'')-Ia family aminoglycoside nucleotidyltransferase AadA1			100.0	100.0	ncbi	2020-01-22.1	WP_001206317.1	263	263	AMINOGLYCOSIDE		AMRFinderPlus	3.6.10	
+sample_id	input_file_name	contig_id	start	stop	strand_orientation	gene_symbol	gene_name	coverage_positions	coverage_depth	coverage_percent	sequence_identity	reference_database_id	reference_database_version	reference_accession	reference_length	target_length	drug_class	antimicrobial_agent	resistance_mechanism	analysis_software_name	analysis_software_version
+SAMEA6058467		DAAGAT010000041.1	222	878	+	catA1	type A-1 chloramphenicol O-acetyltransferase			100.0	100.0	ncbi	2020-01-22.1	WP_000412211.1	219	219	PHENICOL			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000042.1	107	940	-	aph(6)-Id	aminoglycoside O-phosphotransferase APH(6)-Id			100.0	100.0	ncbi	2020-01-22.1	WP_000480968.1	278	278	AMINOGLYCOSIDE			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000042.1	943	1767	-	aph(3'')-Ib	aminoglycoside O-phosphotransferase APH(3'')-Ib			100.0	100.0	ncbi	2020-01-22.1	WP_109545041.1	275	275	AMINOGLYCOSIDE			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000045.1	132	1748	+	mcr-9.1	phosphoethanolamine--lipid A transferase MCR-9.1			100.0	100.0	ncbi	2020-01-22.1	WP_001572373.1	539	539	COLISTIN			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000053.1	453	1004	-	aac(6')-Ib4	aminoglycoside N-acetyltransferase AAC(6')-Ib4			100.0	100.0	ncbi	2020-01-22.1	WP_003159191.1	184	184	AMINOGLYCOSIDE			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000053.1	1115	1912	-	blaVIM-1	subclass B1 metallo-beta-lactamase VIM-1			100.0	100.0	ncbi	2020-01-22.1	WP_013263789.1	266	266	BETA-LACTAM			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000055.1	468	1685	-	ere(A)	EreA family erythromycin esterase			100.0	99.75	ncbi	2020-01-22.1	WP_032490532.1	406	406	MACROLIDE			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000059.1	72	1241	+	blaACC-1	cephalosporin-hydrolyzing class C beta-lactamase ACC-1			100.0	100.0	ncbi	2020-01-22.1	WP_032491956.1	390	390	BETA-LACTAM			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000060.1	718	1395	-	sul1	sulfonamide-resistant dihydropteroate synthase Sul1			81.0	100.0	ncbi	2020-01-22.1	WP_000259018.1	279	226	SULFONAMIDE			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000074.1	1	342	-	qacE	quaternary ammonium compound efflux SMR transporter QacE			99.13	100.0	ncbi	2020-01-22.1	WP_000679427.1	115	114	QUATERNARY AMMONIUM			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000079.1	3417	4241	+	aph(3'')-Ib	aminoglycoside O-phosphotransferase APH(3'')-Ib			100.0	100.0	ncbi	2020-01-22.1	WP_109545041.1	275	275	AMINOGLYCOSIDE			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000079.1	4244	5077	+	aph(6)-Id	aminoglycoside O-phosphotransferase APH(6)-Id			100.0	100.0	ncbi	2020-01-22.1	WP_000480968.1	278	278	AMINOGLYCOSIDE			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000080.1	133	1749	+	mcr-9.1	phosphoethanolamine--lipid A transferase MCR-9.1			100.0	100.0	ncbi	2020-01-22.1	WP_001572373.1	539	539	COLISTIN			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000081.1	111	455	+	qacEdelta1	quaternary ammonium compound efflux SMR transporter QacE delta 1			100.0	100.0	ncbi	2020-01-22.1	WP_000679427.1	115	115	QUATERNARY AMMONIUM			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000081.1	452	1288	+	sul1	sulfonamide-resistant dihydropteroate synthase Sul1			100.0	100.0	ncbi	2020-01-22.1	WP_000259031.1	279	279	SULFONAMIDE			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000082.1	111	455	+	qacEdelta1	quaternary ammonium compound efflux SMR transporter QacE delta 1			100.0	100.0	ncbi	2020-01-22.1	WP_000679427.1	115	115	QUATERNARY AMMONIUM			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000082.1	452	1288	+	sul1	sulfonamide-resistant dihydropteroate synthase Sul1			100.0	99.64	ncbi	2020-01-22.1	WP_000259031.1	279	279	SULFONAMIDE			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000083.1	1	849	+	sul1	sulfonamide-resistant dihydropteroate synthase Sul1			100.0	100.0	ncbi	2020-01-22.1	WP_000946487.1	283	283	SULFONAMIDE			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000084.1	25	822	+	blaVIM-1	subclass B1 metallo-beta-lactamase VIM-1			100.0	100.0	ncbi	2020-01-22.1	WP_013263789.1	266	266	BETA-LACTAM			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000084.1	933	1484	+	aac(6')-Ib4	aminoglycoside N-acetyltransferase AAC(6')-Ib4			100.0	100.0	ncbi	2020-01-22.1	WP_003159191.1	184	184	AMINOGLYCOSIDE			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000085.1	43	699	+	catA1	type A-1 chloramphenicol O-acetyltransferase			100.0	100.0	ncbi	2020-01-22.1	WP_000412211.1	219	219	PHENICOL			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000086.1	73	1242	+	blaACC-1	cephalosporin-hydrolyzing class C beta-lactamase ACC-1			100.0	100.0	ncbi	2020-01-22.1	WP_032491956.1	390	390	BETA-LACTAM			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000087.1	66	1283	+	ere(A)	EreA family erythromycin esterase			100.0	99.75	ncbi	2020-01-22.1	WP_032490532.1	406	406	MACROLIDE			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000088.1	12	800	+	aadA1	ANT(3'')-Ia family aminoglycoside nucleotidyltransferase AadA1			100.0	100.0	ncbi	2020-01-22.1	WP_001206317.1	263	263	AMINOGLYCOSIDE			AMRFinderPlus	3.6.10
+SAMEA6058467		DAAGAT010000089.1	12	800	+	aadA1	ANT(3'')-Ia family aminoglycoside nucleotidyltransferase AadA1			100.0	100.0	ncbi	2020-01-22.1	WP_001206317.1	263	263	AMINOGLYCOSIDE			AMRFinderPlus	3.6.10
