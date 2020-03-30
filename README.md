@@ -59,9 +59,8 @@ The [`antimicrobial_resistance_result`](antimicrobial_resistance_result) directo
 For each tool, the [`test/data`](test/data) directory contains:
 
 1. An example output report
-2. A simple json conversion of the report (preserving original field names)
-3. A 'harmonized' `.json` conversion of the report, where field names have been mapped to their 'harmonized' counterparts
-4. A 'harmonized' `.tsv` output
+2. A 'harmonized' `.json` conversion of the report, where field names have been mapped to their 'harmonized' counterparts
+3. A 'harmonized' `.tsv` output
 
 ## FAQ
 
