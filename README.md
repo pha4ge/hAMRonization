@@ -52,7 +52,7 @@ FIELD_MAP_ABRICATE = {
 
 Our short-term implementation strategy is to create a python class that could be contributed to the [biopython](https://biopython.org/) project.
 
-The [`antimicrobial_resistance_result`](antimicrobial_resistance_result) directory contains a pip-installable python module that provides the `AntimicrobialResistanceResult` class. Each of the parsers
+The [`antimicrobial_resistance_result`](antimicrobial_resistance_result) directory contains a pip-installable python module that provides the `AntimicrobialResistanceGenomicAnalysisResult` class. Each of the parsers
 
 ## Test Data
 
