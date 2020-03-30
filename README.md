@@ -35,7 +35,7 @@ eg:
 ```python
 FIELD_MAP_ABRICATE = {
     'file': 'input_file_name',
-    'sequence': 'contig',
+    'sequence': 'contig_id',
     'start': 'start',
     'end': 'stop',
     ...
