@@ -10,12 +10,12 @@ from AntimicrobialResistance.Result import AntimicrobialResistanceGenomicAnalysi
 
 FIELD_MAP_NCBIAMRFINDERPLUS = {
     'protein_identifier': None,
-    'contig_id': 'contig',
+    'contig_id': 'contig_id',
     'start': 'start',
     'stop': 'stop',
     'strand': 'strand_orientation',
-    'gene_symbol': 'resistance_gene_symbol',
-    'sequence_name': 'resistance_gene_name',
+    'gene_symbol': 'gene_symbol',
+    'sequence_name': 'gene_name',
     'scope': None,
     'element_type': None,
     'element_subtype': None,
@@ -23,7 +23,7 @@ FIELD_MAP_NCBIAMRFINDERPLUS = {
     'subclass': None,
     'method': None,
     'target_length': 'target_length',
-    'reference_sequence_length': None,
+    'reference_sequence_length': 'reference_length',
     'percent_coverage_of_reference_sequence': 'coverage_percent',
     'percent_identity_of_reference_sequence': 'sequence_identity',
     'alignment_length': None,
@@ -33,10 +33,10 @@ FIELD_MAP_NCBIAMRFINDERPLUS = {
     'hmm_description': None,
 }
 
-def parse_ncbi_amrfinderplus_report(path_to_ncbi_amrfinderplus_report):
+def parse_report(path_to_report):
     """
     Args:
-        path_to_ncbi_amrfinderplus_report (str): Path to the NCBI AMRFinderPlus report file.
+        path_to_report (str): Path to the NCBI AMRFinderPlus report file.
     
     Returns:
         list of dict: Parsed NCBI AMRFinderPlus report.
@@ -94,7 +94,7 @@ def parse_ncbi_amrfinderplus_report(path_to_ncbi_amrfinderplus_report):
         'hmm_description',
     ]
     ncbi_amrfinderplus_report = []
-    with open(path_to_ncbi_amrfinderplus_report) as ncbi_amrfinderplus_report_file:
+    with open(path_to_report) as ncbi_amrfinderplus_report_file:
         reader = csv.DictReader(ncbi_amrfinderplus_report_file, fieldnames=ncbi_amrfinderplus_report_fieldnames, delimiter='\t')
         next(reader) # skip header
         integer_fields = ['start', 'stop', 'target_length', 'reference_sequence_length', 'alignment_length']
@@ -109,7 +109,7 @@ def parse_ncbi_amrfinderplus_report(path_to_ncbi_amrfinderplus_report):
     return ncbi_amrfinderplus_report
 
 
-def prepare_for_amr_class(parsed_ncbi_amrfinderplus_report, additional_fields={}):
+def prepare_for_amr_class(parsed_report, additional_fields={}):
     input_for_amr_class = {}
 
     for key, value in additional_fields.items():
@@ -117,25 +117,26 @@ def prepare_for_amr_class(parsed_ncbi_amrfinderplus_report, additional_fields={}
 
     for ncbi_amrfinderplus_field, amr_result_field in FIELD_MAP_NCBIAMRFINDERPLUS.items():
         if amr_result_field:
-            input_for_amr_class[str(amr_result_field)] = parsed_ncbi_amrfinderplus_report[str(ncbi_amrfinderplus_field)]
+            input_for_amr_class[str(amr_result_field)] = parsed_report[str(ncbi_amrfinderplus_field)]
 
     return input_for_amr_class
 
 
 def main(args):
-    parsed_ncbi_amrfinderplus_report = parse_ncbi_amrfinderplus_report(args.ncbi_amrfinderplus_report)
+    parsed_report = parse_report(args.report)
 
     additional_fields = {}
     additional_fields['analysis_software_name'] = "AMRFinderPlus"
+    additional_fields['reference_database_id'] = "ncbi"
     if args.sample_id:
         additional_fields['sample_id'] = args.sample_id
     if args.analysis_software_version:
         additional_fields['analysis_software_version'] = args.analysis_software_version
-    if args.database_version:
-        additional_fields['database_version'] = args.database_version
+    if args.reference_database_version:
+        additional_fields['reference_database_version'] = args.reference_database_version
 
     amr_results = []
-    for result in parsed_ncbi_amrfinderplus_report:
+    for result in parsed_report:
         amr_class_input = prepare_for_amr_class(result, additional_fields)
         amr_result = AntimicrobialResistanceGenomicAnalysisResult(amr_class_input)
         amr_results.append(amr_result)
@@ -155,10 +156,10 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("ncbi_amrfinderplus_report", help="Input NCBI AMRFinderPlus report")
+    parser.add_argument("report", help="Input NCBI AMRFinderPlus report")
     parser.add_argument("--format", default="tsv", help="Output format (tsv or json)")
     parser.add_argument("--sample_id", help="An identifier for the sample that is the subject of the analysis.")
     parser.add_argument("--analysis_software_version", help="Version of NCBI AMRFinderPlus used to generate the report")
-    parser.add_argument("--database_version", help="Version of NCBI AMRFinder database used to generate the report")
+    parser.add_argument("--reference_database_version", help="Version of NCBI AMRFinder database used to generate the report")
     args = parser.parse_args()
     main(args)

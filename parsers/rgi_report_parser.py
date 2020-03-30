@@ -10,7 +10,7 @@ from AntimicrobialResistance.Result import AntimicrobialResistanceGenomicAnalysi
 
 FIELD_MAP_RGI = {
     'orf_id': None,
-    'contig': 'contig',
+    'contig': 'contig_id',
     'start': 'start',
     'stop': 'stop',
     'orientation': 'strand_orientation',
@@ -36,10 +36,10 @@ FIELD_MAP_RGI = {
     'note': None,
 }
 
-def parse_rgi_report_txt(path_to_rgi_result):
+def parse_report(path_to_report):
     """
     Args:
-        path_to_rgi_report (str): Path to the tabular rgi report file (SAMPLE-ID.rgi.txt).
+        path_to_report (str): Path to the tabular rgi report file (SAMPLE-ID.rgi.txt).
     Returns:
         list of dict: Parsed rgi report.
         For example:
@@ -105,7 +105,7 @@ def parse_rgi_report_txt(path_to_rgi_result):
         'note',
     ]
 
-    rgi_report_results = []
+    parsed_report = []
 
     def parse_value_maybe(value):
         if value == "n/a":
@@ -113,8 +113,8 @@ def parse_rgi_report_txt(path_to_rgi_result):
         else:
             return value
 
-    with open(path_to_rgi_result) as rgi_report_file:
-        reader = csv.DictReader(rgi_report_file, fieldnames=rgi_report_fieldnames, delimiter='\t')
+    with open(path_to_report) as report_file:
+        reader = csv.DictReader(report_file, fieldnames=rgi_report_fieldnames, delimiter='\t')
         next(reader) # skip header
         integer_fields = [
             'start',
@@ -140,12 +140,12 @@ def parse_rgi_report_txt(path_to_rgi_result):
                 # 'S80I' => ['S80I']
                 # 'S357N, D350N' => ['S357N', 'D350N']
                 row[key] = row[key].split(', ') if parse_value_maybe(row[key]) else None
-            rgi_report_results.append(row)
+            parsed_report.append(row)
 
-    return rgi_report_results
+    return parsed_report
 
 
-def prepare_for_amr_class(parsed_rgi_report, additional_fields={}):
+def prepare_for_amr_class(parsed_report, additional_fields={}):
     input_for_amr_class = {}
     
     for key, value in additional_fields.items():
@@ -153,13 +153,13 @@ def prepare_for_amr_class(parsed_rgi_report, additional_fields={}):
 
     for rgi_field, amr_result_field in FIELD_MAP_RGI.items():
         if amr_result_field:
-            input_for_amr_class[str(amr_result_field)] = parsed_rgi_report[str(rgi_field)]
+            input_for_amr_class[str(amr_result_field)] = parsed_report[str(rgi_field)]
 
     return input_for_amr_class
 
 
 def main(args):
-    parsed_rgi_report = parse_rgi_report_txt(args.rgi_report)
+    parsed_report = parse_report(args.report)
 
     additional_fields = {}
     additional_fields['analysis_software_name'] = "RGI"
@@ -168,11 +168,11 @@ def main(args):
         additional_fields['sample_id'] = args.sample_id
     if args.analysis_software_version:
         additional_fields['analysis_software_version'] = args.analysis_software_version
-    if args.database_version:
-        additional_fields['database_version'] = args.database_version
+    if args.reference_database_version:
+        additional_fields['reference_database_version'] = args.reference_database_version
 
     amr_results = []
-    for result in parsed_rgi_report:
+    for result in parsed_report:
         amr_class_input = prepare_for_amr_class(result, additional_fields)
         amr_result = AntimicrobialResistanceGenomicAnalysisResult(amr_class_input)
         amr_results.append(amr_result)
@@ -192,10 +192,10 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("rgi_report", help="Input rgi report (txt)")
+    parser.add_argument("report", help="Input RGI report (txt)")
     parser.add_argument("--format", default="tsv", help="Output format (tsv or json)")
     parser.add_argument("--sample_id", help="An identifier for the sample that is the subject of the analysis.")
     parser.add_argument("--analysis_software_version", help="Version of Abricate used to generate the report")
-    parser.add_argument("--database_version", help="Database version used to generate the report")
+    parser.add_argument("--reference_database_version", help="Database version used to generate the report")
     args = parser.parse_args()
     main(args)

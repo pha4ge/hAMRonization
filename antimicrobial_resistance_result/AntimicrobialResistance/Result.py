@@ -4,19 +4,19 @@
 import json
 
 DEFAULTAMRRESULT = {
+    'sample_id': '',
     'input_file_name': '',
-    'contig': '',
+    'contig_id': '',
     'start': 0,
     'stop': 0,
     'strand_orientation': '',
-    'resistance_gene_symbol': '',
-    'resistance_gene_name': '',
-    'resistance_gene_allele': '',
+    'gene_symbol': '',
+    'gene_name': '',
     'coverage_positions': '',
     'coverage_depth': 0.0,
     'coverage_percent': 0.0,
     'sequence_identity': 0.0,
-    'reference_database': '',
+    'reference_database_id': '',
     'reference_database_version': '',
     'reference_accession': '',
     'reference_length': 0,
@@ -33,28 +33,28 @@ class AntimicrobialResistanceGenomicAnalysisResult():
 
     def __init__(self, input=None):
         """Initialize the class."""
-        self.input_file_name = ''
-        self.contig = ''
-        self.start = 0
-        self.stop = 0
-        self.strand_orientation = 0
-        self.resistance_gene_symbol = ''
-        self.resistance_gene_name = ''
-        self.resistance_gene_allele = ''
-        self.coverage_positions = ''
-        self.coverage_depth = 0.0
-        self.coverage_percent = 0.0
-        self.sequence_identity = 0.0
-        self.reference_database = ''
-        self.reference_database_version = ''
-        self.reference_accession = ''
-        self.reference_length = 0
-        self.target_length = 0
-        self.drug_class =  ''
-        self.antimicrobial_agent = ''
-        self.analysis_software_name =  ''
-        self.analysis_software_version = ''
-        self.resistance_mechanism = ''
+        self.sample_id = None
+        self.input_file_name = None
+        self.contig_id = None
+        self.start = None
+        self.stop = None
+        self.strand_orientation = None
+        self.gene_symbol = None
+        self.gene_name = None
+        self.coverage_positions = None
+        self.coverage_depth = None
+        self.coverage_percent = None
+        self.sequence_identity = None
+        self.reference_database_id = None
+        self.reference_database_version = None
+        self.reference_accession = None
+        self.reference_length = None
+        self.target_length = None
+        self.drug_class =  None
+        self.antimicrobial_agent = None
+        self.analysis_software_name =  None
+        self.analysis_software_version = None
+        self.resistance_mechanism = None
         
         if input:
             self.read(input)
@@ -69,11 +69,15 @@ class AntimicrobialResistanceGenomicAnalysisResult():
     def read(self, input):
         # TODO: There must be a less verbose way to do this...
         try:
+            self.sample_id = input['sample_id']
+        except KeyError as e:
+            pass
+        try:
             self.input_file_name = input['input_file_name']
         except KeyError as e:
             pass
         try:
-            self.contig = input['contig']
+            self.contig_id = input['contig_id']
         except KeyError as e:
             pass
         try:
@@ -89,15 +93,11 @@ class AntimicrobialResistanceGenomicAnalysisResult():
         except KeyError as e:
             pass
         try:
-            self.resistance_gene_symbol = input['resistance_gene_symbol']
+            self.gene_symbol = input['gene_symbol']
         except KeyError as e:
             pass
         try:
-            self.resistance_gene_name = input['resistance_gene_name']
-        except KeyError as e:
-            pass
-        try:
-            self.resistance_gene_allele = input['resistance_gene_allele']
+            self.gene_name = input['gene_name']
         except KeyError as e:
             pass
         try:
@@ -117,7 +117,7 @@ class AntimicrobialResistanceGenomicAnalysisResult():
         except KeyError as e:
             pass
         try:
-            self.reference_database = input['reference_database']
+            self.reference_database_id = input['reference_database_id']
         except KeyError as e:
             pass
         try:
