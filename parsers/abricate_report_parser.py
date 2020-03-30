@@ -105,7 +105,9 @@ def main(args):
     parsed_abricate_report = parse_abricate_report(args.abricate_report)
 
     additional_fields = {}
-    additional_fields['analysis_software_name'] = "Abricate"
+    additional_fields['analysis_software_name'] = "ABRicate"
+    if args.sample_id:
+        additional_fields['sample_id'] = args.sample_id
     if args.analysis_software_version:
         additional_fields['analysis_software_version'] = args.analysis_software_version
     if args.database_version:
@@ -133,6 +135,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("abricate_report", help="Input abricate report")
     parser.add_argument("--format", default="tsv", help="Output format (tsv or json)")
+    parser.add_argument("--sample_id", help="An identifier for the sample that is the subject of the analysis.")
     parser.add_argument("--analysis_software_version", help="Version of Abricate used to generate the report")
     parser.add_argument("--database_version", help="Database version used to generate the report")
     args = parser.parse_args()
