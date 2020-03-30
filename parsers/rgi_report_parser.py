@@ -140,6 +140,7 @@ def parse_report(path_to_report):
                 # 'S80I' => ['S80I']
                 # 'S357N, D350N' => ['S357N', 'D350N']
                 row[key] = row[key].split(', ') if parse_value_maybe(row[key]) else None
+            row['contig'] = row['contig'].split('_')[0]
             parsed_report.append(row)
 
     return parsed_report
