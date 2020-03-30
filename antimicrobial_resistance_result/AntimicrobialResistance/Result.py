@@ -23,9 +23,9 @@ DEFAULTAMRRESULT = {
     'target_length': 0,
     'drug_class': '',
     'antimicrobial_agent': '',
+    'resistance_mechanism': '',
     'analysis_software_name': '',
     'analysis_software_version': '',
-    'resistance_mechanism': '',
 }
 
 class AntimicrobialResistanceGenomicAnalysisResult():
@@ -52,9 +52,9 @@ class AntimicrobialResistanceGenomicAnalysisResult():
         self.target_length = None
         self.drug_class =  None
         self.antimicrobial_agent = None
+        self.resistance_mechanism = None
         self.analysis_software_name =  None
         self.analysis_software_version = None
-        self.resistance_mechanism = None
         
         if input:
             self.read(input)
@@ -145,14 +145,14 @@ class AntimicrobialResistanceGenomicAnalysisResult():
         except KeyError as e:
             pass
         try:
+            self.resistance_mechanism = input['resistance_mechanism']
+        except KeyError as e:
+            pass
+        try:
             self.analysis_software_name = input['analysis_software_name']
         except KeyError as e:
             pass
         try:
             self.analysis_software_version = input['analysis_software_version']
-        except KeyError as e:
-            pass
-        try:
-            self.resistance_mechanism = input['resistance_mechanism']
         except KeyError as e:
             pass
