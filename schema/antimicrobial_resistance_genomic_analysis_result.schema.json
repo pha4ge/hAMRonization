@@ -5,30 +5,24 @@
     "title": "Antimicrobial Resistance Genomic Analysis Result Schema",
     "description": "An Antimicrobial Resistance Genomic Analysis Result.",
     "required": [
-        "input_file_name",
-        "contig",
-        "start",
-        "stop",
-        "strand_orientation",
-        "resistance_gene_symbol",
-        "resistance_gene_name",
-        "resistance_gene_allele",
-        "coverage_positions",
-        "coverage_depth",
-        "coverage_percent",
-        "sequence_identity",
-        "reference_database",
-        "reference_database_version",
+        "sample_id",
+        "gene_symbol",
+        "reference_database_id",
         "reference_accession",
-        "reference_length",
-        "target_length",
-        "drug_class",
-        "antimicrobial_agent",
         "analysis_software_name",
         "analysis_software_version",
-        "resistance_mechanism"
     ],
     "properties": {
+      "sample_id": {
+            "$id": "#/properties/sample_id",
+            "type": "string",
+            "title": "sample_id schema",
+            "description": "An identifier for the sample that is the subject of the analysis.",
+            "default": "",
+            "examples": [
+                "SAMEA6058467"
+            ]
+        },
         "input_file_name": {
             "$id": "#/properties/input_file_name",
             "type": "string",
@@ -36,7 +30,7 @@
             "description": "The filename containing molecular sequence data.",
             "default": "",
             "examples": [
-                "sample-01.fasta"
+                "SAMEA6058467.assembly.fasta"
             ]
         },
         "contig": {
