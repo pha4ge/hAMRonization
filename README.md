@@ -50,9 +50,19 @@ FIELD_MAP_ABRICATE = {
 
 ## Harmonized Data Structure
 
+### Python `AntimicrobialResistanceGenomicAnalysisResult` class
+
 Our short-term implementation strategy is to create a python class that could be contributed to the [biopython](https://biopython.org/) project.
 
 The [`antimicrobial_resistance_result`](antimicrobial_resistance_result) directory contains a pip-installable python module that provides the `AntimicrobialResistanceGenomicAnalysisResult` class. Each of the parsers
+
+### Language-Agnostic Schema(s)
+
+We currently have three language-agnostic schemas to describe our data structure:
+
+1. [JSON Schema](schema/antimicrobial_resistance_genomic_analysis_result.schema.json) ([about](https://json-schema.org/))
+2. [JSON-LD Schema](schema/antimicrobial_resistance_genomic_analysis_result.schema.jsonld) ([about](https://json-ld.org/))
+3. [Avro Schema](schema/antimicrobial_resistance_genomic_analysis_result.schema.avro) ([about](https://avro.apache.org/docs/current/#schemas))
 
 ## Test Data
 
