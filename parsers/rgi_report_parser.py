@@ -164,7 +164,7 @@ def main(args):
 
     additional_fields = {}
     additional_fields['analysis_software_name'] = "RGI"
-    additional_fields['reference_database'] = "card"
+    additional_fields['reference_database_id'] = "card"
     if args.sample_id:
         additional_fields['sample_id'] = args.sample_id
     if args.analysis_software_version:
