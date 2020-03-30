@@ -28,7 +28,7 @@ Implemented Parsers:
 
 Each parser follows a similar strategy:
 
-1. Define a 'field map' that provides a mapping between the field names provided in the tool output and the attributes of our harmonized [`AntimicrobialResistanceResult`](antimicrobial_resistance_result/AntimicrobialResistance/Result.py) class.
+1. Define a 'field map' that provides a mapping between the field names provided in the tool output and the attributes of our harmonized [`AntimicrobialResistanceGenomicAnalysisResult`](antimicrobial_resistance_result/AntimicrobialResistance/Result.py) class.
 
 eg:
 
@@ -44,7 +44,7 @@ FIELD_MAP_ABRICATE = {
 
 2. Parse the report, probably using the `csv.DictReader` class from the python standard library (if the report is some sort of csv/tsv output). This produces a python dictionary data structure, with keys corresponding to the header fields in the tool output report.
 
-3. Take the parsed report, and prepare it for loading into the `AntimicrobialResistanceResult` class by using the field map to convert field names from the parsed report into their corresponding 'harmonized' attribute names. This is done in a function called `prepare_for_amr_class()` which takes a dictionary as input and returns a dictionary that can be used to initialize an `AntimicrobialResistanceResult` object.
+3. Take the parsed report, and prepare it for loading into the `AntimicrobialResistanceGenomicAnalysisResult` class by using the field map to convert field names from the parsed report into their corresponding 'harmonized' attribute names. This is done in a function called `prepare_for_amr_class()` which takes a dictionary as input and returns a dictionary that can be used to initialize an `AntimicrobialResistanceGenomicAnalysisResult` object.
 
 4. Write the parsed/harmonized data to `stdout`, in either `tsv` or `json` format (controlled by the `--format` flag.
 
@@ -52,7 +52,7 @@ FIELD_MAP_ABRICATE = {
 
 Our short-term implementation strategy is to create a python class that could be contributed to the [biopython](https://biopython.org/) project.
 
-The [`antimicrobial_resistance_result`](antimicrobial_resistance_result) directory contains a pip-installable python module that provides the `AntimicrobialResistanceResult` class. Each of the parsers
+The [`antimicrobial_resistance_result`](antimicrobial_resistance_result) directory contains a pip-installable python module that provides the `AntimicrobialResistanceGenomicAnalysisResult` class. Each of the parsers
 
 ## Test Data
 
