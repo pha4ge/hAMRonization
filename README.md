@@ -54,7 +54,9 @@ FIELD_MAP_ABRICATE = {
 
 Our short-term implementation strategy is to create a python class that could be contributed to the [biopython](https://biopython.org/) project.
 
-The [`antimicrobial_resistance_result`](antimicrobial_resistance_result) directory contains a pip-installable python module that provides the `AntimicrobialResistanceGenomicAnalysisResult` class. Each of the parsers
+The [`antimicrobial_resistance_result`](antimicrobial_resistance_result) directory contains a pip-installable python module that provides the `AntimicrobialResistanceGenomicAnalysisResult` class. Each of the parsers loads the parsed report into a list of `AntimicrobialResistanceGenomicAnalysisResult`s.
+
+The [`AntimicrobialResistanceGenomicAnalysisResult.__repr__()`](https://github.com/pha4ge/harmonized-amr-parsers/blob/3bb8f40360e49a0be397ac884ba31e17a73a1452/antimicrobial_resistance_result/AntimicrobialResistance/Result.py#L65-L66) method has been designed such that printing an instance of the class produces a JSON-compatible string.
 
 ### Language-Agnostic Schema(s)
 
