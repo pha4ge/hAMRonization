@@ -10,7 +10,7 @@
     "iao": "http://purl.obolibrary.org/obo/IAO_",
     "aro": "http://purl.obolibrary.org/obo/ARO_",
     "chebi": "http://purl.obolibrary.org/obo/CHEBI_",
-    "ncit": "http://purl.obolibrary.org/obo/NCIT_",
+    "ncit": "http://purl.obolibrary.org/obo/NCIT_"
   },
   "@graph": [
     {
