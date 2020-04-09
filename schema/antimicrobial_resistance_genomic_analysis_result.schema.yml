@@ -1,79 +1,52 @@
 - name: AntimicrobialResistanceGenomicAnalysisResult
+  documentRoot: true
   doc: |
-    Result of applying a computational analysis to genomic data for the purpose of predicting or explaining resistance to antimicrobial agents based on genomic features.
+    Result of applying a computational analysis to genomic data for the purpose
+    of predicting or explaining resistance to antimicrobial agents based on
+    genomic features.
   type: record
   fields:
     sample_id:
-      type:
-        type: string
+      type: string
     input_file_name:
-      type:
-        type: string
+      type: string
     contig_id:
-      type:
-        type: string
+      type: string
     start:
-      type:
-        type: int
+      type: int
     stop:
-      type:
-        type: int
+      type: int
     strand_orientation:
-      type:
-        type: string
+      type: string
     gene_symbol:
-      type:
-        type: string
+      type: string
     gene_name:
-      type:
-        type: string
+      type: string
     coverage_positions:
-      type:
-        type: string
+      type: string
     coverage_depth:
-      type:
-        type: int
+      type: int?
     coverage_percent:
-      type:
-        type: float
+      type: float
     sequence_identity:
-      type:
-        type: float
+      type: float
+    reference_database_id:
+      type: string
     reference_database_version:
-        type:
-          type: string
+      type: string
     reference_accession:
-        type:
-          type: string
+      type: string
     reference_length:
-      type:
-        type: int
+      type: int?
     target_length:
-      type:
-        type: int
+      type: int?
     drug_class:
-      type:
-        type: string
+      type: string
     antimicrobial_agent:
-      type:
-        type: string
+      type: string?
     resistance_mechanism:
-      type:
-        type: string
+      type: string?
     analysis_software_name:
-      type:
-        type: string
+      type: string
     analysis_software_version:
-      type:
-        type: string
-
-- name: AntimicrobialResistanceGenomicAnalysisReport
-  doc: |
-    Array of AntimicrobialResistanceGenomicAnalysisResults
-  documentRoot: true
-  type: record
-  fields:
-    results:
-      type:
-        type: array
-        items: AntimicrobialResistanceGenomicAnalysisResult
+      type: string
