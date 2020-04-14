@@ -1,0 +1,23 @@
+sample_id	input_file_name	contig_id	start	stop	strand_orientation	gene_symbol	gene_name	coverage_positions	coverage_depth	coverage_percent	sequence_identity	reference_database_id	reference_database_version	reference_accession	reference_length	target_length	drug_class	antimicrobial_agent	resistance_mechanism	analysis_software_name	analysis_software_version
+SAMEA6058467		tpg|DAAGAT010000084.1|	908	1487		aac(6')-Ib-cr				96.67	99.31	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	DQ303918			ciprofloxacin I/R			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000053.1|	1029	450		aac(6')-Ib-cr				96.67	99.31	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	DQ303918			ciprofloxacin I/R			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000084.1|	933	1487		aac(6')-Ib3				100.0	99.64	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	X60321			gentamicin			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000053.1|	1004	450		aac(6')-Ib3				100.0	99.64	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	X60321			gentamicin			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000089.1|	12	803		aadA1				100.0	100.0	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	JX185132			streptomycin			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000088.1|	12	803		aadA1b				100.0	100.0	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	M95287			streptomycin			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000042.1|	940	104		aph(6)-Id				100.0	100.0	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	M28829			kanamycin			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000079.1|	4244	5080		aph(6)-Id				100.0	100.0	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	M28829			kanamycin			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000059.1|	84	1244		blaACC-1				100.0	100.0	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	AM939420			ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000086.1|	85	1245		blaACC-1				100.0	100.0	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	AM939420			ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000084.1|	25	825		blaVIM-1				100.0	100.0	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	Y18050			ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, meropenem			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000053.1|	1912	1112		blaVIM-1				100.0	100.0	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	Y18050			ampicillin, amoxicillin/clavulanic acid, cefoxitin, ceftriaxone, meropenem			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000085.1|	43	702		catA1				100.0	99.85	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	V00622			chloramphenicol			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000041.1|	222	881		catA1				100.0	99.85	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	V00622			chloramphenicol			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000087.1|	66	1286		ere(A)				100.0	99.84	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	AY183453			erythromycin, azithromycin			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000055.1|	1685	465		ere(A)				100.0	99.84	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	AY183453			erythromycin, azithromycin			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000042.1|	1743	940		strA				100.0	100.0	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	M96392			streptomycin			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000079.1|	3441	4244		strA				100.0	100.0	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	M96392			streptomycin			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000060.1|	1397	715		sul1				81.31	100.0	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	AM040449			sulfisoxazole			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000083.1|	1	852		sul1				100.0	100.0	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	AY963803			sulfisoxazole			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000082.1|	452	1291		sul1				100.0	99.88	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	U12338			sulfisoxazole			staramr	0.7.1
+SAMEA6058467		tpg|DAAGAT010000081.1|	452	1291		sul1				100.0	100.0	resfinder	e8f1eb2585cd9610c4034a54ce7fc4f93aa95535	U12338			sulfisoxazole			staramr	0.7.1
