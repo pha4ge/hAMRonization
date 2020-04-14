@@ -1,3 +1,14 @@
+$namespaces:
+  obo: http://purl.obolibrary.org/obo/
+  edam_data: http://edamontology.org/data_
+  iao: http://purl.obolibrary.org/obo/IAO_
+  ncit: http://purl.obolibrary.org/obo/NCIT_
+  genepio: http://purl.obolibrary.org/obo/GENEPIO_
+  chebi: http://purl.obolibrary.org/obo/CHEBI_
+  aro: http://purl.obolibrary.org/obo/ARO_
+
+$graph:
+
 - name: AntimicrobialResistanceGenomicAnalysisResult
   documentRoot: true
   doc: |
@@ -7,46 +18,133 @@
   type: record
   fields:
     sample_id:
-      type: string
+      type: string?
+      doc: An identifier for the sample that is the subject of the analysis.
+      jsonldPredicate:
+        _id: edam_data:3273
+        _type: "@id"
     input_file_name:
       type: string
+      doc: The filename containing sequence data used as input for the analysis.
+      jsonldPredicate:
+        _id: edam_data:1050
+        _type: "@id"
     contig_id:
-      type: string
+      type: string?
+      doc: The identifier specifying a particular contig in a collection.
     start:
-      type: int
+      type: int?
+      doc: The identifier specifying a particular contig in a collection.
     stop:
-      type: int
+      type: int?
+      doc: The last nucleotide of the termination codon in the user submitted sequence.
     strand_orientation:
-      type: string
+      type: string?
+      doc: The orientation of a genomic element on the double stranded molecule.
+      jsonldPredicate:
+        _id: ncit:C48673
+        _type: "@id"
     gene_symbol:
       type: string
+      doc: |
+        The short name of a gene; a single word that does not contain white space characters.
+        It is typically derived from the gene name.
+      jsonldPredicate:
+        _id: edam_data:1026
+        _type: "@id"
     gene_name:
       type: string
-    coverage_positions:
-      type: string
+      doc: |
+        The name of a gene, (typically) assigned by a person and/or according to a naming scheme.
+        It may contain white space characters and is typically more intuitive and readable than a gene symbol.
+        It (typically) may be used to identify similar genes in different species and to derive a gene symbol.
+      jsonldPredicate:
+        _id: edam_data:2299
+        _type: "@id"
     coverage_depth:
       type: int?
-    coverage_percent:
+      doc: |
+        Coverage (read depth or depth) is the average number of reads representing
+        a given nucleotide in the reconstructed sequence, described as fold coverage.
+      jsonldPredicate:
+        _id: genepio:0000092
+        _type: "@id"
+    coverage_breadth:
       type: float
+      doc: |
+        The percentage of the positions in the reference molecular sequence that
+        can be aligned with the target molecular sequence.
     sequence_identity:
       type: float
+      doc: |
+        Sequence identity is the number (%) of matches (identical characters)
+        in positions from an alignment of two molecular sequences.
+      jsonldPredicate:
+        _id: edam_data:1412
+        _type: "@id"
     reference_database_id:
       type: string
+      doc: |
+        Identifier for the database containing references genomes for
+        genome annotation, gene identification, characterization etc.
+      jsonldPredicate:
+        _id: edam_data:1048
+        _type: "@id"
     reference_database_version:
       type: string
+      doc: Version of a particular reference database.
     reference_accession:
       type: string
+      doc: A persistent, unique identifier of a molecular sequence database entry.
+      jsonldPredicate:
+        _id: edam_data:2091
+        _type: "@id"
     reference_length:
-      type: int?
+      type: int
+      doc: The length (number of positions) of the molecular sequence retrieved from the reference database.
+      jsonldPredicate:
+        _id: edam_data:1249
+        _type: "@id"
     target_length:
-      type: int?
+      type: int
+      doc: The length (number of positions) of the molecular sequence being analyzed.
+      jsonldPredicate:
+        _id: edam_data:1249
+        _type: "@id"
     drug_class:
-      type: string
+      type: string?
+      doc: |
+        A set of medications and other compounds that have similar chemical structures,
+        the same mechanism of action (i.e., bind to the same biological target),
+        a related mode of action, and/or are used to treat the same disease.
     antimicrobial_agent:
       type: string?
+      doc: |
+        A substance that kills or slows the growth of microorganisms, including
+        bacteria, viruses, fungi and protozoans.
+      jsonldPredicate:
+        _id: chebi:33281
+        _type: "@id"
     resistance_mechanism:
       type: string?
+      doc: |
+        Cellular processes in a pathogen that result in antimicrobial drug resistance.
+      jsonldPredicate:
+        _id: aro:1000002
+        _type: "@id"
     analysis_software_name:
       type: string
+      doc: The name of a computer package, application, method or function.
+      jsonldPredicate:
+        _id: edam_data:1190
+        _type: "@id"
     analysis_software_version:
       type: string
+      doc: |
+        A version number is a unique number or set of numbers assigned to a specific
+        release of a software program, file, firmware, device driver, or even hardware.
+        Typically, as updates and entirely new editions of a program or driver are released,
+        the version number will increase.
+      jsonldPredicate:
+        _id: ncit:C111093
+        _type: "@id"
