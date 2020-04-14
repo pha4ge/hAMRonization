@@ -48,7 +48,7 @@ def parse_report(path_to_report):
     ]
     parsed_report = []
     with open(path_to_report) as report_file:
-        reader = csv.DictReader(report_file, fieldnames=abricate_report_fieldnames, delimiter='\t')
+        reader = csv.DictReader(report_file, fieldnames=report_fieldnames, delimiter='\t')
         next(reader) # skip header
         integer_fields = []
         float_fields = []
