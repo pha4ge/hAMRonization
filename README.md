@@ -48,6 +48,10 @@ FIELD_MAP_ABRICATE = {
 
 4. Write the parsed/harmonized data to `stdout`, in either `tsv` or `json` format (controlled by the `--format` flag.
 
+### Parser Template
+
+A [template](parsers/template_report_parser.py) is provided for quick development of new parsers. The template assumes that it is parsing a single tabular (tsv or csv) report file.
+
 ## Harmonized Data Structure
 
 ### Python `AntimicrobialResistanceGenomicAnalysisResult` class
@@ -60,11 +64,12 @@ The [`AntimicrobialResistanceGenomicAnalysisResult.__repr__()`](https://github.c
 
 ### Language-Agnostic Schema(s)
 
-We currently have three language-agnostic schemas to describe our data structure:
+We currently have four language-agnostic schemas to describe our data structure:
 
 1. [JSON Schema](schema/antimicrobial_resistance_genomic_analysis_result.schema.json) ([about](https://json-schema.org/))
 2. [JSON-LD Schema](schema/antimicrobial_resistance_genomic_analysis_result.schema.jsonld) ([about](https://json-ld.org/))
 3. [Avro Schema](schema/antimicrobial_resistance_genomic_analysis_result.schema.avro) ([about](https://avro.apache.org/docs/current/#schemas))
+4. [SALAD Schema](schema/antimicrobial_resistance_genomic_analysis_result.schema.yml) ([about](https://www.commonwl.org/v1.0/SchemaSalad.html))
 
 ## Test Data
 
