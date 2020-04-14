@@ -22,13 +22,11 @@ $graph:
       doc: An identifier for the sample that is the subject of the analysis.
       jsonldPredicate:
         _id: edam_data:3273
-        _type: "@id"
     input_file_name:
       type: string
       doc: The filename containing sequence data used as input for the analysis.
       jsonldPredicate:
         _id: edam_data:1050
-        _type: "@id"
     contig_id:
       type: string?
       doc: The identifier specifying a particular contig in a collection.
@@ -43,7 +41,6 @@ $graph:
       doc: The orientation of a genomic element on the double stranded molecule.
       jsonldPredicate:
         _id: ncit:C48673
-        _type: "@id"
     gene_symbol:
       type: string
       doc: |
@@ -51,7 +48,6 @@ $graph:
         It is typically derived from the gene name.
       jsonldPredicate:
         _id: edam_data:1026
-        _type: "@id"
     gene_name:
       type: string
       doc: |
@@ -60,7 +56,6 @@ $graph:
         It (typically) may be used to identify similar genes in different species and to derive a gene symbol.
       jsonldPredicate:
         _id: edam_data:2299
-        _type: "@id"
     coverage_depth:
       type: int?
       doc: |
@@ -68,7 +63,6 @@ $graph:
         a given nucleotide in the reconstructed sequence, described as fold coverage.
       jsonldPredicate:
         _id: genepio:0000092
-        _type: "@id"
     coverage_breadth:
       type: float
       doc: |
@@ -81,7 +75,6 @@ $graph:
         in positions from an alignment of two molecular sequences.
       jsonldPredicate:
         _id: edam_data:1412
-        _type: "@id"
     reference_database_id:
       type: string
       doc: |
@@ -89,7 +82,6 @@ $graph:
         genome annotation, gene identification, characterization etc.
       jsonldPredicate:
         _id: edam_data:1048
-        _type: "@id"
     reference_database_version:
       type: string
       doc: Version of a particular reference database.
@@ -98,19 +90,16 @@ $graph:
       doc: A persistent, unique identifier of a molecular sequence database entry.
       jsonldPredicate:
         _id: edam_data:2091
-        _type: "@id"
     reference_length:
       type: int
       doc: The length (number of positions) of the molecular sequence retrieved from the reference database.
       jsonldPredicate:
         _id: edam_data:1249
-        _type: "@id"
     target_length:
       type: int
       doc: The length (number of positions) of the molecular sequence being analyzed.
       jsonldPredicate:
         _id: edam_data:1249
-        _type: "@id"
     drug_class:
       type: string?
       doc: |
@@ -124,20 +113,17 @@ $graph:
         bacteria, viruses, fungi and protozoans.
       jsonldPredicate:
         _id: chebi:33281
-        _type: "@id"
     resistance_mechanism:
       type: string?
       doc: |
         Cellular processes in a pathogen that result in antimicrobial drug resistance.
       jsonldPredicate:
         _id: aro:1000002
-        _type: "@id"
     analysis_software_name:
       type: string
       doc: The name of a computer package, application, method or function.
       jsonldPredicate:
         _id: edam_data:1190
-        _type: "@id"
     analysis_software_version:
       type: string
       doc: |
@@ -147,4 +133,3 @@ $graph:
         the version number will increase.
       jsonldPredicate:
         _id: ncit:C111093
-        _type: "@id"
