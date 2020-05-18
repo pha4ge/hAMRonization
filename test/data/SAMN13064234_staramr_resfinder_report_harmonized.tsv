@@ -1,0 +1,19 @@
+sample_id	input_file_name	contig_id	start	stop	strand_orientation	gene_symbol	gene_name	coverage_positions	coverage_depth	coverage_percent	sequence_identity	reference_database_id	reference_database_version	reference_accession	reference_length	target_length	drug_class	antimicrobial_agent	resistance_mechanism	analysis_software_name	analysis_software_version
+	GCA_009239785.1_PDT000612108.1_genomic	gb|AAMHNX010000083.1|	1294	2097		aph(3'')-Ib					100.00			AF321551				streptomycin		staramr	
+	GCA_009239785.1_PDT000612108.1_genomic	gb|AAMHNX010000058.1|	4337	3534		aph(3'')-Ib					100.00			AF321551				streptomycin		staramr	
+	GCA_009239785.1_PDT000612108.1_genomic	gb|AAMHNX010000083.1|	2097	2933		aph(6)-Id					100.00			M28829				kanamycin		staramr	
+	GCA_009239785.1_PDT000612108.1_genomic	gb|AAMHNX010000058.1|	3534	2698		aph(6)-Id					100.00			M28829				kanamycin		staramr	
+	GCA_009239785.1_PDT000612108.1_genomic	gb|AAMHNX010000060.1|	1684	2559		blaCTX-M-15					100.00			DQ302097				ampicillin, ceftriaxone		staramr	
+	GCA_009239785.1_PDT000612108.1_genomic	gb|AAMHNX010000082.1|	1705	2580		blaCTX-M-15					100.00			DQ302097				ampicillin, ceftriaxone		staramr	
+	GCA_009239785.1_PDT000612108.1_genomic	gb|AAMHNX010000058.1|	1117	1977		blaTEM-1B					100.00			JF910132				ampicillin		staramr	
+	GCA_009239785.1_PDT000612108.1_genomic	gb|AAMHNX010000084.1|	1118	1978		blaTEM-1B					100.00			JF910132				ampicillin		staramr	
+	GCA_009239785.1_PDT000612108.1_genomic	gb|AAMHNX010000085.1|	222	881		catA1					99.85			V00622				chloramphenicol		staramr	
+	GCA_009239785.1_PDT000612108.1_genomic	gb|AAMHNX010000070.1|	223	882		catA1					99.85			V00622				chloramphenicol		staramr	
+	GCA_009239785.1_PDT000612108.1_genomic	gb|AAMHNX010000053.1|	2064	1591		dfrA7					100.00			JF806498				trimethoprim		staramr	
+	GCA_009239785.1_PDT000612108.1_genomic	gb|AAMHNX010000081.1|	3801	4274		dfrA7					100.00			JF806498				trimethoprim		staramr	
+	GCA_009239785.1_PDT000612108.1_genomic	gb|AAMHNX010000080.1|	1415	2071		qnrS1					100.00			AB187515				ciprofloxacin I/R		staramr	
+	GCA_009239785.1_PDT000612108.1_genomic	gb|AAMHNX010000048.1|	9555	8899		qnrS1					100.00			AB187515				ciprofloxacin I/R		staramr	
+	GCA_009239785.1_PDT000612108.1_genomic	gb|AAMHNX010000053.1|	1020	181		sul1					100.00			U12338				sulfisoxazole		staramr	
+	GCA_009239785.1_PDT000612108.1_genomic	gb|AAMHNX010000081.1|	4845	5684		sul1					100.00			U12338				sulfisoxazole		staramr	
+	GCA_009239785.1_PDT000612108.1_genomic	gb|AAMHNX010000083.1|	418	1233		sul2					100.00			AY034138				sulfisoxazole		staramr	
+	GCA_009239785.1_PDT000612108.1_genomic	gb|AAMHNX010000058.1|	5213	4398		sul2					100.00			AY034138				sulfisoxazole		staramr	
