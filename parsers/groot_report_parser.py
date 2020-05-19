@@ -8,7 +8,7 @@ import sys
 
 from AntimicrobialResistance.Result import AntimicrobialResistanceGenomicAnalysisResult
 
-FIELD_MAP = {
+GROOT_FIELD_MAP = {
     'gene_name': 'gene_name',
     'cigar_coverage': None,
     'gene_length': None,
@@ -60,7 +60,7 @@ def prepare_for_amr_class(parsed_report, additional_fields={}):
     for key, value in additional_fields.items():
         input_for_amr_class[key] = value
 
-    for field, amr_result_field in FIELD_MAP.items():
+    for field, amr_result_field in GROOT_FIELD_MAP.items():
         if amr_result_field:
             input_for_amr_class[str(amr_result_field)] = parsed_report[str(field)]
 

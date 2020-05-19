@@ -8,7 +8,7 @@ import sys
 
 from AntimicrobialResistance.Result import AntimicrobialResistanceGenomicAnalysisResult
 
-FIELD_MAP = {
+SRST2_FIELD_MAP = {
         'Sample': 'input_file_name',
         'DB': 'reference_database_id',
         'gene': 'gene_name',
@@ -41,7 +41,7 @@ def parse_report(path_to_report):
             ...
         ]
     """
-    report_fieldnames = FIELD_MAP.keys()
+    report_fieldnames = SRST2_FIELD_MAP.keys()
 
     parsed_report = []
     with open(path_to_report) as report_file:
@@ -66,7 +66,7 @@ def prepare_for_amr_class(parsed_report, additional_fields={}):
     for key, value in additional_fields.items():
         input_for_amr_class[key] = value
 
-    for field, amr_result_field in FIELD_MAP.items():
+    for field, amr_result_field in SRST2_FIELD_MAP.items():
         if amr_result_field:
             input_for_amr_class[str(amr_result_field)] = parsed_report[str(field)]
 
