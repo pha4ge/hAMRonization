@@ -23,6 +23,8 @@ Implemented Parsers:
 1. [abricate](parsers/abricate_report_parser.py)
 2. [NCBI AMRFinderPlus](parsers/ncbiamrfinderplus_report_parser.py)
 3. [RGI](parsers/rgi_report_parser.py)
+4. [srst2](parsers/srst2_report_parser.py)
+5. [groot](parsers/groot_report_parser.py)
 
 ### Basic Parsing Strategy
 
