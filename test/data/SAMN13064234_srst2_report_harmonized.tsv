@@ -1,0 +1,15 @@
+sample_id	input_file_name	contig_id	start	stop	strand_orientation	gene_symbol	gene_name	coverage_positions	coverage_depth	coverage_percent	sequence_identity	reference_database_id	reference_database_version	reference_accession	reference_length	target_length	drug_class	antimicrobial_agent	resistance_mechanism	analysis_software_name	analysis_software_version
+	SRR10313716					catA1	cat		75.852			ResFinder			660						
+	SRR10313716					dfrA32	dfrA		25.914			ResFinder			474						
+	SRR10313716					strA4	strA		74.021			ResFinder			804						
+	SRR10313716					aac(6')-Iy	aac(6')-I		39.246			ResFinder			438						
+	SRR10313716					dfrA17	dfrA		33.08			ResFinder			474						
+	SRR10313716					sul1_11	sul1		62.65			ResFinder			882						
+	SRR10313716					sul1_2	sul1		68.151			ResFinder			927						
+	SRR10313716					blaTEM-1_1	blaTEM		117.002			ResFinder			861						
+	SRR10313716					QnrS2	Qnr-S		79.482			ResFinder			657						
+	SRR10313716					sul2_2	sul2		76.613			ResFinder			816						
+	SRR10313716					QnrS1	Qnr-S		114.435			ResFinder			657						
+	SRR10313716					blaCTX-M-15_23	blaCTX-M		150.877			ResFinder			876						
+	SRR10313716					strB1	strB		99.549			ResFinder			837						
+	SRR10313716					dfrA7_2	dfrA		51.853			ResFinder			474						
