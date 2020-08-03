@@ -86,8 +86,13 @@ def parse_report(path_to_report):
                 row[key] = float(row[key])
             # the
             gene_string = row['gene']
-            row['gene_symbol'] = gene_string.split('|')[5]
-            row['gene_name'] = gene_string.split('|')[8].replace('_', ' ')
+            if row['database'] == 'ncbi':
+                row['gene_symbol'] = gene_string.split('|')[5]
+                row['gene_name'] = gene_string.split('|')[8].replace('_', ' ')
+            else:
+                row['gene_symbol'] = gene_string
+                row['gene_name'] = gene_string
+
             parsed_report.append(row)
         
     return parsed_report
