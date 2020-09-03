@@ -18,15 +18,30 @@ pip install -e .
 
 ## Parsers
 
-Implemented Parsers:
+Parsers needing updated:
+test/data/raw_outputs/ 
 
-1. [abricate](parsers/abricate_report_parser.py)
-2. [NCBI AMRFinderPlus](parsers/ncbiamrfinderplus_report_parser.py)
-3. [RGI](parsers/rgi_report_parser.py)
-4. [RGI BWT](parsers/rgibwt_report_parser.py)
-5. [srst2](parsers/srst2_report_parser.py)
-6. [groot](parsers/groot_report_parser.py)
-7. [resfinder](parsers/resfinder_report_parser.py)
+1. [abricate](parsers/deprecated/abricate_report_parser.py) - [test output](test/data/raw_outputs/abricate/report.tsv)
+2. [NCBI AMRFinderPlus](parsers/deprecated/ncbiamrfinderplus_report_parser.py) - [test_output](test/data/raw_outputs/amrfinder/report.tsv)
+3. [RGI](parsers/deprecated/rgi_report_parser.py) - [test_output](test/data/raw_outputs/rgi/rgi.json)
+4. [RGI BWT](parsers/deprecated/rgibwt_report_parser.py) - [test_output](test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt)
+5. [srst2](parsers/deprecated/srst2_report_parser.py) - [test_output](test/data/SAMN13064234_srst2_report.tsv)
+6. [groot](parsers/deprecated/groot_report_parser.py) - [test_output](test/data/raw_outputs/groot/report.tsv)
+7. [resfinder](parsers/deprecated/resfinder_report_parser.py) - [test_output](test/data/raw_outputs/resfinder/data_resfinder.json)
+8. [ariba](parsers/deprecated/ariba_report_parser.py) - [test_output](test/data/raw_outputs/ariba/report.tsv)
+
+Parsers needing implemented:
+
+1. [staramr](test/data/raw_outputs/staramr/resfinder.tsv)
+2. [mykrobe](test/data/raw_outputs/mykrobe/report.json)
+3. [resfams](test/data/raw_outputs/resfams/resfams.tblout)
+5. [srax](test/data/raw_outputs/srax/sraX_detected_ARGs.tsv)
+6. [deeparg](test/data/raw_outputs/deeparg/output.mapping.ARG)
+7. [pointfinder](test/data/raw_outputs/pointfinder/report.tsv)
+8. [sstar](test/data/raw_outputs/sstar/report.tsv)
+9. [amrplusplus](test/data/raw_outputs/amrplusplus/gene.tsv)
+10. [kmerresistance](test/data/raw_outputs/kmerresistance/results.res)
+
 
 ### Basic Parsing Strategy
 
