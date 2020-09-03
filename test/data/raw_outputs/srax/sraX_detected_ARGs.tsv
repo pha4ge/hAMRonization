@@ -1,0 +1,4 @@
+Locus ID	# Sequences	ARG	Coverage (%)	Identity (%)	Drug class	Gene accession ID	Gene description	AMR detection model
+1	1	Mycobacteroides_chelonae_16S_rRNA_mutation_conferring_resistance_to_gentamicin_C	68.91	87.948	Mutations on rRNA gene (16S)	NR_114659.1	Point mutations in the 16S rRNA of Mycobacteroides chelonae can confer resistance to gentamicin C	rRNA gene variant
+2	81	Salmonella_enterica_16S_rRNA_(rrsD)_mutation_conferring_resistance_to_spectinomycin	69.17	98.596	Mutations on rRNA gene (16S)	AE006468	Point mutations in the helix 34 region of the rrsD 16S rRNA gene of Salmonella enterica serovar Typhimurium can confer resistance to spectinomycin	rRNA gene variant
+3	73	Escherichia_coli_23S_rRNA_with_mutation_conferring_resistance_to_clarithromycin	93.29	96.872	Mutations on rRNA gene (23S)	AE014075.1	Point mutation in the 23S rRNA of Escherichia coli shown clinically to confer resistance to clarithromycin a macrolide antibiotic	rRNA gene variant
