@@ -1,6 +1,4 @@
-# Harmonized AMR Parsers
-
-![Python package](https://github.com/dfornika/harmonized-amr-parsers/workflows/Python%20package/badge.svg)
+# hAMRonised AMR Parsers
 
 This repo is intended as a place to prototype and experiment with a set of parsers for reports/outputs from several
 antimicrobial resistance tools.
@@ -10,8 +8,8 @@ In addition to the parsers, a data structure for storing antimicrobial resistanc
 ## Setting up a Development Environment
 
 ```
-conda create -n harmonized-amr-parsers-dev python=3 biopython
-conda activate harmonized-amr-parsers-dev
+conda create -n hamronised-amr-parsers-dev "python>=3.6" biopython
+conda activate hamronised-amr-parsers-dev
 cd antimicrobial_resistance_result
 pip install -e .
 ```
@@ -19,7 +17,6 @@ pip install -e .
 ## Parsers
 
 Parsers needing updated:
-test/data/raw_outputs/ 
 
 1. [abricate](parsers/deprecated/abricate_report_parser.py) - [test output](test/data/raw_outputs/abricate/report.tsv)
 2. [NCBI AMRFinderPlus](parsers/deprecated/ncbiamrfinderplus_report_parser.py) - [test_output](test/data/raw_outputs/amrfinder/report.tsv)
@@ -41,6 +38,15 @@ Parsers needing implemented:
 8. [sstar](test/data/raw_outputs/sstar/report.tsv)
 9. [amrplusplus](test/data/raw_outputs/amrplusplus/gene.tsv)
 10. [kmerresistance](test/data/raw_outputs/kmerresistance/results.res)
+
+### Issues
+
+- gene symbol and gene name being mandatory: most tools only have one field corresponding to this.  In these cases should we map both to this.
+
+- software version, database version are typically not in output, make these mandatory arguments for parsers of tools without these?
+Software name is known even when not provided because. This has been implemented in parser.
+
+- identity is sequence type specific %id amino acids != %id nucleotide
 
 
 ### Basic Parsing Strategy

@@ -8,13 +8,19 @@ import sys
 
 from AntimicrobialResistance.Result import AntimicrobialResistanceGenomicAnalysisResult
 
+# ADD NAME OF TOOL e.g. ABRicate, RGI etc.
+ANALYSIS_TOOL = "ABRicate"
+
+# ADD APPROPRIATE TOOL OUTPUT FIELDS THAT MAP TO SCHEME FIELDS BELOW
+# COMMENT OUT FIELDS NOT IMPLEMENTED IN TOOL
+# ADD FIELDS IN TOOL BUT NOT IN SCHEME WITH None AS THE VALUE
 FIELD_MAP = {
     '': 'input_file_name',
     '': 'contig_id',
     '': 'query_start_aa',
     '': 'query_stop_aa',
     '': 'query_start_nt',
-    '': 'query_stop_nt', 
+    '': 'query_stop_nt',
     '': 'subject_start_aa',
     '': 'subject_stop_aa',
     '': 'subject_start_nt',
@@ -40,11 +46,23 @@ FIELD_MAP = {
     '': 'analysis_software_version'
 }
 
+MANDATORY_FIELDS = {'input_file_name',
+                    'gene_symbol',
+                    'gene_name',
+                    'sequence_identity',
+                    'reference_database_id',
+                    'reference_database_version',
+                    'reference_accession',
+                    #'analysis_software_name',
+                    #excluded as added manually above in ANALYSIS TOOL
+                    'analysis_software_version'}
+
+
 def parse_report(path_to_report):
     """
     Args:
         path_to_report (str): Path to the report file.
-    
+
     Returns:
         list of dict: Parsed report.
         For example:
@@ -56,9 +74,8 @@ def parse_report(path_to_report):
             ...
         ]
     """
-    report_fieldnames = [
-        
-    ]
+    report_fieldnames = FIELD_MAP.keys()
+
     parsed_report = []
     with open(path_to_report) as report_file:
         reader = csv.DictReader(report_file, fieldnames=report_fieldnames, delimiter='\t')
@@ -70,15 +87,15 @@ def parse_report(path_to_report):
                 row[key] = int(row[key])
             for key in float_fields:
                 row[key] = float(row[key])
-            
+
             parsed_report.append(row)
-        
+
     return parsed_report
 
 
 def prepare_for_amr_class(parsed_report, additional_fields={}):
     input_for_amr_class = {}
-    
+
     for key, value in additional_fields.items():
         input_for_amr_class[key] = value
 
@@ -93,7 +110,9 @@ def main(args):
     parsed_report = parse_report(args.report)
 
     additional_fields = {}
-    additional_fields['analysis_software_name'] = ""
+    additional_fields['analysis_software_name'] = ANALYSIS_TOOL
+
+
     if args.sample_id:
         additional_fields['sample_id'] = args.sample_id
     if args.analysis_software_version:
@@ -120,11 +139,17 @@ def main(args):
         exit(1)
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument("report", help="Input abricate report")
+    parser = argparse.ArgumentParser(description=f"hAMRonisation parser for {ANALYSIS_TOOL} output")
+    parser.add_argument("report", help="Path to tool report")
     parser.add_argument("--format", default="tsv", help="Output format (tsv or json)")
-    parser.add_argument("--sample_id", help="An identifier for the sample that is the subject of the analysis.")
-    parser.add_argument("--analysis_software_version", help="Version of Abricate used to generate the report")
-    parser.add_argument("--reference_database_version", help="Database version used to generate the report")
+
+    # any missing mandatory fields need supplied as CLI argument
+    missing_mandatory_fields = MANDATORY_FIELDS - set(FIELD_MAP.values())
+    for missing_field in missing_mandatory_fields:
+        parser.add_argument(f"--{missing_field}", required=True,
+                            help="Input string containing the "
+                                f"{missing_field.replace('_', ' ')} "
+                                f"for {ANALYSIS_TOOL}")
+
     args = parser.parse_args()
     main(args)
