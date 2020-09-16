@@ -16,16 +16,19 @@ pip install -e .
 
 ## Parsers
 
-Parsers needing updated:
+Parser needing tested:
 
 1. [abricate](parsers/deprecated/abricate_report_parser.py) - [test output](test/data/raw_outputs/abricate/report.tsv)
-2. [NCBI AMRFinderPlus](parsers/deprecated/ncbiamrfinderplus_report_parser.py) - [test_output](test/data/raw_outputs/amrfinder/report.tsv)
+2. [ariba](parsers/deprecated/ariba_report_parser.py) - [test_output](test/data/raw_outputs/ariba/report.tsv)
+3. [NCBI AMRFinderPlus](parsers/deprecated/ncbiamrfinderplus_report_parser.py) - [test_nt_output](test/data/raw_outputs/amrfinder/report_nucleotide.tsv), [test_aa_output](test/data/raw_outputs/amrfinder/report_protein.tsv)
+
+Parsers needing updated:
+
 3. [RGI](parsers/deprecated/rgi_report_parser.py) - [test_output](test/data/raw_outputs/rgi/rgi.json)
 4. [RGI BWT](parsers/deprecated/rgibwt_report_parser.py) - [test_output](test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt)
 5. [srst2](parsers/deprecated/srst2_report_parser.py) - [test_output](test/data/SAMN13064234_srst2_report.tsv)
 6. [groot](parsers/deprecated/groot_report_parser.py) - [test_output](test/data/raw_outputs/groot/report.tsv)
 7. [resfinder](parsers/deprecated/resfinder_report_parser.py) - [test_output](test/data/raw_outputs/resfinder/data_resfinder.json)
-8. [ariba](parsers/deprecated/ariba_report_parser.py) - [test_output](test/data/raw_outputs/ariba/report.tsv)
 
 Parsers needing implemented:
 
@@ -46,7 +49,14 @@ Parsers needing implemented:
 - software version, database version are typically not in output, make these mandatory arguments for parsers of tools without these?
 Software name is known even when not provided because. This has been implemented in parser.
 
-- identity is sequence type specific %id amino acids != %id nucleotide
+- identity is sequence type specific %id amino acids != %id nucleotide but does this matter?
+
+- ariba and mykrobe (among others) really need variant specification to parse most of their output usefully.
+
+- resfinder needs a json parser more code than the default mapping
+
+- amrfinderplus: can we confidently say will always use NCBI reference gene catalogue?
+
 
 
 ### Basic Parsing Strategy
