@@ -112,7 +112,7 @@ def main(args):
     additional_fields = {}
     additional_fields['analysis_software_name'] = ANALYSIS_TOOL
 
-    # add data from mandatory fields
+    # add data from mandatory fields not in specification (gathered from CLI)
     for arg_key, arg_value in args._get_kwargs():
         # skip the standard input/output fields
         if arg_key not in ['report', 'format']:
