@@ -23,6 +23,8 @@ Parser needing tested (both automated and just sanity checking output):
 3. [NCBI AMRFinderPlus](parsers/amrfinderplus_report_parser.py) - [test_nt_output](test/data/raw_outputs/amrfinder/report_nucleotide.tsv), [test_aa_output](test/data/raw_outputs/amrfinder/report_protein.tsv) e.g. `python amrfinderplus_report_parser.py --input_file_name "a" --analysis_software_version 3.0 --reference_database_version 3.0 ../test/data/raw_outputs/amrfinder/report_nucleotide.tsv` or `python amrfinderplus_report_parser.py --input_file_name "a" --analysis_software_version 3.0 --reference_database_version 3.0 ../test/data/raw_outputs/amrfinder/report_protein.tsv`
 4. [RGI](parsers/rgi_report_parser.py) (includes RGI-BWT) [test_rgi_output](test/data/raw_outputs/rgi/rgi.txt) `python rgi_report_parser.py --input_file_name foo --analysis_software_version 5.1.2 --reference_database_version 3.5.2 ../test/data/raw_outputs/rgi/rgi.txt` or for RGI-BWT mode (automatically detected by parser) [test_rgi_bwt_output](test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt) `python rgi_report_parser.py --input_file_name foo --analysis_software_version 5.1.2 --reference_database_version 3.5.2 ../test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt`
 5. [resfinder](parsers/resfinder_report_parser.py) [test_resfinder_output](test/data/raw_outputs/resfinder/data_resfinder.json) `python resfinder_report_parser.py --analysis_software_version 3 --reference_database_version 45 ../test/data/raw_outputs/resfinder/data_resfinder.json`
+6. [sraX](parsers/srax_report_parser.py) [test_srax_output](test/data/raw_outputs/srax/sraX_detected_ARGs.tsv) `python srax_report_parser.py ../test/data/raw_outputs/srax/sraX_detected_ARGs.tsv --reference_database_id default --input_file_name a.fas --reference_database_version 3.1.0 --analysis_software_version 1.0.1`
+7. [deepARG](parsers/deeparg_report_parser.py) [test_deeparg_output](test/data/raw_outputs/deeparg/output.mapping.ARG) `python deeparg_report_parser.py --input_file_name foo.fasta --analysis_software_version 1.0.0 --reference_database_version 9.9.9 ../test/data/raw_outputs/deeparg/output.mapping.ARG`
 
 Parsers with mandatory field issues needing addressed:
 1. [srst2](parsers/srst2_report_parser.py) (see issue below with mandatory sequence identity field) [test_srst2_output](test/data/raw_outputs/srst2/SAMN13064234_srst2_report.tsv) `python srst2_report_parser.py ../test/data/SAMN13064234_srst2_report.tsv --sequence_identity 5 --analysis_software_version 2 --reference_database_version 5`
@@ -33,14 +35,14 @@ Parsers needing implemented:
 
 2. [mykrobe](test/data/raw_outputs/mykrobe/report.json)
 3. [resfams](test/data/raw_outputs/resfams/resfams.tblout)
-5. [srax](test/data/raw_outputs/srax/sraX_detected_ARGs.tsv)
-6. [deeparg](test/data/raw_outputs/deeparg/output.mapping.ARG)
 7. [pointfinder](test/data/raw_outputs/pointfinder/report.tsv)
 8. [sstar](test/data/raw_outputs/sstar/report.tsv)
 9. [amrplusplus](test/data/raw_outputs/amrplusplus/gene.tsv)
 10. [kmerresistance](test/data/raw_outputs/kmerresistance/results.res)
 
 ### Issues
+
+- integer/float fields not implemented by me
 
 - gene symbol and gene name being mandatory: most tools only have one field corresponding to this.  In these cases should we map both to this.
 
@@ -59,11 +61,13 @@ Software name is known even when not provided because. This has been implemented
 
 - 'nomenclature' : "Target gene" seems at odds with "subject/query", would be more consistent as "query gene length"
 
-- gene name vs gene symbol is confusing and an issue with tools that only have one gene field, 1:2 mapping allowed? if so template needs edited to allow it.
+- gene name vs gene symbol is confusing and an issue with tools that only have one gene field, 1:2 mapping allowed? if so template needs edited to allow it. Also kinda poorly defined for srax (using "annotation" as gene name)
 
 - Code related: lot of repeated boilerplate code in different parsers that really should be modularised, use of globals also makes me itchy.
 
 - mapping to coverage depth includs average depth AND plain read counts (based on previous parsers: not the same and needs discussed)
+
+- `contig_id` should probably be `sequence_id` or similar to enable putting readnames in there for tools like deeparg
 
 ### Basic Parsing Strategy
 
