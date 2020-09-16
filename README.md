@@ -27,11 +27,10 @@ Parser needing tested (both automated and just sanity checking output):
 Parsers with mandatory field issues needing addressed:
 1. [srst2](parsers/srst2_report_parser.py) (see issue below with mandatory sequence identity field) [test_srst2_output](test/data/raw_outputs/srst2/SAMN13064234_srst2_report.tsv) `python srst2_report_parser.py ../test/data/SAMN13064234_srst2_report.tsv --sequence_identity 5 --analysis_software_version 2 --reference_database_version 5`
 2. [groot](parsers/groot_report_parser.py) so many mandatory fields not even worth providing a run command
-
+3. [staramr](parsers/staramr_report_parser.py) (only one gene field so mapping to gene symbol and gene name as mandatory is a problem. [test_staramr_output](test/data/raw_outputs/staramr/resfinder.tsv) `python staramr_report_parser.py --analysis_software_version 3 --gene_name NA  --reference_database_version 2 ../test/data/raw_outputs/staramr/resfinder.tsv`
 
 Parsers needing implemented:
 
-1. [staramr](test/data/raw_outputs/staramr/resfinder.tsv)
 2. [mykrobe](test/data/raw_outputs/mykrobe/report.json)
 3. [resfams](test/data/raw_outputs/resfams/resfams.tblout)
 5. [srax](test/data/raw_outputs/srax/sraX_detected_ARGs.tsv)
@@ -60,7 +59,7 @@ Software name is known even when not provided because. This has been implemented
 
 - 'nomenclature' : "Target gene" seems at odds with "subject/query", would be more consistent as "query gene length"
 
-- gene name vs gene symbol is confusing
+- gene name vs gene symbol is confusing and an issue with tools that only have one gene field, 1:2 mapping allowed? if so template needs edited to allow it.
 
 - Code related: lot of repeated boilerplate code in different parsers that really should be modularised, use of globals also makes me itchy.
 
