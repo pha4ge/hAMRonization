@@ -26,7 +26,7 @@ Parser needing tested (both automated and just sanity checking output):
 
 Parsers with mandatory field issues needing addressed:
 1. [srst2](parsers/srst2_report_parser.py) (see issue below with mandatory sequence identity field) [test_srst2_output](test/data/raw_outputs/srst2/SAMN13064234_srst2_report.tsv) `python srst2_report_parser.py ../test/data/SAMN13064234_srst2_report.tsv --sequence_identity 5 --analysis_software_version 2 --reference_database_version 5`
-2. [groot](parsers/groot_report_parser.py) 
+2. [groot](parsers/groot_report_parser.py) so many mandatory fields not even worth providing a run command
 
 
 Parsers needing implemented:
