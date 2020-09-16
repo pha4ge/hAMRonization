@@ -21,11 +21,10 @@ Parser needing tested:
 1. [abricate](parsers/deprecated/abricate_report_parser.py) - [test output](test/data/raw_outputs/abricate/report.tsv) e.g. `python abricate_report_parser.py ../test/data/raw_outputs/abricate/report.tsv --reference_database_version NCBI --analysis_software_version 0`
 2. [ariba](parsers/deprecated/ariba_report_parser.py) - [test_output](test/data/raw_outputs/ariba/report.tsv) e.g. `python ariba_report_parser.py ../test/data/raw_outputs/ariba/report.tsv --reference_database_version 1 --reference_database_id foo --input_file_name sample_x --analysis_software_version 1`  
 3. [NCBI AMRFinderPlus](parsers/deprecated/ncbiamrfinderplus_report_parser.py) - [test_nt_output](test/data/raw_outputs/amrfinder/report_nucleotide.tsv), [test_aa_output](test/data/raw_outputs/amrfinder/report_protein.tsv) e.g. `python amrfinderplus_report_parser.py --input_file_name "a" --analysis_software_version 3.0 --reference_database_version 3.0 ../test/data/raw_outputs/amrfinder/report_nucleotide.tsv` or `python amrfinderplus_report_parser.py --input_file_name "a" --analysis_software_version 3.0 --reference_database_version 3.0 ../test/data/raw_outputs/amrfinder/report_protein.tsv`
+4. [RGI](parsers/rgi_report_parser.py) (includes RGI-BWT) [test_rgi_output](test/data/raw_outputs/rgi/rgi.txt) `python rgi_report_parser.py --input_file_name foo --analysis_software_version 5.1.2 --reference_database_version 3.5.2 ../test/data/raw_outputs/rgi/rgi.txt` or for RGI-BWT mode (automatically detected by parser) [test_rgi_bwt_output](test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt) `python rgi_report_parser.py --input_file_name foo --analysis_software_version 5.1.2 --reference_database_version 3.5.2 ../test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt`
 
 Parsers needing updated:
 
-3. [RGI](parsers/deprecated/rgi_report_parser.py) - [test_output](test/data/raw_outputs/rgi/rgi.json)
-4. [RGI BWT](parsers/deprecated/rgibwt_report_parser.py) - [test_output](test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt)
 5. [srst2](parsers/deprecated/srst2_report_parser.py) - [test_output](test/data/SAMN13064234_srst2_report.tsv)
 6. [groot](parsers/deprecated/groot_report_parser.py) - [test_output](test/data/raw_outputs/groot/report.tsv)
 7. [resfinder](parsers/deprecated/resfinder_report_parser.py) - [test_output](test/data/raw_outputs/resfinder/data_resfinder.json)
@@ -55,7 +54,13 @@ Software name is known even when not provided because. This has been implemented
 
 - resfinder needs a json parser more code than the default mapping
 
-- amrfinderplus: can we confidently say will always use NCBI reference gene catalogue?
+- amrfinderplus: can we confidently say will always use NCBI reference gene catalogue? Its currently fixed to "NCBI Reference Gene Catalogue"
+
+- 'nomenclature' : "Target gene" seems at odds with "subject/query", would be more consistent as "query gene length"
+
+- gene name vs gene symbol is confusing
+
+- Code related: lot of repeated boilerplate code in different parsers that really should be modularised, use of globals also makes me itchy.
 
 
 
