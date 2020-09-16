@@ -30,13 +30,13 @@ Parsers with mandatory field issues needing addressed:
 1. [srst2](parsers/srst2_report_parser.py) (see issue below with mandatory sequence identity field) [test_srst2_output](test/data/raw_outputs/srst2/SAMN13064234_srst2_report.tsv) `python srst2_report_parser.py ../test/data/SAMN13064234_srst2_report.tsv --sequence_identity 5 --analysis_software_version 2 --reference_database_version 5`
 2. [groot](parsers/groot_report_parser.py) so many mandatory fields not even worth providing a run command
 3. [staramr](parsers/staramr_report_parser.py) (only one gene field so mapping to gene symbol and gene name as mandatory is a problem. [test_staramr_output](test/data/raw_outputs/staramr/resfinder.tsv) `python staramr_report_parser.py --analysis_software_version 3 --gene_name NA  --reference_database_version 2 ../test/data/raw_outputs/staramr/resfinder.tsv`
+4. [c-sstar](parsers/csstar_report_parser.py) (no reference accession issue) [test_csstar_output](test/data/raw_outputs/sstar/report.tsv) `python csstar_report_parser.py --reference_accession 'NA' --reference_database_version 3.0.0 --analysis_software_version 1.0.0 --reference_database_id resgannot --input_file_name foo.fas ../test/data/raw_outputs/sstar/report.tsv`
 
 Parsers needing implemented:
 
 2. [mykrobe](test/data/raw_outputs/mykrobe/report.json)
 3. [resfams](test/data/raw_outputs/resfams/resfams.tblout)
 7. [pointfinder](test/data/raw_outputs/pointfinder/report.tsv)
-8. [sstar](test/data/raw_outputs/sstar/report.tsv)
 9. [amrplusplus](test/data/raw_outputs/amrplusplus/gene.tsv)
 10. [kmerresistance](test/data/raw_outputs/kmerresistance/results.res)
 
