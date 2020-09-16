@@ -135,13 +135,11 @@ def main(args):
     additional_fields = {}
     additional_fields['analysis_software_name'] = ANALYSIS_TOOL
 
-
-    if args.sample_id:
-        additional_fields['sample_id'] = args.sample_id
-    if args.analysis_software_version:
-        additional_fields['analysis_software_version'] = args.analysis_software_version
-    if args.reference_database_version:
-        additional_fields['reference_database_version'] = args.reference_database_version
+    # add data from mandatory fields not in tool output (gathered from CLI)
+    for arg_key, arg_value in args._get_kwargs():
+        # skip the standard input/output fields
+        if arg_key not in ['report', 'format']:
+            additional_fields[arg_key] = arg_value
 
     amr_results = []
     for result in parsed_report:

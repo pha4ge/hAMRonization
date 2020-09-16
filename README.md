@@ -18,9 +18,9 @@ pip install -e .
 
 Parser needing tested:
 
-1. [abricate](parsers/deprecated/abricate_report_parser.py) - [test output](test/data/raw_outputs/abricate/report.tsv)
-2. [ariba](parsers/deprecated/ariba_report_parser.py) - [test_output](test/data/raw_outputs/ariba/report.tsv)
-3. [NCBI AMRFinderPlus](parsers/deprecated/ncbiamrfinderplus_report_parser.py) - [test_nt_output](test/data/raw_outputs/amrfinder/report_nucleotide.tsv), [test_aa_output](test/data/raw_outputs/amrfinder/report_protein.tsv)
+1. [abricate](parsers/deprecated/abricate_report_parser.py) - [test output](test/data/raw_outputs/abricate/report.tsv) e.g. `python abricate_report_parser.py ../test/data/raw_outputs/abricate/report.tsv --reference_database_version NCBI --analysis_software_version 0`
+2. [ariba](parsers/deprecated/ariba_report_parser.py) - [test_output](test/data/raw_outputs/ariba/report.tsv) e.g. `python ariba_report_parser.py ../test/data/raw_outputs/ariba/report.tsv --reference_database_version 1 --reference_database_id foo --input_file_name sample_x --analysis_software_version 1`  
+3. [NCBI AMRFinderPlus](parsers/deprecated/ncbiamrfinderplus_report_parser.py) - [test_nt_output](test/data/raw_outputs/amrfinder/report_nucleotide.tsv), [test_aa_output](test/data/raw_outputs/amrfinder/report_protein.tsv) e.g. `python amrfinderplus_report_parser.py --input_file_name "a" --analysis_software_version 3.0 --reference_database_version 3.0 ../test/data/raw_outputs/amrfinder/report_nucleotide.tsv` or `python amrfinderplus_report_parser.py --input_file_name "a" --analysis_software_version 3.0 --reference_database_version 3.0 ../test/data/raw_outputs/amrfinder/report_protein.tsv`
 
 Parsers needing updated:
 
