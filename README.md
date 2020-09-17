@@ -28,6 +28,7 @@ Parser needing tested (both automated and just sanity checking output):
 8. [kmerresistance](parsers/kmerresistance_report_parser.py) [test_kmerresistance_output](test/data/raw_outputs/kmerresistance/results.res) `python kmerresistance_report_parser.py ../test/data/raw_outputs/kmerresistance/results.res  --analysis_software_version 3.0.0 --reference_database_version 0.1.0 --input_file_name foo.fas`
 
 Parsers with mandatory field issues needing addressed:
+
 1. [srst2](parsers/srst2_report_parser.py) (see issue below with mandatory sequence identity field) [test_srst2_output](test/data/raw_outputs/srst2/SAMN13064234_srst2_report.tsv) `python srst2_report_parser.py ../test/data/SAMN13064234_srst2_report.tsv --sequence_identity 5 --analysis_software_version 2 --reference_database_version 5`
 2. [groot](parsers/groot_report_parser.py) so many mandatory fields not even worth providing a run command
 3. [staramr](parsers/staramr_report_parser.py) (only one gene field so mapping to gene symbol and gene name as mandatory is a problem. [test_staramr_output](test/data/raw_outputs/staramr/resfinder.tsv) `python staramr_report_parser.py --analysis_software_version 3 --gene_name NA  --reference_database_version 2 ../test/data/raw_outputs/staramr/resfinder.tsv`
@@ -36,8 +37,8 @@ Parsers with mandatory field issues needing addressed:
 6. [resfams](parsers/resfams_report_parser.py) (no sequence identity) [test_resfams_output](test/data/raw_outputs/resfams/resfams.tblout) `python resfams_report_parser.py --input_file_name "a.fas" --sequence_identity 0 --reference_database_version db5 --analysis_software_version soft8 ../test/data/raw_outputs/resfams/resfams.tblout`
 
 Parsers excluded as needing variant specification to implement:
-2. [mykrobe](test/data/raw_outputs/mykrobe/report.json)
-7. [pointfinder](test/data/raw_outputs/pointfinder/report.tsv)
+1. [mykrobe](test/data/raw_outputs/mykrobe/report.json)
+2. [pointfinder](test/data/raw_outputs/pointfinder/report.tsv)
 
 ### Issues
 
