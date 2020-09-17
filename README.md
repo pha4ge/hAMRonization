@@ -32,46 +32,48 @@ Parsers with mandatory field issues needing addressed:
 2. [groot](parsers/groot_report_parser.py) so many mandatory fields not even worth providing a run command
 3. [staramr](parsers/staramr_report_parser.py) (only one gene field so mapping to gene symbol and gene name as mandatory is a problem. [test_staramr_output](test/data/raw_outputs/staramr/resfinder.tsv) `python staramr_report_parser.py --analysis_software_version 3 --gene_name NA  --reference_database_version 2 ../test/data/raw_outputs/staramr/resfinder.tsv`
 4. [c-sstar](parsers/csstar_report_parser.py) (no reference accession issue) [test_csstar_output](test/data/raw_outputs/sstar/report.tsv) `python csstar_report_parser.py --reference_accession 'NA' --reference_database_version 3.0.0 --analysis_software_version 1.0.0 --reference_database_id resgannot --input_file_name foo.fas ../test/data/raw_outputs/sstar/report.tsv`
+5. [amrplusplus](parsers/amrplusplus_report_parser.py) (no sequence identity) [test_amrplusplus_output](test/data/raw_outputs/amrplusplus/gene.tsv) `python amrplusplus_report_parser.py --sequence_identity 90 --analysis_software_version 2.0.0 --reference_database_version 1.0.0 ../test/data/raw_outputs/amrplusplus/gene.tsv`
+6. [resfams](parsers/resfams_report_parser.py) (no sequence identity) [test_resfams_output](test/data/raw_outputs/resfams/resfams.tblout) `python resfams_report_parser.py --input_file_name "a.fas" --sequence_identity 0 --reference_database_version db5 --analysis_software_version soft8 ../test/data/raw_outputs/resfams/resfams.tblout`
 
-Parsers needing implemented:
-
+Parsers excluded as needing variant specification to implement:
 2. [mykrobe](test/data/raw_outputs/mykrobe/report.json)
-3. [resfams](test/data/raw_outputs/resfams/resfams.tblout)
 7. [pointfinder](test/data/raw_outputs/pointfinder/report.tsv)
-9. [amrplusplus](test/data/raw_outputs/amrplusplus/gene.tsv)
 
 ### Issues
 
-- integer/float fields not implemented by me
+#### Coding
 
-- gene symbol and gene name being mandatory: most tools only have one field corresponding to this.  In these cases should we map both to this.
+- sanity checks need done
 
-- similarly: `sequence_identity` isn't in srst2 or groot output so difficult for mandatory *needs resolved*
+- automated tests need added
 
-- sequence identity is an issue for kmer-resistance as there is both query AND reference identity reported
+- integer/float cleaning of fields not implemented yet
 
-- software version, database version are typically not in output, make these mandatory arguments for parsers of tools without these?
-Software name is known even when not provided because. This has been implemented in parser.
+- use of global variables makes me uncomfortable and should probably be refactored
 
-- identity is sequence type specific %id amino acids != %id nucleotide but does this matter?
+- code duplication between parsers should be modularised away
 
-- ariba and mykrobe (among others) really need variant specification to parse most of their output usefully.
+- parsers need to be easier to use within a python script
 
-- resfinder needs a json parser more code than the default mapping
+- output to file options (with appending) should be added
 
-- amrfinderplus: can we confidently say will always use NCBI reference gene catalogue? Its currently fixed to "NCBI Reference Gene Catalogue"
+#### Specification
 
-- 'nomenclature' : "Target gene" seems at odds with "subject/query", would be more consistent as "query gene length"
+- mandatory fields: `sequence_identity` not implemented in amrplusplus, srst2, groot, (and for kmerresistance there are sequence identities for query and subject)
 
-- gene name vs gene symbol is confusing and an issue with tools that only have one gene field, 1:2 mapping allowed? if so template needs edited to allow it. Also kinda poorly defined for srax (using "annotation" as gene name)
+- mandatory fields: `gene_symbol` and `gene_name` are confusing and not usually both present (only consistently used in AFP). Means tools either need 1:2 mapping i.e. single output field maps to both `gene_symbol` and `gene_name` OR have fragile text splitting of single field that won't be robust to databases changes.
 
-- Code related: lot of repeated boilerplate code in different parsers that really should be modularised, use of globals also makes me itchy.
+- mandatory fields: `software_version` and `database_version` are never included but as mandatory the user must supply these on the CLI, is this reasonable?
 
-- mapping to coverage depth includs average depth AND plain read counts (based on previous parsers: not the same and needs discussed)
+- inconsistent nomenclature of terms being used in specification fields: target, query, subject, reference. Need to stick to one name for sequence with which the database is being searched, and one the hit that results from that search.
 
-- `contig_id` should probably be `sequence_id` or similar to enable putting readnames in there for tools like deeparg
+- variant specification needed to fully exploit ariba (or make mykrobe and pointfinder worth implementing): *discard these tools for now*
 
-- kmer
+- `sequence_identity`: is sequence type specific %id amino acids != %id nucleotide but does this matter?
+
+- `coverage_depth` seems to include both tool fields that are average depth of read and just plain overall read-count, 
+
+- `contig_id` isn't general enough when some tools this ID naturally corresponds to a `read_name` (deepARG), individual ORF (resfams), or protein sequence (AFP with protein input): *change to `query_id_name` or similar?*
 
 ### Basic Parsing Strategy
 
