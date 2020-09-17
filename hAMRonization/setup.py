@@ -5,13 +5,13 @@ with open('README.md') as fh:
     long_description = fh.read()
 
 setup(
-    name='antimicrobial_resistance_result',
+    name='hAMRonization',
     version='v0.1.0',
-    author=['Dan Fornika'], 
+    author=['Dan Fornika', 'Finlay Maguire'],
     author_email='dfornika@gmail.com',
     description='',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/dfornika/antimicrobial_resistance_result",
-    packages=['AntimicrobialResistance'],
+    url="https://github.com/pha4ge/hAMRonization ",
+    packages=['hAMRonization'],
 )

@@ -1,4 +1,7 @@
-"""AntimicrobialResistanceResult class.
+#!/usr/bin/env python
+
+"""
+Class to AntimicrobialResistanceResult class.
 """
 
 import json
@@ -28,8 +31,11 @@ DEFAULTAMRRESULT = {
     'analysis_software_version': '',
 }
 
-class AntimicrobialResistanceGenomicAnalysisResult():
-    """Class for the management of antimicrobial resistance analysis results."""
+class hAMRonizedResult():
+    """
+    S
+
+    Class for the management of antimicrobial resistance analysis results."""
 
     def __init__(self, input=None):
         """Initialize the class."""
@@ -55,7 +61,7 @@ class AntimicrobialResistanceGenomicAnalysisResult():
         self.resistance_mechanism = None
         self.analysis_software_name =  None
         self.analysis_software_version = None
-        
+
         if input:
             self.read(input)
         else:
@@ -65,7 +71,7 @@ class AntimicrobialResistanceGenomicAnalysisResult():
     def __repr__(self):
         return json.dumps(self.__dict__)
 
-    
+
     def read(self, input):
         # TODO: There must be a less verbose way to do this...
         try:
