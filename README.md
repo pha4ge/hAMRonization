@@ -25,6 +25,7 @@ Parser needing tested (both automated and just sanity checking output):
 5. [resfinder](parsers/resfinder_report_parser.py) [test_resfinder_output](test/data/raw_outputs/resfinder/data_resfinder.json) `python resfinder_report_parser.py --analysis_software_version 3 --reference_database_version 45 ../test/data/raw_outputs/resfinder/data_resfinder.json`
 6. [sraX](parsers/srax_report_parser.py) [test_srax_output](test/data/raw_outputs/srax/sraX_detected_ARGs.tsv) `python srax_report_parser.py ../test/data/raw_outputs/srax/sraX_detected_ARGs.tsv --reference_database_id default --input_file_name a.fas --reference_database_version 3.1.0 --analysis_software_version 1.0.1`
 7. [deepARG](parsers/deeparg_report_parser.py) [test_deeparg_output](test/data/raw_outputs/deeparg/output.mapping.ARG) `python deeparg_report_parser.py --input_file_name foo.fasta --analysis_software_version 1.0.0 --reference_database_version 9.9.9 ../test/data/raw_outputs/deeparg/output.mapping.ARG`
+8. [kmerresistance](parsers/kmerresistance_report_parser.py) [test_kmerresistance_output](test/data/raw_outputs/kmerresistance/results.res) `python kmerresistance_report_parser.py ../test/data/raw_outputs/kmerresistance/results.res  --analysis_software_version 3.0.0 --reference_database_version 0.1.0 --input_file_name foo.fas`
 
 Parsers with mandatory field issues needing addressed:
 1. [srst2](parsers/srst2_report_parser.py) (see issue below with mandatory sequence identity field) [test_srst2_output](test/data/raw_outputs/srst2/SAMN13064234_srst2_report.tsv) `python srst2_report_parser.py ../test/data/SAMN13064234_srst2_report.tsv --sequence_identity 5 --analysis_software_version 2 --reference_database_version 5`
@@ -38,7 +39,6 @@ Parsers needing implemented:
 3. [resfams](test/data/raw_outputs/resfams/resfams.tblout)
 7. [pointfinder](test/data/raw_outputs/pointfinder/report.tsv)
 9. [amrplusplus](test/data/raw_outputs/amrplusplus/gene.tsv)
-10. [kmerresistance](test/data/raw_outputs/kmerresistance/results.res)
 
 ### Issues
 
@@ -47,6 +47,8 @@ Parsers needing implemented:
 - gene symbol and gene name being mandatory: most tools only have one field corresponding to this.  In these cases should we map both to this.
 
 - similarly: `sequence_identity` isn't in srst2 or groot output so difficult for mandatory *needs resolved*
+
+- sequence identity is an issue for kmer-resistance as there is both query AND reference identity reported
 
 - software version, database version are typically not in output, make these mandatory arguments for parsers of tools without these?
 Software name is known even when not provided because. This has been implemented in parser.
@@ -68,6 +70,8 @@ Software name is known even when not provided because. This has been implemented
 - mapping to coverage depth includs average depth AND plain read counts (based on previous parsers: not the same and needs discussed)
 
 - `contig_id` should probably be `sequence_id` or similar to enable putting readnames in there for tools like deeparg
+
+- kmer
 
 ### Basic Parsing Strategy
 
