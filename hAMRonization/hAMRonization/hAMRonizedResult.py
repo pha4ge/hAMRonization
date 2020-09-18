@@ -18,17 +18,18 @@ class hAMRonizedResult():
                     'analysis_software_name',
                     'analysis_software_version'}
     """
-
+    # mandatory fields
     input_file_name: str
     gene_symbol: str
     gene_name: str
-    sequence_identity: float
     reference_database_id: str
     reference_database_version: str
     reference_accession: str
     analysis_software_name: str
     analysis_software_version: str
 
+    # optional fields
+    sequence_identity: float = None
     contig_id: str = None
     query_start_aa: int = None
     query_stop_aa: int = None
@@ -49,3 +50,17 @@ class hAMRonizedResult():
     drug_class: str = None
     antimicrobial_agent: str = None
     resistance_mechanism: str = None
+
+    def __post_init__(self):
+        """
+        Use type hints to check if field value is correct value and if not
+        try to cast the type (failing with a valueerror)
+        """
+        for field in dataclasses.fields(self):
+            value = getattr(self, field.name)
+            if not isinstance(value, field.type):
+                try:
+                    setattr(self, field.name) = field.type(value)
+                except ValueError:
+                    raise(f"Expected {field.name} to be {field.type}, "
+                                 f"got {repr(value)}")

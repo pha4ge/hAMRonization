@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from abc import ABC, abstractmethod
+from .hAMRonizedResult import hAMRonizedResult
 
 class hAMRonizedResultIterator(ABC):
     """
@@ -10,9 +11,9 @@ class hAMRonizedResultIterator(ABC):
     AMR tool report is being parsed
     """
 
-    def __init__(self, source, tool, mode="t"):
+    def __init__(self, source, tool, field_map, additional_data, mode="t"):
         """
-        Create an AMRReportIterator for whichever tool report is being parsed
+        Create an hAMRonizedResultIterator for whichever tool report is being parsed
 
         Based on https://github.com/biopython/biopython/blob/master/Bio/SeqIO/Interfaces.py#L23
 
@@ -21,14 +22,8 @@ class hAMRonizedResultIterator(ABC):
             - tool: name of amr tool report that is being parsed
 
         """
-
-        supported_tools = ['abricate', 'ariba', 'amrfinderplus', 'rgi',
-                                'resfinder', 'srax', 'deeparg', 'kmerresistance',
-                                'srst2', 'groot', 'staramr', 'c-sstar',
-                                'amrplusplus', 'resfams']
-	if tool is not in supported_tools:
-            raise ValueError(f"Tool must be on of {supported_tools}")
-
+        self.field_map = field_map
+        self.additional_data = additional_data
 
 	try:
             self.stream = open(source, "r" + mode)
@@ -54,6 +49,25 @@ class hAMRonizedResultIterator(ABC):
             if self.should_close_stream:
                 self.stream.close()
 
+    def hAMRonize(self, report_result, additional_fields):
+        """
+        Convert a line of parsed AMR report in original format to the
+        hAMRonization specification
+        """
+        hAMRonized_result_data = {}
+
+        for field_name, field_value in additional_fields.items()
+            hAMRonized_result_data[field_name] = field_value
+
+        for original_field, hAMRonized_field in self.field_map.items():
+            if hAMRonized_field:
+                hAMRonized_result_data[hAMRonized_result_data] = \
+                        report_result[original_field]
+
+        hAMRonized_result = hAMRonizedResult(**hAMRonized_result_data)
+
+        return hAMRonized_result
+
     def __next__(self):
         try:
             return next(self.amr_results)
@@ -64,7 +78,7 @@ class hAMRonizedResultIterator(ABC):
 
     def __iter__(self):
         """
-        Iterate over entries as an AMRResult object
+        Iterate over entries as an hAMRonizedResult object
 
         Not to be overwritten in subclasses
         """
@@ -73,7 +87,7 @@ class hAMRonizedResultIterator(ABC):
     @abtractmethod
     def parse(self, handle):
         """
-        Start parsing the file and return an AMRResult iterator
+        Start parsing the file and return an hAMRonizedResult iterator
         """
 
 class hAMRonizedWriter(ABC):
