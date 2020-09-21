@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-from dataclasses import dataclass
+import dataclasses
 
-@dataclass
+@dataclasses.dataclass
 class hAMRonizedResult():
     """
     Single AMR result converted to the hAMRonization specification
@@ -58,9 +58,9 @@ class hAMRonizedResult():
         """
         for field in dataclasses.fields(self):
             value = getattr(self, field.name)
-            if not isinstance(value, field.type):
+            if not isinstance(value, field.type) and not value is None:
                 try:
-                    setattr(self, field.name) = field.type(value)
+                    setattr(self, field.name, field.type(value))
                 except ValueError:
-                    raise(f"Expected {field.name} to be {field.type}, "
-                                 f"got {repr(value)}")
+                    raise ValueError(f"Expected {field.name} to be {field.type}, "
+                            f"got {repr(value)}")
