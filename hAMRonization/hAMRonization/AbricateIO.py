@@ -39,7 +39,6 @@ class AbricateIterator(hAMRonizedResultIterator):
         Read each and return it
         """
         # skip any manually specified fields for later
-        report_fieldnames = [x for x in self.field_mapping if not x.startswith('_')]
         reader = csv.DictReader(handle, delimiter='\t')
         for result in reader:
             yield self.hAMRonize(result, self.metadata)

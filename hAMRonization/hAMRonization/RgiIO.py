@@ -125,7 +125,6 @@ class RgiIterator(hAMRonizedResultIterator):
         Read each and return it
         """
         # skip any manually specified fields for later
-        report_fieldnames = [x for x in self.field_mapping if not x.startswith('_')]
         reader = csv.DictReader(handle, delimiter='\t')
         for result in reader:
             # round down average length of coverage so its comparable to other
