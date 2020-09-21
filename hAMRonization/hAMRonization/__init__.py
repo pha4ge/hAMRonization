@@ -7,7 +7,7 @@ from hAMRonization import AmrFinderPlusIO
 from hAMRonization import AribaIO
 from hAMRonization import RgiIO
 from hAMRonization import ResFinderIO
-#from hAMRonization import SraxIO
+from hAMRonization import SraxIO
 #from hAMRonization import DeepArgIO
 #from hAMRonization import KmerResistanceIO
 #from hAMRonization import Srst2IO
@@ -24,7 +24,7 @@ _FormatToIterator = {
     "ariba": AribaIO.AribaIterator,
     "rgi": RgiIO.RgiIterator,
     "resfinder": ResFinderIO.ResFinderIterator,
-    #"srax": SraxIO.SraxIterator,
+    "srax": SraxIO.SraxIterator,
     #"deeparg": DeepArgIO.DeepArgIterator,
     #"kmerresistance": KmerResistanceIO.KmerResistanceIterator,
     #"srst2": Srst2IO.Srst2Iterator,
@@ -41,6 +41,7 @@ _RequiredToolMetadata = {
     "ariba": AribaIO.required_metadata,
     "rgi": RgiIO.required_metadata,
     "resfinder": ResFinderIO.required_metadata,
+    "srax": SraxIO.required_metadata,
 }
 
 def parse(handle, metadata, tool):
@@ -54,7 +55,7 @@ def parse(handle, metadata, tool):
     >>> filename = "abricate_report.tsv"
     >>> metadata = {"analysis_software_version": "1.0.1", "reference_database_version": "2019-Jul-28"}
     >>> for result in hAMRonization.parse(filename, required_arguments, "abricate"):
-    ...    print(record)
+    ...    print(result)
 
     """
     if not isinstance(tool, str):
