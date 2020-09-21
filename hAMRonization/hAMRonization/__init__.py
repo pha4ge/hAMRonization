@@ -8,7 +8,7 @@ from hAMRonization import AribaIO
 from hAMRonization import RgiIO
 from hAMRonization import ResFinderIO
 from hAMRonization import SraxIO
-#from hAMRonization import DeepArgIO
+from hAMRonization import DeepArgIO
 #from hAMRonization import KmerResistanceIO
 #from hAMRonization import Srst2IO
 #from hAMRonization import GrootIO
@@ -25,7 +25,7 @@ _FormatToIterator = {
     "rgi": RgiIO.RgiIterator,
     "resfinder": ResFinderIO.ResFinderIterator,
     "srax": SraxIO.SraxIterator,
-    #"deeparg": DeepArgIO.DeepArgIterator,
+    "deeparg": DeepArgIO.DeepArgIterator,
     #"kmerresistance": KmerResistanceIO.KmerResistanceIterator,
     #"srst2": Srst2IO.Srst2Iterator,
     #"groot": GrootIO.GrootIterator,
@@ -42,6 +42,7 @@ _RequiredToolMetadata = {
     "rgi": RgiIO.required_metadata,
     "resfinder": ResFinderIO.required_metadata,
     "srax": SraxIO.required_metadata,
+    "deeparg": DeepArgIO.required_metadata,
 }
 
 def parse(handle, metadata, tool):
