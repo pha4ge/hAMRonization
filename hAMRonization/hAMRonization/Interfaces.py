@@ -4,9 +4,12 @@ import sys
 import os
 import csv
 import json
+import argparse
 import dataclasses
 from abc import ABC, abstractmethod
+import hAMRonization
 from .hAMRonizedResult import hAMRonizedResult
+
 
 class hAMRonizedResultIterator(ABC):
     """
@@ -122,3 +125,24 @@ class hAMRonizedResultIterator(ABC):
         if out_fh is not sys.stdout:
             out_fh.close()
 
+
+def cli_parser(analysis_tool):
+    parser = argparse.ArgumentParser(description=f"hAMRonization parser for {analysis_tool}")
+    parser.add_argument("report", help="Path to tool report")
+    parser.add_argument("--format", default="tsv", help="Output format (tsv or json)")
+    parser.add_argument("--output", default=None, help="Output location")
+
+    # any missing mandatory fields need supplied as CLI argument
+    required_mandatory_metadata = hAMRonization._RequiredToolMetadata[analysis_tool]
+    for field in required_mandatory_metadata:
+        parser.add_argument(f"--{field}", required=True,
+                            help="Input string containing the "
+                                f"{field} "
+                                f"for {analysis_tool}")
+    args = parser.parse_args()
+    metadata = {field: getattr(args, field) for field in required_mandatory_metadata}
+
+    # parse report and write to specified
+    parsed_report = hAMRonization.parse(args.report, metadata, analysis_tool)
+    parsed_report.write(output_location=args.output,
+                        output_format=args.format)
