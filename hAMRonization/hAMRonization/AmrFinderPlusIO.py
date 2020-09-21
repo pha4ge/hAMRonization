@@ -5,14 +5,15 @@ from .hAMRonizedResult import hAMRonizedResult
 from .Interfaces import hAMRonizedResultIterator
 
 
-required_metadata = ['analysis_software_version', 'reference_database_version']
+required_metadata = ['analysis_software_version',
+                     'reference_database_version',
+                     'input_file_name']
 
 class AmrFinderPlusIterator(hAMRonizedResultIterator):
 
     def __init__(self, source, metadata):
         metadata['analysis_software_name'] = 'amrfinderplus'
         metadata['reference_database_id'] = 'NCBI Reference Gene Database'
-        metadata['input_file_name'] = str(source)
         self.metadata = metadata
 
         # check source for whether AMFP has been run in protein or nt mode
@@ -112,4 +113,8 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
         report_fieldnames = [x for x in self.field_mapping if not x.startswith('_')]
         reader = csv.DictReader(handle, delimiter='\t')
         for result in reader:
+            # replace NA value with None for consitency
+            for field, value in result.items():
+                if value == "NA":
+                    result[field] = None
             yield self.hAMRonize(result, self.metadata)

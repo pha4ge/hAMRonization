@@ -30,6 +30,7 @@ class hAMRonizedResultIterator(ABC):
             - tool: name of amr tool report that is being parsed
 
         """
+        self.source = source
         self.field_map = field_map
         self.metadata  = metadata
 
@@ -105,7 +106,10 @@ class hAMRonizedResultIterator(ABC):
         out_fh = open(output_location, 'w') if output_location else sys.stdout
         if output_format == 'tsv':
             # to get first result to build csvwriter
-            first_result = next(self)
+            try:
+                first_result = next(self)
+            except StopIteration:
+                raise ValueError(f"Input report empty: {source}")
             writer = csv.DictWriter(out_fh, delimiter='\t',
                               fieldnames = first_result.__annotations__.keys(),
                               lineterminator = os.linesep)
