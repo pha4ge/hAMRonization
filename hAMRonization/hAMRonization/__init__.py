@@ -14,7 +14,7 @@ from hAMRonization import Srst2IO
 #from hAMRonization import GrootIO
 #from hAMRonization import StarAmrIO
 #from hAMRonization import CSStarIO
-#from hAMRonization import AmrPlusPlusIO
+from hAMRonization import AmrPlusPlusIO
 #from hAMRonization import ResFamsIO
 
 
@@ -31,7 +31,7 @@ _FormatToIterator = {
     #"groot": GrootIO.GrootIterator,
     #"staramr": StarAmrIO.StarAmrIterator,
     #"csstar": CSStarIO.CSStarIterator,
-    #"amrplusplus": AmrPlusPlusIO.AmrPlusPlusIterator,
+    "amrplusplus": AmrPlusPlusIO.AmrPlusPlusIterator,
     #"resfams": ResFamsIO.ResFamsIterator
     }
 
@@ -45,6 +45,7 @@ _RequiredToolMetadata = {
     "deeparg": DeepArgIO.required_metadata,
     "kmerresistance": KmerResistanceIO.required_metadata,
     "srst2": Srst2IO.required_metadata,
+    "amrplusplus": AmrPlusPlusIO.required_metadata,
 }
 
 def parse(handle, metadata, tool):
