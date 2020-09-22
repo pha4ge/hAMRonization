@@ -1,40 +1,38 @@
-# hAMRonised AMR Parsers
+# hAMRonization 
 
-This repo is intended as a place to prototype and experiment with a set of parsers for reports/outputs from several
-antimicrobial resistance tools.
+This repo contains the hAMRonization module and CLI parser tools combine the outputs of 
+disparate antimicrobial resistance gene detection tools into a single unified format.
 
-In addition to the parsers, a data structure for storing antimicrobial resistance results according to a harmonized schema.
+This is an implementation of the hAMRonization AMR detection specification scheme:
+
 
 ## Setting up a Development Environment
 
 ```
-conda create -n hamronised-amr-parsers-dev "python>=3.6" biopython
-conda activate hamronised-amr-parsers-dev
-cd antimicrobial_resistance_result
+conda create -n hAMRonization 
+conda activate hAMRonization
+cd hAMRonization
 pip install -e .
 ```
 
 ## Parsers
 
-Parser needing tested (both automated and just sanity checking output):
-
-1. [abricate](parsers/abricate_report_parser.py) - [test output](test/data/raw_outputs/abricate/report.tsv) e.g. `python abricate_report_parser.py ../test/data/raw_outputs/abricate/report.tsv --reference_database_version NCBI --analysis_software_version 0`
-2. [ariba](parsers/ariba_report_parser.py) - [test_output](test/data/raw_outputs/ariba/report.tsv) e.g. `python ariba_report_parser.py ../test/data/raw_outputs/ariba/report.tsv --reference_database_version 0 --reference_database_id foo --input_file_name sample_x --analysis_software_version 1`  
-3. [NCBI AMRFinderPlus](parsers/amrfinderplus_report_parser.py) - [test_nt_output](test/data/raw_outputs/amrfinder/report_nucleotide.tsv), [test_aa_output](test/data/raw_outputs/amrfinder/report_protein.tsv) e.g. `python amrfinderplus_report_parser.py --input_file_name "a" --analysis_software_version 3.0 --reference_database_version 3.0 ../test/data/raw_outputs/amrfinder/report_nucleotide.tsv` or `python amrfinderplus_report_parser.py --input_file_name "a" --analysis_software_version 3.0 --reference_database_version 3.0 ../test/data/raw_outputs/amrfinder/report_protein.tsv`
-4. [RGI](parsers/rgi_report_parser.py) (includes RGI-BWT) [test_rgi_output](test/data/raw_outputs/rgi/rgi.txt) `python rgi_report_parser.py --input_file_name foo --analysis_software_version 5.1.2 --reference_database_version 3.5.2 ../test/data/raw_outputs/rgi/rgi.txt` or for RGI-BWT mode (automatically detected by parser) [test_rgi_bwt_output](test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt) `python rgi_report_parser.py --input_file_name foo --analysis_software_version 5.1.2 --reference_database_version 3.5.2 ../test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt`
-5. [resfinder](parsers/resfinder_report_parser.py) [test_resfinder_output](test/data/raw_outputs/resfinder/data_resfinder.json) `python resfinder_report_parser.py --analysis_software_version 3 --reference_database_version 45 ../test/data/raw_outputs/resfinder/data_resfinder.json`
-6. [sraX](parsers/srax_report_parser.py) [test_srax_output](test/data/raw_outputs/srax/sraX_detected_ARGs.tsv) `python srax_report_parser.py ../test/data/raw_outputs/srax/sraX_detected_ARGs.tsv --reference_database_id default --input_file_name a.fas --reference_database_version 3.1.0 --analysis_software_version 1.0.1`
-7. [deepARG](parsers/deeparg_report_parser.py) [test_deeparg_output](test/data/raw_outputs/deeparg/output.mapping.ARG) `python deeparg_report_parser.py --input_file_name foo.fasta --analysis_software_version 1.0.0 --reference_database_version 9.9.9 ../test/data/raw_outputs/deeparg/output.mapping.ARG`
-8. [kmerresistance](parsers/kmerresistance_report_parser.py) [test_kmerresistance_output](test/data/raw_outputs/kmerresistance/results.res) `python kmerresistance_report_parser.py ../test/data/raw_outputs/kmerresistance/results.res  --analysis_software_version 3.0.0 --reference_database_version 0.1.0 --input_file_name foo.fas`
-
-Parsers with mandatory field issues needing addressed:
-
-1. [srst2](parsers/srst2_report_parser.py) (see issue below with mandatory sequence identity field) [test_srst2_output](test/data/raw_outputs/srst2/SAMN13064234_srst2_report.tsv) `python srst2_report_parser.py ../test/data/SAMN13064234_srst2_report.tsv --sequence_identity 5 --analysis_software_version 2 --reference_database_version 5`
-2. [groot](parsers/groot_report_parser.py) so many mandatory fields not even worth providing a run command
-3. [staramr](parsers/staramr_report_parser.py) (only one gene field so mapping to gene symbol and gene name as mandatory is a problem. [test_staramr_output](test/data/raw_outputs/staramr/resfinder.tsv) `python staramr_report_parser.py --analysis_software_version 3 --gene_name NA  --reference_database_version 2 ../test/data/raw_outputs/staramr/resfinder.tsv`
-4. [c-sstar](parsers/csstar_report_parser.py) (no reference accession issue) [test_csstar_output](test/data/raw_outputs/sstar/report.tsv) `python csstar_report_parser.py --reference_accession 'NA' --reference_database_version 3.0.0 --analysis_software_version 1.0.0 --reference_database_id resgannot --input_file_name foo.fas ../test/data/raw_outputs/sstar/report.tsv`
-5. [amrplusplus](parsers/amrplusplus_report_parser.py) (no sequence identity) [test_amrplusplus_output](test/data/raw_outputs/amrplusplus/gene.tsv) `python amrplusplus_report_parser.py --sequence_identity 90 --analysis_software_version 2.0.0 --reference_database_version 1.0.0 ../test/data/raw_outputs/amrplusplus/gene.tsv`
-6. [resfams](parsers/resfams_report_parser.py) (no sequence identity) [test_resfams_output](test/data/raw_outputs/resfams/resfams.tblout) `python resfams_report_parser.py --input_file_name "a.fas" --sequence_identity 0 --reference_database_version db5 --analysis_software_version soft8 ../test/data/raw_outputs/resfams/resfams.tblout`
+Parsers needing tested (both automated and just sanity checking output), see [test.sh](parsers/test.sh) for example invocations.
+`
+1. [abricate](parsers/abricate_report_parser.py) 
+2. [ariba](parsers/ariba_report_parser.py)
+3. [NCBI AMRFinderPlus](parsers/amrfinderplus_report_parser.py) 
+4. [RGI](parsers/rgi_report_parser.py) (includes RGI-BWT) 
+5. [resfinder](parsers/resfinder_report_parser.py) 
+6. [sraX](parsers/srax_report_parser.py) 
+7. [deepARG](parsers/deeparg_report_parser.py) 
+8. [kmerresistance](parsers/kmerresistance_report_parser.py) 
+9. [srst2](parsers/srst2_report_parser.py) 
+10. [staramr](parsers/staramr_report_parser.py) 
+11. [c-sstar](parsers/csstar_report_parser.py)
+12. [amrplusplus](parsers/amrplusplus_report_parser.py)
+13. [resfams](parsers/resfams_report_parser.py)
+14. [groot](parsers/groot_report_parser.py)
 
 Parsers excluded as needing variant specification to implement:
 1. [mykrobe](test/data/raw_outputs/mykrobe/report.json)
@@ -48,23 +46,11 @@ Parsers excluded as needing variant specification to implement:
 
 - automated tests need added
 
-- integer/float cleaning of fields not implemented yet
-
-- use of global variables makes me uncomfortable and should probably be refactored
-
-- code duplication between parsers should be modularised away
-
-- parsers need to be easier to use within a python script
-
-- output to file options (with appending) should be added
+- output to file options (with appending and check headers) should be added
 
 #### Specification
 
-- mandatory fields: `sequence_identity` not implemented in amrplusplus, srst2, groot, (and for kmerresistance there are sequence identities for query and subject)
-
-- mandatory fields: `gene_symbol` and `gene_name` are confusing and not usually both present (only consistently used in AFP). Means tools either need 1:2 mapping i.e. single output field maps to both `gene_symbol` and `gene_name` OR have fragile text splitting of single field that won't be robust to databases changes.
-
-- mandatory fields: `software_version` and `database_version` are never included but as mandatory the user must supply these on the CLI, is this reasonable?
+- mandatory fields: `gene_symbol` and `gene_name` are confusing and not usually both present (only consistently used in AFP). Means tools either need 1:2 mapping i.e. single output field maps to both `gene_symbol` and `gene_name` OR have fragile text splitting of single field that won't be robust to databases changes.  Current solution is 1:2 mapping e.g. staramr
 
 - inconsistent nomenclature of terms being used in specification fields: target, query, subject, reference. Need to stick to one name for sequence with which the database is being searched, and one the hit that results from that search.
 
@@ -76,43 +62,68 @@ Parsers excluded as needing variant specification to implement:
 
 - `contig_id` isn't general enough when some tools this ID naturally corresponds to a `read_name` (deepARG), individual ORF (resfams), or protein sequence (AFP with protein input): *change to `query_id_name` or similar?*
 
-### Basic Parsing Strategy
+## Implementation Details
 
-Each parser follows a similar strategy:
+### hAMRonizedResult Data Structure
 
-1. Define a 'field map' that provides a mapping between the field names provided in the tool output and the attributes of our harmonized [`AntimicrobialResistanceGenomicAnalysisResult`](antimicrobial_resistance_result/AntimicrobialResistance/Result.py) class.
+The hAMRonization specification is implemented in the [hAMRonizedResult dataclass](https://github.com/pha4ge/harmonized-amr-parsers/blob/master/hAMRonization/hAMRonization/hAMRonizedResult.py#L6).
 
-eg:
+This is a simple datastructure that uses positional and key-word args to distinguish mandatory from optional hAMRonization fields. 
+It also uses type-hinting to validate the supplied values are of the correct type
 
-```python
-FIELD_MAP_ABRICATE = {
-    'file': 'input_file_name',
-    'sequence': 'contig_id',
-    'start': 'start',
-    'end': 'stop',
-    ...
-}
-```
 
-2. Parse the report, probably using the `csv.DictReader` class from the python standard library (if the report is some sort of csv/tsv output). This produces a python dictionary data structure, with keys corresponding to the header fields in the tool output report.
+Each parser follows a similar strategy, using a common interface.
+This has been designed to match the `biopython` `SeqIO` `parse` function 
 
-3. Take the parsed report, and prepare it for loading into the `AntimicrobialResistanceGenomicAnalysisResult` class by using the field map to convert field names from the parsed report into their corresponding 'harmonized' attribute names. This is done in a function called `prepare_for_amr_class()` which takes a dictionary as input and returns a dictionary that can be used to initialize an `AntimicrobialResistanceGenomicAnalysisResult` object.
+    >>> import hAMRonization
+    >>> filename = "abricate_report.tsv"
+    >>> metadata = {"analysis_software_version": "1.0.1", "reference_database_version": "2019-Jul-28"}
+    >>> for result in hAMRonization.parse(filename, metadata, "abricate"):
+    ...    print(result)
 
-4. Write the parsed/harmonized data to `stdout`, in either `tsv` or `json` format (controlled by the `--format` flag.
+Where the final argument to the `hAMRonization.parse` command is whichever tool is being parsed.
 
-### Parser Template
+### hAMRonizedResultIterator
 
-A [template](parsers/template_report_parser.py) is provided for quick development of new parsers. The template assumes that it is parsing a single tabular (tsv or csv) report file.
+An abstract iterator is then implemented to ingest a given AMR tool's report
+(via the appropriate subclassed implementation), hAMRonize results i.e. translate the 
+original inputs to the fields in the hAMRonization specification, and yield a stream of 
+hAMRonizedResult dataclasses.
 
-## Harmonized Data Structure
+This iterator also implements a write function to enable outputting the contents 
+to a output stream or filehandle in either tsv or json format.
 
-### Python `AntimicrobialResistanceGenomicAnalysisResult` class
+### Tool-specific Iterators
 
-Our short-term implementation strategy is to create a python class that could be contributed to the [biopython](https://biopython.org/) project.
+Each tool has a specific subclass of this abstract hAMRonizedResultIterator e.g. `AbricateIO.AbricateIterator`.
 
-The [`antimicrobial_resistance_result`](antimicrobial_resistance_result) directory contains a pip-installable python module that provides the `AntimicrobialResistanceGenomicAnalysisResult` class. Each of the parsers loads the parsed report into a list of `AntimicrobialResistanceGenomicAnalysisResult`s.
+These include an attribute containing the mapping of the tools original output report fields to the hAMRonized specification fields (`self.field_mapping`), as well as handling specifying any additional required metadata.
 
-The [`AntimicrobialResistanceGenomicAnalysisResult.__repr__()`](https://github.com/pha4ge/harmonized-amr-parsers/blob/3bb8f40360e49a0be397ac884ba31e17a73a1452/antimicrobial_resistance_result/AntimicrobialResistance/Result.py#L65-L66) method has been designed such that printing an instance of the class produces a JSON-compatible string.
+The `parse` method of these subclasses then implements the tool-specific parsing logic required.
+This is typically a simple `csv.DictReader` but can be more complex such as the json parsing of `resfinder` output, 
+or the modification of output fields required to better fit some tools into the hAMRonization specification.
+
+## Adding a new parser
+
+1. Add an entry into `_RequiredToolMetadata` and `_FormatToIterator` in `hAMRonziation/__init__.py` which points to the appropriate `ToolNameIO.py` containing the tool's Iterator subclass
+
+2. In `ToolNameIO.py` add a `required_metadata` list containing any mandatory fields not implemented by the tool
+
+3. Then add a class `ToolNameIterator(hAMRonizedResultIterator)` and implement the `__init__` methods with the approriate mapping (`self.field_mapping`), and metadata (`self.metadata`).
+
+4. To this class, add a `parse` method which reads an opened file stream into a dictionary per line/result (matching the keys of `self.field_mapping`) and yields the output of `self.hAMRonize` being applied to that dictionary.
+
+5. Finally, to add a CLI parser for the tool, create a python file in the `parsers` directory:
+
+    from hAMRonization import Interfaces
+
+    if __name__ == '__main__':
+    
+        Interfaces.cli_parser('toolname')
+
+Alternatively, the `hAMRonized_parser.py` can be used as a common script interface to all implemented parsers. 
+*Note* this needs the proper subparser handling to manage `--help` correctly.
+
 
 ### Language-Agnostic Schema(s)
 
@@ -125,7 +136,9 @@ We currently have four language-agnostic schemas to describe our data structure:
 
 ## Test Data
 
-For each tool, the [`test/data`](test/data) directory contains:
+This needs tidied, currently there is a `test.sh` shellscript in `parsers` folder which invokes all the individual parsers on files in `test/data/raw_outputs/`.
+
+There is also an older set of test data in `test/data`, containing:
 
 1. An example output report
 2. A 'harmonized' `.json` conversion of the report, where field names have been mapped to their 'harmonized' counterparts
