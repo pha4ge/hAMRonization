@@ -115,9 +115,11 @@ or the modification of output fields required to better fit some tools into the 
 
 5. Finally, to add a CLI parser for the tool, create a python file in the `parsers` directory:
 
-    ```from hAMRonization import Interfaces
+    ```
+    from hAMRonization import Interfaces
     if __name__ == '__main__': 
-        Interfaces.cli_parser('toolname')```
+        Interfaces.cli_parser('toolname')
+    ```
 
 Alternatively, the `hAMRonized_parser.py` can be used as a common script interface to all implemented parsers. 
 *Note* this needs the proper subparser handling to manage `--help` correctly.
