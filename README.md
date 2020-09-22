@@ -115,11 +115,9 @@ or the modification of output fields required to better fit some tools into the 
 
 5. Finally, to add a CLI parser for the tool, create a python file in the `parsers` directory:
 
-    from hAMRonization import Interfaces
-
-    if __name__ == '__main__':
-    
-        Interfaces.cli_parser('toolname')
+    ```from hAMRonization import Interfaces
+    if __name__ == '__main__': 
+        Interfaces.cli_parser('toolname')```
 
 Alternatively, the `hAMRonized_parser.py` can be used as a common script interface to all implemented parsers. 
 *Note* this needs the proper subparser handling to manage `--help` correctly.
@@ -127,7 +125,7 @@ Alternatively, the `hAMRonized_parser.py` can be used as a common script interfa
 
 ### Language-Agnostic Schema(s)
 
-We currently have four language-agnostic schemas to describe our data structure:
+We currently have four language-agnostic schemas to describe our data structure, these need updated to latest specification, and used in automatic validation of outputs.
 
 1. [JSON Schema](schema/antimicrobial_resistance_genomic_analysis_result.schema.json) ([about](https://json-schema.org/))
 2. [JSON-LD Schema](schema/antimicrobial_resistance_genomic_analysis_result.schema.jsonld) ([about](https://json-ld.org/))
