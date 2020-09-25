@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
 import csv
-from .hAMRonizedResult import hAMRonizedResult
 from .Interfaces import hAMRonizedResultIterator
-
 
 required_metadata = ['analysis_software_version',
                      'reference_database_version']

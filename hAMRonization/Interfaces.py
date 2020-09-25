@@ -21,9 +21,11 @@ class hAMRonizedResultIterator(ABC):
 
     def __init__(self, source, field_map, metadata, mode="t"):
         """
-        Create an hAMRonizedResultIterator for whichever tool report is being parsed
+        Create an hAMRonizedResultIterator for whichever tool report is
+        being parsed
 
-        Based on https://github.com/biopython/biopython/blob/master/Bio/SeqIO/Interfaces.py#L23
+        Based on:
+        github.com/biopython/biopython/blob/master/Bio/SeqIO/Interfaces.py#L23
 
         Arguments:
             - source: input file stream or path to input
@@ -32,7 +34,7 @@ class hAMRonizedResultIterator(ABC):
         """
         self.source = source
         self.field_map = field_map
-        self.metadata  = metadata
+        self.metadata = metadata
 
         try:
             self.stream = open(source, "r" + mode)
@@ -41,12 +43,12 @@ class hAMRonizedResultIterator(ABC):
             if mode == "t":
                 if source.read(0) != "":
                     raise ValueError(
-                        f"{fmt} files must be opened in text mode."
+                        "Files must be opened in text mode."
                     ) from None
             elif mode == "b":
                 if source.read(0) != b"":
                     raise ValueError(
-                        f"{fmt} files must be opened in binary mode."
+                        "Files must be opened in binary mode."
                     ) from None
             else:
                 raise ValueError(f"Unknown mode {mode}") from None
@@ -109,10 +111,11 @@ class hAMRonizedResultIterator(ABC):
             try:
                 first_result = next(self)
             except StopIteration:
-                raise ValueError(f"Input report empty: {source}")
+                raise ValueError(f"Input report empty: {self.source}")
+            fieldnames = first_result.__annotations__.keys()
             writer = csv.DictWriter(out_fh, delimiter='\t',
-                              fieldnames = first_result.__annotations__.keys(),
-                              lineterminator = os.linesep)
+                                    fieldnames=fieldnames,
+                                    lineterminator=os.linesep)
             writer.writeheader()
             writer.writerow(dataclasses.asdict(first_result))
             for result in self:
@@ -124,47 +127,40 @@ class hAMRonizedResultIterator(ABC):
                 out_fh.write(json_entry)
         else:
             raise ValueError("Unknown output format. "
-                            "Valid options are: csv or json")
+                             "Valid options are: csv or json")
 
         if out_fh is not sys.stdout:
             out_fh.close()
 
 
-def cli_parser(analysis_tool):
-    """
-    Generate a command line hAMRonization tool for a specific tool
-    """
-    parser = generic_parser(analysis_tool)
-    args = parser.parse_args()
-    metadata = {field: getattr(args, field) for field in required_mandatory_metadata}
-
-    # parse report and write to specified
-    parsed_report = hAMRonization.parse(args.report, metadata, analysis_tool)
-    parsed_report.write(output_location=args.output,
-                        output_format=args.format)
-
 def generate_tool_subparser(subparser, analysis_tool):
     """
-    Build the argument parser for a specific tool (used to generate a tool-specific
-    cli-parser and a generic tool parser)
+    Build the argument parser for a specific tool
+    (used to generate a tool-specific cli-parser and a generic tool parser)
     """
     report_file = hAMRonization._ReportFileToUse[analysis_tool]
+    description = f"Applies hAMRonization specification to output from "\
+                  f"{analysis_tool} ({report_file})"
+    usage = f"hamronize.py {analysis_tool} <options>"
+    help = f"hAMRonize {analysis_tool}'s output report i.e., {report_file}"
+
     tool_parser = subparser.add_parser(analysis_tool,
-                         description=f"Applies hAMRonization specification to output from {analysis_tool} ({report_file})",
-                         usage=f"hamronize.py {analysis_tool} <options>",
-                         help=f"hAMRonize {analysis_tool}'s output report i.e., {report_file}")
+                                       description=description,
+                                       usage=usage,
+                                       help=help)
 
     tool_parser.add_argument("report", help="Path to tool report")
-    tool_parser.add_argument("--format", default="tsv", help="Output format (tsv or json)")
+    tool_parser.add_argument("--format", default="tsv",
+                             help="Output format (tsv or json)")
     tool_parser.add_argument("--output", default=None, help="Output location")
 
     # any missing mandatory fields need supplied as CLI argument
-    required_mandatory_metadata = hAMRonization._RequiredToolMetadata[analysis_tool]
+    required_mandatory_metadata = \
+        hAMRonization._RequiredToolMetadata[analysis_tool]
     for field in required_mandatory_metadata:
         tool_parser.add_argument(f"--{field}", required=True,
-                            help="Input string containing the "
-                                f"{field} "
-                                f"for {analysis_tool}")
+                                 help=f"Input string containing the {field} "
+                                 f"for {analysis_tool}")
     return subparser
 
 
@@ -173,16 +169,18 @@ def generic_cli_interface():
     Generate a generic tool report parser that passes to the tool specific
     parser
     """
-    parser = argparse.ArgumentParser(description="Convert AMR gene detection tool output to hAMRonization specification format",
-                                                 prog='hamronize',
-                                                 usage='hamronize.py <tool> <options>')
+    parser = argparse.ArgumentParser(description="Convert AMR gene detection "
+                                                 "tool output to "
+                                                 "hAMRonization specification"
+                                                 " format",
+                                     prog='hamronize',
+                                     usage='hamronize.py <tool> <options>')
 
     parser.add_argument('-v', '--version', action='version',
                         version=f"%(prog)s {hAMRonization.__version__}")
 
-
     subparser = parser.add_subparsers(title="Tools with hAMRonizable reports",
-                                       help='', dest='analysis_tool')
+                                      help='', dest='analysis_tool')
 
     for analysis_tool in hAMRonization._RequiredToolMetadata.keys():
         subparser = generate_tool_subparser(subparser, analysis_tool)
@@ -190,14 +188,16 @@ def generic_cli_interface():
     args = parser.parse_args()
 
     if args.analysis_tool:
-        required_mandatory_metadata = hAMRonization._RequiredToolMetadata[args.analysis_tool]
-        metadata = {field: getattr(args, field) for field in required_mandatory_metadata}
+        required_mandatory_metadata = \
+                hAMRonization._RequiredToolMetadata[args.analysis_tool]
+        metadata = {field: getattr(args, field)
+                    for field in required_mandatory_metadata}
 
         # parse report and write to specified
-        parsed_report = hAMRonization.parse(args.report, metadata, args.analysis_tool)
+        parsed_report = hAMRonization.parse(args.report, metadata,
+                                            args.analysis_tool)
         parsed_report.write(output_location=args.output,
                             output_format=args.format)
     else:
         parser.print_help()
         exit(1)
-

@@ -2,8 +2,6 @@
 
 __version__ = "1.0.0"
 
-from hAMRonization.hAMRonizedResult import hAMRonizedResult
-
 from hAMRonization import AbricateIO
 from hAMRonization import AmrFinderPlusIO
 from hAMRonization import AribaIO
@@ -72,17 +70,19 @@ _RequiredToolMetadata = {
     "groot": GrootIO.required_metadata,
 }
 
+
 def parse(handle, metadata, tool):
     r"""Turn a sequence file into an iterator returning SeqRecords.
     Arguments:
      - handle   - handle to the file, or the filename as a string
      - tool - lower case string describing the file format.
-     - required_arguments - dictionary containing the required arguments for tool
+     - required_arguments - dict containing the required arguments for tool
     Typical usage, opening a file to read in, and looping over the record(s):
-    >>> import hAMRonization
+    >>> import hAMRonization as hAMR
     >>> filename = "abricate_report.tsv"
-    >>> metadata = {"analysis_software_version": "1.0.1", "reference_database_version": "2019-Jul-28"}
-    >>> for result in hAMRonization.parse(filename, required_arguments, "abricate"):
+    >>> metadata = {"analysis_software_version": "1.0.1",
+    ...             "reference_database_version": "2019-Jul-28"}
+    >>> for result in hAMR.parse(filename, required_arguments, "abricate"):
     ...    print(result)
 
     """
@@ -99,15 +99,18 @@ def parse(handle, metadata, tool):
     try:
         tool_required_metadata = _RequiredToolMetadata[tool]
     except KeyError:
-        raise ValueError(f"Unknown tool: {tool}\nMust be in {_RequiredToolMetadata.keys()}")
+        raise ValueError(f"Unknown tool: {tool}\nMust be in "
+                         f"{_RequiredToolMetadata.keys()}")
     missing_data = []
     for required in tool_required_metadata:
         if required not in metadata:
             missing_data.append(required)
     if missing_data:
-        raise ValueError(f"{tool} requires {missing_data} supplied in metadata dictionary")
+        raise ValueError(f"{tool} requires {missing_data} supplied "
+                         "in metadata dictionary")
 
     iterator_generator = _FormatToIterator.get(tool)
     if iterator_generator:
         return iterator_generator(handle, metadata)
-    raise ValueError(f"Unknown tool: {tool}\nMust be in {_FormatToIterator.keys()}")
+    raise ValueError(f"Unknown tool: {tool}\nMust be in "
+                     f"{_FormatToIterator.keys()}")

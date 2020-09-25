@@ -1,12 +1,11 @@
 #!/usr/bin/env python
 
 import csv
-from .hAMRonizedResult import hAMRonizedResult
 from .Interfaces import hAMRonizedResultIterator
-
 
 required_metadata = ['analysis_software_version',
                      'reference_database_version']
+
 
 class StarAmrIterator(hAMRonizedResultIterator):
 
@@ -26,7 +25,8 @@ class StarAmrIterator(hAMRonizedResultIterator):
                 'Start': 'query_start_nt',
                 'End': 'query_stop_nt',
                 'Accession': 'reference_accession',
-                '_gene_name': 'gene_name'} # Gene is mapped to both symbol and name
+                # Gene is mapped to both symbol and name
+                '_gene_name': 'gene_name'}
 
         super().__init__(source, self.field_mapping, self.metadata)
 
@@ -39,6 +39,9 @@ class StarAmrIterator(hAMRonizedResultIterator):
         for result in reader:
             result['_gene_name'] = result['Gene']
             coverage_ratio = result['HSP Length/Total Length'].split('/')
-            coverage_ratio = float(coverage_ratio[0]) / float(coverage_ratio[1])
+
+            cov_1 = float(coverage_ratio[0])
+            cov_2 = float(coverage_ratio[1])
+            coverage_ratio = cov_1 / cov_2
             result['HSP Length/Total Length'] = coverage_ratio
             yield self.hAMRonize(result, self.metadata)

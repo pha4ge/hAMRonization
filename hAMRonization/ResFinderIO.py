@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
 import json
-from .hAMRonizedResult import hAMRonizedResult
 from .Interfaces import hAMRonizedResultIterator
-
 
 required_metadata = ['analysis_software_version',
                      'reference_database_version']
@@ -29,11 +27,15 @@ class ResFinderIterator(hAMRonizedResultIterator):
             'predicted_phenotype': 'drug_class',
             'coverage': 'coverage_percentage',
             'hit_id': None,
-            '_start': 'query_start_nt', # decomposed from positions_in_contig field e.g "314193..314738"
-            '_stop': 'query_stop_nt',  # decomposed from positions_in_contig field e.g "314193..314738"
-            '_strand': 'strand_orientation', # infered from positions_in_contig field
-            '_input_file_name': 'input_file_name', # grabbed from user_input section
-            '_gene_name': 'gene_name' # parsed from top level of within class results
+            # decomposed from positions_in_contig field e.g "314193..314738"
+            '_start': 'query_start_nt',
+            '_stop': 'query_stop_nt',
+            # infered from positions_in_contig field
+            '_strand': 'strand_orientation',
+            # grabbed from user_input section
+            '_input_file_name': 'input_file_name',
+            # parsed from top level of within class results
+            '_gene_name': 'gene_name'
         }
         super().__init__(source, self.field_mapping, self.metadata)
 
@@ -46,17 +48,27 @@ class ResFinderIterator(hAMRonizedResultIterator):
         report = json.load(handle)
         result = {}
         for drug_class in report["resfinder"]["results"]:
-            if report["resfinder"]["results"][drug_class][drug_class.lower()] != "No hit found":
-                for gene_name in report["resfinder"]["results"][drug_class][drug_class.lower()]:
-                    for field in (report["resfinder"]["results"][drug_class][drug_class.lower()][gene_name]):
+            hit_status = report["resfinder"]["results"][drug_class][
+                                drug_class.lower()]
+
+            if hit_status != 'No hit found':
+
+                gene_names = report["resfinder"]["results"][drug_class][
+                             drug_class.lower()]
+                for gene_name in gene_names:
+                    for field in (report["resfinder"]["results"][drug_class][
+                                  drug_class.lower()][gene_name]):
                         # add input_file_name from user_input
                         result['_gene_name'] = gene_name
-                        result['_input_file_name'] = report['resfinder']['user_input']['filename(s)'][0]
+                        result['_input_file_name'] = report['resfinder'][
+                            'user_input']['filename(s)'][0]
 
                         if field in self.field_mapping:
                             if field == 'positions_in_contig':
                                 # decompose to get start and stop
-                                coordinates = report["resfinder"]["results"][drug_class][drug_class.lower()][gene_name][field].split("..")
+                                coordinates = report["resfinder"]["results"][
+                                    drug_class][drug_class.lower()][
+                                        gene_name][field].split("..")
                                 _start = int(coordinates[0])
                                 _stop = int(coordinates[1])
                                 _strand = "+"
@@ -65,12 +77,11 @@ class ResFinderIterator(hAMRonizedResultIterator):
                                 result["_start"] = _start
                                 result["_stop"] = _stop
                                 result["_strand"] = _strand
-                                # print(_start, _stop, _strand)
                             else:
-                                result[field] = report["resfinder"]["results"]\
-                                        [drug_class][drug_class.lower()]\
-                                        [gene_name][field]
-
+                                result[field] = report["resfinder"][
+                                    "results"][drug_class][
+                                        drug_class.lower()][
+                                            gene_name][field]
 
                 yield self.hAMRonize(result, self.metadata)
                 result = {}
