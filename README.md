@@ -18,6 +18,56 @@ pip install -e .
 ## Usage
 
 ```
+>python hamronize.py -h
+usage: hamronize.py <tool> <options>
+
+Convert AMR gene detection tool output to hAMRonization specification format
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --version         show program's version number and exit
+
+Tools with hAMRonizable reports:
+  {abricate,amrfinderplus,ariba,rgi,resfinder,srax,deeparg,kmerresistance,srst2,staramr,csstar,amrplusplus,resfams,groot}
+    abricate            hAMRonize abricate's output report i.e., OUTPUT.tsv
+    amrfinderplus       hAMRonize amrfinderplus's output report i.e., OUTPUT.tsv
+    ariba               hAMRonize ariba's output report i.e., OUTDIR/OUTPUT.tsv
+    rgi                 hAMRonize rgi's output report i.e., OUTPUT.txt or OUTPUT_bwtoutput.gene_mapping_data.txt
+    resfinder           hAMRonize resfinder's output report i.e., data_resfinder.json
+    srax                hAMRonize srax's output report i.e., sraX_detected_ARGs.tsv
+    deeparg             hAMRonize deeparg's output report i.e., OUTDIR/OUTPUT.mapping.ARG
+    kmerresistance      hAMRonize kmerresistance's output report i.e., OUTPUT.KmerRes
+    srst2               hAMRonize srst2's output report i.e., OUTPUT_srst2_report.tsv
+    staramr             hAMRonize staramr's output report i.e., resfinder.tsv
+    csstar              hAMRonize csstar's output report i.e., OUTPUT.tsv
+    amrplusplus         hAMRonize amrplusplus's output report i.e., gene.tsv
+    resfams             hAMRonize resfams's output report i.e., resfams.tblout
+    groot               hAMRonize groot's output report i.e., OUTPUT.tsv (from `groot report`)
+```
+
+To look at a specific tool e.g. `abricate`:
+```
+>python hamronize.py abricate -h 
+usage: hamronize.py abricate <options>
+
+Applies hAMRonization specification to output from abricate (OUTPUT.tsv)
+
+positional arguments:
+  report                Path to tool report
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --format FORMAT       Output format (tsv or json)
+  --output OUTPUT       Output location
+  --analysis_software_version ANALYSIS_SOFTWARE_VERSION
+                        Input string containing the analysis_software_version for abricate
+  --reference_database_version REFERENCE_DATABASE_VERSION
+                        Input string containing the reference_database_version for abricate
+
+```
+
+Therefore, hAMRonizing abricates output:
+```
 python hamronize.py abricate ../test/data/raw_outputs/abricate/report.tsv --reference_database_version db_v_1 --analysis_software_version tool_v_1 --format json
 ```
 
