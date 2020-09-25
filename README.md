@@ -15,6 +15,12 @@ cd hAMRonization
 pip install -e .
 ```
 
+## Usage
+
+```
+python hamronize.py abricate ../test/data/raw_outputs/abricate/report.tsv --reference_database_version db_v_1 --analysis_software_version tool_v_1 --format json
+```
+
 ## Parsers
 
 Parsers needing tested (both automated and just sanity checking output), see [test.sh](parsers/test.sh) for example invocations.

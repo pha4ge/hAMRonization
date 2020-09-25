@@ -131,18 +131,10 @@ class hAMRonizedResultIterator(ABC):
 
 
 def cli_parser(analysis_tool):
-    parser = argparse.ArgumentParser(description=f"hAMRonization parser for {analysis_tool}")
-    parser.add_argument("report", help="Path to tool report")
-    parser.add_argument("--format", default="tsv", help="Output format (tsv or json)")
-    parser.add_argument("--output", default=None, help="Output location")
-
-    # any missing mandatory fields need supplied as CLI argument
-    required_mandatory_metadata = hAMRonization._RequiredToolMetadata[analysis_tool]
-    for field in required_mandatory_metadata:
-        parser.add_argument(f"--{field}", required=True,
-                            help="Input string containing the "
-                                f"{field} "
-                                f"for {analysis_tool}")
+    """
+    Generate a command line hAMRonization tool for a specific tool
+    """
+    parser = generic_parser(analysis_tool)
     args = parser.parse_args()
     metadata = {field: getattr(args, field) for field in required_mandatory_metadata}
 
@@ -150,3 +142,62 @@ def cli_parser(analysis_tool):
     parsed_report = hAMRonization.parse(args.report, metadata, analysis_tool)
     parsed_report.write(output_location=args.output,
                         output_format=args.format)
+
+def generate_tool_subparser(subparser, analysis_tool):
+    """
+    Build the argument parser for a specific tool (used to generate a tool-specific
+    cli-parser and a generic tool parser)
+    """
+    report_file = hAMRonization._ReportFileToUse[analysis_tool]
+    tool_parser = subparser.add_parser(analysis_tool,
+                         description=f"Applies hAMRonization specification to output from {analysis_tool} ({report_file})",
+                         usage=f"hamronize.py {analysis_tool} <options>",
+                         help=f"hAMRonize {analysis_tool}'s output report i.e., {report_file}")
+
+    tool_parser.add_argument("report", help="Path to tool report")
+    tool_parser.add_argument("--format", default="tsv", help="Output format (tsv or json)")
+    tool_parser.add_argument("--output", default=None, help="Output location")
+
+    # any missing mandatory fields need supplied as CLI argument
+    required_mandatory_metadata = hAMRonization._RequiredToolMetadata[analysis_tool]
+    for field in required_mandatory_metadata:
+        tool_parser.add_argument(f"--{field}", required=True,
+                            help="Input string containing the "
+                                f"{field} "
+                                f"for {analysis_tool}")
+    return subparser
+
+
+def generic_cli_interface():
+    """
+    Generate a generic tool report parser that passes to the tool specific
+    parser
+    """
+    parser = argparse.ArgumentParser(description="Convert AMR gene detection tool output to hAMRonization specification format",
+                                                 prog='hamronize',
+                                                 usage='hamronize.py <tool> <options>')
+
+    parser.add_argument('-v', '--version', action='version',
+                        version=f"%(prog)s {hAMRonization.__version__}")
+
+
+    subparser = parser.add_subparsers(title="Tools with hAMRonizable reports",
+                                       help='', dest='analysis_tool')
+
+    for analysis_tool in hAMRonization._RequiredToolMetadata.keys():
+        subparser = generate_tool_subparser(subparser, analysis_tool)
+
+    args = parser.parse_args()
+
+    if args.analysis_tool:
+        required_mandatory_metadata = hAMRonization._RequiredToolMetadata[args.analysis_tool]
+        metadata = {field: getattr(args, field) for field in required_mandatory_metadata}
+
+        # parse report and write to specified
+        parsed_report = hAMRonization.parse(args.report, metadata, args.analysis_tool)
+        parsed_report.write(output_location=args.output,
+                            output_format=args.format)
+    else:
+        parser.print_help()
+        exit(1)
+

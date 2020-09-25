@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+__version__ = "1.0.0"
+
 from hAMRonization.hAMRonizedResult import hAMRonizedResult
 
 from hAMRonization import AbricateIO
@@ -34,6 +36,24 @@ _FormatToIterator = {
     "amrplusplus": AmrPlusPlusIO.AmrPlusPlusIterator,
     "resfams": ResFamsIO.ResFamsIterator
     }
+
+_ReportFileToUse = {
+    "abricate": "OUTPUT.tsv",
+    "amrfinderplus": "OUTPUT.tsv",
+    "ariba": "OUTDIR/OUTPUT.tsv",
+    "rgi": "OUTPUT.txt or OUTPUT_bwtoutput.gene_mapping_data.txt",
+    "resfinder": "data_resfinder.json",
+    "srax": "sraX_detected_ARGs.tsv",
+    "deeparg": "OUTDIR/OUTPUT.mapping.ARG",
+    "kmerresistance": "OUTPUT.KmerRes",
+    "srst2": "OUTPUT_srst2_report.tsv",
+    "groot": "OUTPUT.tsv (from `groot report`)",
+    "staramr": "resfinder.tsv",
+    "csstar": "OUTPUT.tsv",
+    "amrplusplus": "gene.tsv",
+    "resfams": "resfams.tblout"
+    }
+
 
 _RequiredToolMetadata = {
     "abricate": AbricateIO.required_metadata,
