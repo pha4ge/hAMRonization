@@ -23,14 +23,14 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Lint parsers with flake8
+    - name: Lint parser with flake8
       run: |
         pip install flake8
         # stop the build if there are Python syntax errors or undefined names
-        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics hamronize.py
+        flake8 --count --select=E9,F63,F7,F82 --show-source --statistics hamronize.py
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics hamronize.py 
-    - name: Lint hAMRonization module with flake8
+        flake8 --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics hamronize.py 
+    - name: Lint hAMRonization library with flake8
       run: |
         pip install flake8
         pushd hAMRonization
@@ -38,12 +38,12 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Crude functional test
+    - name: Run crude test to ensure parser runs for all tools
       run: |
         pip install .
         bash test.sh
-        #- name: Validate all harmonized .json files with SALAD schema
-        #  run: |
-        #    pip install schema_salad
-        #    pushd test/data
-        #    for f in *.harmonized.json; do schema-salad-tool ../../schema/antimicrobial_resistance_genomic_analysis_result.schema.yml ${f}; done
+    #- name: Validate all harmonized .json files with SALAD schema
+    #  run: |
+    #    pip install schema_salad
+    #    pushd test/data
+    #    for f in *.harmonized.json; do schema-salad-tool ../../schema/antimicrobial_resistance_genomic_analysis_result.schema.yml ${f}; done
