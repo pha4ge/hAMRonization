@@ -13,5 +13,10 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/pha4ge/hAMRonization ",
+    entry_points={
+        'console_scripts': [
+            'hamronize = hamronize:main'
+            ],
+        },
     packages=['hAMRonization'],
 )

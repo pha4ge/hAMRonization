@@ -18,8 +18,8 @@ pip install -e .
 ## Usage
 
 ```
->python hamronize.py -h
-usage: hamronize.py <tool> <options>
+>hamronize -h
+usage: hamronize <tool> <options>
 
 Convert AMR gene detection tool output to hAMRonization specification format
 
@@ -47,8 +47,8 @@ Tools with hAMRonizable reports:
 
 To look at a specific tool e.g. `abricate`:
 ```
->python hamronize.py abricate -h 
-usage: hamronize.py abricate <options>
+>hamronize abricate -h 
+usage: hamronize abricate <options>
 
 Applies hAMRonization specification to output from abricate (OUTPUT.tsv)
 
@@ -68,34 +68,34 @@ optional arguments:
 
 Therefore, hAMRonizing abricates output:
 ```
-python hamronize.py abricate ../test/data/raw_outputs/abricate/report.tsv --reference_database_version db_v_1 --analysis_software_version tool_v_1 --format json
+hamronize abricate ../test/data/raw_outputs/abricate/report.tsv --reference_database_version db_v_1 --analysis_software_version tool_v_1 --format json
 ```
 
 To parser multiple reports from the same tool at once just give a list of reports as the argument,
 and they will be concatenated appropriately (i.e. only one header for tsv)
 
 ```
-python hamronize.py rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --reference_database_version card_v1 test/data/raw_outputs/rgi/rgi.txt test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt
+hamronize rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --reference_database_version card_v1 test/data/raw_outputs/rgi/rgi.txt test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt
 ```
 
 ## Parsers
 
 Parsers needing tested (both automated and just sanity checking output), see [test.sh](parsers/test.sh) for example invocations.
 `
-1. [abricate](parsers/abricate_report_parser.py) 
-2. [ariba](parsers/ariba_report_parser.py)
-3. [NCBI AMRFinderPlus](parsers/amrfinderplus_report_parser.py) 
-4. [RGI](parsers/rgi_report_parser.py) (includes RGI-BWT) 
-5. [resfinder](parsers/resfinder_report_parser.py) 
-6. [sraX](parsers/srax_report_parser.py) 
-7. [deepARG](parsers/deeparg_report_parser.py) 
-8. [kmerresistance](parsers/kmerresistance_report_parser.py) 
-9. [srst2](parsers/srst2_report_parser.py) 
-10. [staramr](parsers/staramr_report_parser.py) 
-11. [c-sstar](parsers/csstar_report_parser.py)
-12. [amrplusplus](parsers/amrplusplus_report_parser.py)
-13. [resfams](parsers/resfams_report_parser.py)
-14. [groot](parsers/groot_report_parser.py)
+1. [abricate](hAMRonization/AbricateIO.py)
+2. [ariba](hAMRonization/AribaIO.py)
+3. [NCBI AMRFinderPlus](hAMRonization/AmrFinderPlusIO.py)
+4. [RGI](hAMRonization/RgiIO.py) (includes RGI-BWT) 
+5. [resfinder](hAMRonization/ResFinderIO.py)
+6. [sraX](hAMRonization/SraxIO.py)
+7. [deepARG](hAMRonization/DeepArgIO.py)
+8. [kmerresistance](hAMRonization/KmerResistanceIO.py)
+9. [srst2](hAMRonization/Srst2IO.py)
+10. [staramr](hAMRonization/StarAmrIO.py)
+11. [c-sstar](hAMRonization/CSStarIO.py)
+12. [amrplusplus](hAMRonization/AmrPlusPlusIO.py)
+13. [resfams](hAMRonization/ResFamsIO.py)
+14. [groot](hAMRonization/GrootIO.py)
 
 Parsers excluded as needing variant specification to implement:
 1. [mykrobe](test/data/raw_outputs/mykrobe/report.json)
