@@ -100,12 +100,23 @@ class hAMRonizedResultIterator(ABC):
         Start parsing the file and return an hAMRonizedResult iterator
         """
 
-    def write(self, output_location=None, output_format='tsv'):
+    def write(self, output_location=None, output_format='tsv',
+              append_mode=False):
         """
         Class to write to output the hAMRonized report (to either stdout or
         a filehandle) in TSV or json format
+
+        If append mode is used then the tsv header is not printed
         """
-        out_fh = open(output_location, 'w') if output_location else sys.stdout
+        if output_location:
+            if os.path.exists(output_location):
+                append_mode = True
+                out_fh = open(output_location, 'a')
+            else:
+                out_fh = open(output_location, 'w')
+        else:
+            out_fh = sys.stdout
+
         if output_format == 'tsv':
             # to get first result to build csvwriter
             try:
@@ -116,7 +127,10 @@ class hAMRonizedResultIterator(ABC):
             writer = csv.DictWriter(out_fh, delimiter='\t',
                                     fieldnames=fieldnames,
                                     lineterminator=os.linesep)
-            writer.writeheader()
+
+            # don't write header if appending
+            if not append_mode:
+                writer.writeheader()
             writer.writerow(dataclasses.asdict(first_result))
             for result in self:
                 writer.writerow(dataclasses.asdict(result))
@@ -139,7 +153,7 @@ def generate_tool_subparser(subparser, analysis_tool):
     (used to generate a tool-specific cli-parser and a generic tool parser)
     """
     report_file = hAMRonization._ReportFileToUse[analysis_tool]
-    description = f"Applies hAMRonization specification to output from "\
+    description = f"Applies hAMRonization specification to output(s) from "\
                   f"{analysis_tool} ({report_file})"
     usage = f"hamronize.py {analysis_tool} <options>"
     help = f"hAMRonize {analysis_tool}'s output report i.e., {report_file}"
@@ -149,7 +163,7 @@ def generate_tool_subparser(subparser, analysis_tool):
                                        usage=usage,
                                        help=help)
 
-    tool_parser.add_argument("report", help="Path to tool report")
+    tool_parser.add_argument("report", nargs="+", help="Path to report(s)")
     tool_parser.add_argument("--format", default="tsv",
                              help="Output format (tsv or json)")
     tool_parser.add_argument("--output", default=None, help="Output location")
@@ -170,7 +184,7 @@ def generic_cli_interface():
     parser
     """
     parser = argparse.ArgumentParser(description="Convert AMR gene detection "
-                                                 "tool output to "
+                                                 "tool output(s) to "
                                                  "hAMRonization specification"
                                                  " format",
                                      prog='hamronize',
@@ -193,11 +207,19 @@ def generic_cli_interface():
         metadata = {field: getattr(args, field)
                     for field in required_mandatory_metadata}
 
-        # parse report and write to specified
-        parsed_report = hAMRonization.parse(args.report, metadata,
-                                            args.analysis_tool)
-        parsed_report.write(output_location=args.output,
-                            output_format=args.format)
+        # parse report and
+        for ix, report in enumerate(args.report):
+            parsed_report = hAMRonization.parse(report, metadata,
+                                                args.analysis_tool)
+            if ix == 0:
+                parsed_report.write(output_location=args.output,
+                                output_format=args.format)
+            else:
+                parsed_report.write(output_location=args.output,
+                                    output_format=args.format,
+                                    append_mode=True)
+
+
     else:
         parser.print_help()
         exit(1)

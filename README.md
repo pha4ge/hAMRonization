@@ -71,6 +71,13 @@ Therefore, hAMRonizing abricates output:
 python hamronize.py abricate ../test/data/raw_outputs/abricate/report.tsv --reference_database_version db_v_1 --analysis_software_version tool_v_1 --format json
 ```
 
+To parser multiple reports from the same tool at once just give a list of reports as the argument,
+and they will be concatenated appropriately (i.e. only one header for tsv)
+
+```
+python hamronize.py rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --reference_database_version card_v1 test/data/raw_outputs/rgi/rgi.txt test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt
+```
+
 ## Parsers
 
 Parsers needing tested (both automated and just sanity checking output), see [test.sh](parsers/test.sh) for example invocations.

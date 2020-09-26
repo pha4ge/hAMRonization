@@ -16,6 +16,9 @@ python hamronize.py rgi --input_file_name rgi_report --analysis_software_version
 python hamronize.py rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --reference_database_version card_v1 test/data/raw_outputs/rgi/rgi.txt --format tsv
 python hamronize.py rgi --input_file_name rgi_bwt_report --analysis_software_version rgi_bwt_v1 --reference_database_version card_v1 test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt --format json
 python hamronize.py rgi --input_file_name rgi_bwt_report --analysis_software_version rgi_bwt_v1 --reference_database_version card_v1 test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt --format tsv
+    
+# test multi-report usage
+python hamronize.py rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --reference_database_version card_v1 test/data/raw_outputs/rgi/rgi.txt test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt
 
 python hamronize.py resfinder --analysis_software_version resfinder_v1 --reference_database_version resfinder_db_v1 test/data/raw_outputs/resfinder/data_resfinder.json --format json
 python hamronize.py resfinder --analysis_software_version resfinder_v1 --reference_database_version resfinder_db_v1 test/data/raw_outputs/resfinder/data_resfinder.json --format tsv
