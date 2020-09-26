@@ -6,7 +6,7 @@ with open('README.md') as fh:
 
 setup(
     name='hAMRonization',
-    version='v0.1.0',
+    version='v1.0.0alpha',
     author=['Dan Fornika', 'Finlay Maguire'],
     author_email='dfornika@gmail.com',
     description='',
