@@ -1,21 +1,27 @@
 import setuptools
-from distutils.core import setup, Extension
+import re
+from distutils.core import setup
 
 with open('README.md') as fh:
     long_description = fh.read()
 
+with open('hAMRonization/__init__.py') as fh:
+    info = fh.read()
+    version = re.search('^__version__\s*=\s*"(.*)"',
+                        info, re.M).group(1)
+
 setup(
     name='hAMRonization',
-    version='v1.0.0alpha',
-    author=['Dan Fornika', 'Finlay Maguire'],
-    author_email='dfornika@gmail.com',
-    description='',
+    version=version,
+    author=['Finlay Maguire', 'Dan Fornika'],
+    author_email='finlaymaguire@gmail.com',
+    description='hAMRonization AMR gene detection implementation',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/pha4ge/hAMRonization ",
+    url="https://github.com/pha4ge/hAMRonization",
     entry_points={
         'console_scripts': [
-            'hamronize = hamronize:main'
+            'hamronize = hAMRonization.hamronize:main'
             ],
         },
     packages=['hAMRonization'],
