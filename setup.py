@@ -14,6 +14,7 @@ setup(
     name='hAMRonization',
     version=version,
     author=['Finlay Maguire', 'Dan Fornika'],
+    python_require='>=3.7',
     author_email='finlaymaguire@gmail.com',
     description='hAMRonization AMR gene detection implementation',
     long_description=long_description,
