@@ -3,17 +3,17 @@
 This repo contains the hAMRonization module and CLI parser tools combine the outputs of 
 disparate antimicrobial resistance gene detection tools into a single unified format.
 
-This is an implementation of the hAMRonization AMR detection specification scheme:
+This is an implementation of the hAMRonization AMR detection specification scheme.
 
 ## Installation
 
-This tool can be installed directly from pip (python>=3.7) without cloning the repo.
+This tool requires python>=3.7 and can be installed directly from pip without cloning the repo.
 
 ```
 pip install git+https://github.com/pha4ge/hAMRonization
 ```
 
-Alternatively just clone the repo and run pip within it:
+Or just clone the repo and run pip:
 
 ```
 git clone https://github.com/pha4ge/hAMRonization
