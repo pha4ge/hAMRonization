@@ -5,14 +5,19 @@ disparate antimicrobial resistance gene detection tools into a single unified fo
 
 This is an implementation of the hAMRonization AMR detection specification scheme:
 
+## Installation
 
-## Setting up a Development Environment
+This tool can be installed directly from pip (python>=3.7) without cloning the repo.
 
 ```
-conda create -n hAMRonization 
-conda activate hAMRonization
-cd hAMRonization
-pip install -e .
+pip install git+https://github.com/pha4ge/hAMRonization
+```
+
+Alternatively just clone the repo and run pip within it:
+
+```
+git clone https://github.com/pha4ge/hAMRonization
+pip install hAMRonization
 ```
 
 ## Usage
@@ -213,3 +218,13 @@ There is also an older set of test data in `test/data`, containing:
   * For the purposes of this project, a 'Report' is an output file (or collection of files) from an AMR analysis tool.
     A 'Result' is a single entry in a report. For example, a single line in an abricate report file is a single Antimicrobial
     Resistance 'Result'.
+    
+## Setting up a Development Environment
+
+```
+git clone https://github.com/pha4ge/hAMRonization
+conda create -n hAMRonization 
+conda activate hAMRonization
+cd hAMRonization
+pip install -e .
+```
