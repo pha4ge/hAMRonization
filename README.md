@@ -85,7 +85,7 @@ hamronize rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --
 
 
 
-### Using within scrripts
+### Using within scripts
 
 Alternatively, hAMRonization can be used within scripts (the metadata must contain the mandatory metadata that is not included in that tool's output, this can be checked by looking at the CLI flags in `hamronize <tool> --help`):
 
