@@ -19,14 +19,14 @@ class KmerResistanceIterator(hAMRonizedResultIterator):
             '#Template': 'reference_accession',
             'Score': None,
             'Expected': None,
-            'template length': 'reference_gene_length',
+            'Template_length': 'reference_gene_length',
             # should be double checked query/template are right
             'Template_Identity': None,
-            'template_coverage': 'coverage_percentage',
-            'query_id': 'sequence_identity',
+            'Template_Coverage': 'coverage_percentage',
+            'Query_Identity': 'sequence_identity',
             # should be checked
-            'query_coverage': None,
-            'depth': 'coverage_depth',
+            'Query_Coverage': None,
+            'Depth': 'coverage_depth',
             'q_value': None,
             'p_value': None,
             # will be parsed from #Template (only works for resfinder)
