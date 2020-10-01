@@ -19,7 +19,7 @@ class hAMRonizedResultIterator(ABC):
     AMR tool report is being parsed
     """
 
-    def __init__(self, source, field_map, metadata, mode="t"):
+    def __init__(self, source, field_map, metadata):
         """
         Create an hAMRonizedResultIterator for whichever tool report is
         being parsed
@@ -36,29 +36,20 @@ class hAMRonizedResultIterator(ABC):
         self.field_map = field_map
         self.metadata = metadata
 
+
+        if os.stat(source).st_size == 0:
+            print(f"Warning: {source} is empty", file=sys.stderr)
+
         try:
-            self.stream = open(source, "r" + mode)
-            self.should_close_stream = True
-        except TypeError:  # not a path, assume we received a stream
-            if mode == "t":
-                if source.read(0) != "":
-                    raise ValueError(
-                        "Files must be opened in text mode."
-                    ) from None
-            elif mode == "b":
-                if source.read(0) != b"":
-                    raise ValueError(
-                        "Files must be opened in binary mode."
-                    ) from None
-            else:
-                raise ValueError(f"Unknown mode {mode}") from None
-            self.stream = source
-            self.should_close_stream = False
+            self.stream = open(source, "r")
+        except FileNotFoundError:  # path doesn't exist
+            print(f"File {source} not found", file=sys.stderr)
+            exit(1)
+
         try:
             self.hAMRonized_results = self.parse(self.stream)
         except Exception:
-            if self.should_close_stream:
-                self.stream.close()
+            self.stream.close()
 
     def hAMRonize(self, report_data, metadata):
         """
@@ -82,8 +73,7 @@ class hAMRonizedResultIterator(ABC):
         try:
             return next(self.hAMRonized_results)
         except Exception:
-            if self.should_close_stream:
-                self.stream.close()
+            self.stream.close()
             raise
 
     def __iter__(self):
@@ -108,6 +98,7 @@ class hAMRonizedResultIterator(ABC):
 
         If append mode is used then the tsv header is not printed
         """
+
         if output_location:
             if os.path.exists(output_location) and append_mode == True:
                 out_fh = open(output_location, 'a')
@@ -120,19 +111,21 @@ class hAMRonizedResultIterator(ABC):
             # to get first result to build csvwriter
             try:
                 first_result = next(self)
-            except StopIteration:
-                raise ValueError(f"Input report empty: {self.source}")
-            fieldnames = first_result.__annotations__.keys()
-            writer = csv.DictWriter(out_fh, delimiter='\t',
-                                    fieldnames=fieldnames,
-                                    lineterminator=os.linesep)
+                fieldnames = first_result.__annotations__.keys()
+                writer = csv.DictWriter(out_fh, delimiter='\t',
+                                        fieldnames=fieldnames,
+                                        lineterminator=os.linesep)
 
-            # don't write header if appending
-            if not append_mode:
-                writer.writeheader()
-            writer.writerow(dataclasses.asdict(first_result))
-            for result in self:
-                writer.writerow(dataclasses.asdict(result))
+                # don't write header if appending
+                if not append_mode:
+                    writer.writeheader()
+                writer.writerow(dataclasses.asdict(first_result))
+                for result in self:
+                    writer.writerow(dataclasses.asdict(result))
+            # if the iterator is empty then do nothing
+            except StopIteration:
+                pass
+
 
         elif output_format == 'json':
             for result in self:
@@ -206,7 +199,8 @@ def generic_cli_interface():
         metadata = {field: getattr(args, field)
                     for field in required_mandatory_metadata}
 
-        # parse report and
+        # parse reports and write as appropriate (only first report with head
+        # in tsv mode)
         for ix, report in enumerate(args.report):
             parsed_report = hAMRonization.parse(report, metadata,
                                                 args.analysis_tool)
