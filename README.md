@@ -95,9 +95,10 @@ metadata = {"analysis_software_version": "1.0.1", "reference_database_version": 
 parsed_report = hAMRonization.parse("abricate_report.tsv", metadata, "abricate")
 ```
 
-Then either the `parsed_report` can be used as generator return hAMRonized result objects from the report:
+The `parsed_report` is then a generator that yields hAMRonized result objects from the parsed report:
 
-```for result in parsed_report:
+```
+for result in parsed_report:
       print(result)
 ```
 
