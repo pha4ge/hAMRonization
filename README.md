@@ -3,16 +3,21 @@
 This repo contains the hAMRonization module and CLI parser tools combine the outputs of 
 disparate antimicrobial resistance gene detection tools into a single unified format.
 
-This is an implementation of the hAMRonization AMR detection specification scheme:
+This is an implementation of the hAMRonization AMR detection specification scheme.
 
+## Installation
 
-## Setting up a Development Environment
+This tool requires python>=3.7 and can be installed directly from pip without cloning the repo.
 
 ```
-conda create -n hAMRonization 
-conda activate hAMRonization
-cd hAMRonization
-pip install -e .
+pip install git+https://github.com/pha4ge/hAMRonization
+```
+
+Or just clone the repo and run pip:
+
+```
+git clone https://github.com/pha4ge/hAMRonization
+pip install hAMRonization
 ```
 
 ## Usage
@@ -77,6 +82,37 @@ and they will be concatenated appropriately (i.e. only one header for tsv)
 ```
 hamronize rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --reference_database_version card_v1 test/data/raw_outputs/rgi/rgi.txt test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt
 ```
+
+
+
+### Using within scrripts
+
+Alternatively, hAMRonization can be used within scripts (the metadata must contain the mandatory metadata that is not included in that tool's output, this can be checked by looking at the CLI flags in `hamronize <tool> --help`):
+
+```
+import hAMRonization
+metadata = {"analysis_software_version": "1.0.1", "reference_database_version": "2019-Jul-28"}
+parsed_report = hAMRonization.parse("abricate_report.tsv", metadata, "abricate")
+```
+
+The `parsed_report` is then a generator that yields hAMRonized result objects from the parsed report:
+
+```
+for result in parsed_report:
+      print(result)
+```
+
+Alternatively, you can use the `.write` attribute to export all results left in the generator to a file (if a filepath isn't provided, this will write to stdout).
+
+```parsed_report.write('hAMRonized_abricate_report.tsv')```
+
+You can also output a `json` formatted hAMRonized report:
+
+`parsed_report.write('all_hAMRonized_abricate_report.json', output_format='json')`
+
+If you want to write multiple reports to one file, this `.write` method can accept `append_mode=True` to append rather than overwrite the output file and not include the header (in tsv format).
+
+`parsed_report.write('all_hAMRonized_abricate_report.tsv', append_mode=True)`
 
 ## Parsers
 
@@ -213,3 +249,13 @@ There is also an older set of test data in `test/data`, containing:
   * For the purposes of this project, a 'Report' is an output file (or collection of files) from an AMR analysis tool.
     A 'Result' is a single entry in a report. For example, a single line in an abricate report file is a single Antimicrobial
     Resistance 'Result'.
+    
+## Setting up a Development Environment
+
+```
+git clone https://github.com/pha4ge/hAMRonization
+conda create -n hAMRonization 
+conda activate hAMRonization
+cd hAMRonization
+pip install -e .
+```
