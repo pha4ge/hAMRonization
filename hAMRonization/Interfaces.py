@@ -109,8 +109,7 @@ class hAMRonizedResultIterator(ABC):
         If append mode is used then the tsv header is not printed
         """
         if output_location:
-            if os.path.exists(output_location):
-                append_mode = True
+            if os.path.exists(output_location) and append_mode == True:
                 out_fh = open(output_location, 'a')
             else:
                 out_fh = open(output_location, 'w')
