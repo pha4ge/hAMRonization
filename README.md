@@ -83,6 +83,36 @@ and they will be concatenated appropriately (i.e. only one header for tsv)
 hamronize rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --reference_database_version card_v1 test/data/raw_outputs/rgi/rgi.txt test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt
 ```
 
+
+
+### Using within scrripts
+
+Alternatively, hAMRonization can be used within scripts (the metadata must contain the mandatory metadata that is not included in that tool's output, this can be checked by looking at the CLI flags in `hamronize <tool> --help`):
+
+```
+import hAMRonization
+metadata = {"analysis_software_version": "1.0.1", "reference_database_version": "2019-Jul-28"}
+parsed_report = hAMRonization.parse("abricate_report.tsv", metadata, "abricate")
+```
+
+Then either the `parsed_report` can be used as generator return hAMRonized result objects from the report:
+
+```for result in parsed_report:
+      print(result)
+```
+
+Alternatively, you can use the `.write` attribute to export all results left in the generator to a file (if a filepath isn't provided, this will write to stdout).
+
+```parsed_report.write('hAMRonized_abricate_report.tsv')```
+
+You can also output a `json` formatted hAMRonized report:
+
+`parsed_report.write('all_hAMRonized_abricate_report.json', output_format='json')`
+
+If you want to write multiple reports to one file, this `.write` method can accept `append_mode=True` to append rather than overwrite the output file and not include the header (in tsv format).
+
+`parsed_report.write('all_hAMRonized_abricate_report.tsv', append_mode=True)`
+
 ## Parsers
 
 Parsers needing tested (both automated and just sanity checking output), see [test.sh](parsers/test.sh) for example invocations.
