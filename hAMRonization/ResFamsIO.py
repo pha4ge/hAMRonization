@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 
-import csv
 from collections import OrderedDict
-from .hAMRonizedResult import hAMRonizedResult
 from .Interfaces import hAMRonizedResultIterator
-
 
 required_metadata = ['analysis_software_version',
                      'reference_database_version',
@@ -21,9 +18,11 @@ class ResFamsIterator(hAMRonizedResultIterator):
         # needed as indexing into the positions
         self.field_mapping = OrderedDict([
                 ('target name', None),
-                ('accession1', None), #this is blank in resfams output
+                # this is blank in resfams output
+                ('accession1', None),
                 ('query name', "gene_name"),
-                ("_gene_symbol", "gene_symbol"), #extract from query name
+                # extract from query name
+                ("_gene_symbol", "gene_symbol"),
                 ('accession2', 'reference_accession'),
                 ("E-value_full", None),
                 ("score_full", None),
@@ -48,7 +47,8 @@ class ResFamsIterator(hAMRonizedResultIterator):
         Read each and return it
         """
         # skip any manually specified fields for later
-        report_fieldnames = [x for x in self.field_mapping.keys() if not x.startswith('_')]
+        report_fieldnames = [x for x in self.field_mapping.keys()
+                             if not x.startswith('_')]
         for result in handle:
             if not result.startswith('#'):
                 result = dict(zip(report_fieldnames, result.split()))

@@ -3,36 +3,135 @@
 This repo contains the hAMRonization module and CLI parser tools combine the outputs of 
 disparate antimicrobial resistance gene detection tools into a single unified format.
 
-This is an implementation of the hAMRonization AMR detection specification scheme:
+This is an implementation of the hAMRonization AMR detection specification scheme.
 
+## Installation
 
-## Setting up a Development Environment
+This tool requires python>=3.7 and can be installed directly from pip without cloning the repo.
 
 ```
-conda create -n hAMRonization 
-conda activate hAMRonization
-cd hAMRonization
-pip install -e .
+pip install git+https://github.com/pha4ge/hAMRonization
 ```
+
+Or just clone the repo and run pip:
+
+```
+git clone https://github.com/pha4ge/hAMRonization
+pip install hAMRonization
+```
+
+## Usage
+
+```
+>hamronize -h
+usage: hamronize <tool> <options>
+
+Convert AMR gene detection tool output to hAMRonization specification format
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --version         show program's version number and exit
+
+Tools with hAMRonizable reports:
+  {abricate,amrfinderplus,ariba,rgi,resfinder,srax,deeparg,kmerresistance,srst2,staramr,csstar,amrplusplus,resfams,groot}
+    abricate            hAMRonize abricate's output report i.e., OUTPUT.tsv
+    amrfinderplus       hAMRonize amrfinderplus's output report i.e., OUTPUT.tsv
+    ariba               hAMRonize ariba's output report i.e., OUTDIR/OUTPUT.tsv
+    rgi                 hAMRonize rgi's output report i.e., OUTPUT.txt or OUTPUT_bwtoutput.gene_mapping_data.txt
+    resfinder           hAMRonize resfinder's output report i.e., data_resfinder.json
+    srax                hAMRonize srax's output report i.e., sraX_detected_ARGs.tsv
+    deeparg             hAMRonize deeparg's output report i.e., OUTDIR/OUTPUT.mapping.ARG
+    kmerresistance      hAMRonize kmerresistance's output report i.e., OUTPUT.KmerRes
+    srst2               hAMRonize srst2's output report i.e., OUTPUT_srst2_report.tsv
+    staramr             hAMRonize staramr's output report i.e., resfinder.tsv
+    csstar              hAMRonize csstar's output report i.e., OUTPUT.tsv
+    amrplusplus         hAMRonize amrplusplus's output report i.e., gene.tsv
+    resfams             hAMRonize resfams's output report i.e., resfams.tblout
+    groot               hAMRonize groot's output report i.e., OUTPUT.tsv (from `groot report`)
+```
+
+To look at a specific tool e.g. `abricate`:
+```
+>hamronize abricate -h 
+usage: hamronize abricate <options>
+
+Applies hAMRonization specification to output from abricate (OUTPUT.tsv)
+
+positional arguments:
+  report                Path to tool report
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --format FORMAT       Output format (tsv or json)
+  --output OUTPUT       Output location
+  --analysis_software_version ANALYSIS_SOFTWARE_VERSION
+                        Input string containing the analysis_software_version for abricate
+  --reference_database_version REFERENCE_DATABASE_VERSION
+                        Input string containing the reference_database_version for abricate
+
+```
+
+Therefore, hAMRonizing abricates output:
+```
+hamronize abricate ../test/data/raw_outputs/abricate/report.tsv --reference_database_version db_v_1 --analysis_software_version tool_v_1 --format json
+```
+
+To parser multiple reports from the same tool at once just give a list of reports as the argument,
+and they will be concatenated appropriately (i.e. only one header for tsv)
+
+```
+hamronize rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --reference_database_version card_v1 test/data/raw_outputs/rgi/rgi.txt test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt
+```
+
+
+
+### Using within scripts
+
+Alternatively, hAMRonization can be used within scripts (the metadata must contain the mandatory metadata that is not included in that tool's output, this can be checked by looking at the CLI flags in `hamronize <tool> --help`):
+
+```
+import hAMRonization
+metadata = {"analysis_software_version": "1.0.1", "reference_database_version": "2019-Jul-28"}
+parsed_report = hAMRonization.parse("abricate_report.tsv", metadata, "abricate")
+```
+
+The `parsed_report` is then a generator that yields hAMRonized result objects from the parsed report:
+
+```
+for result in parsed_report:
+      print(result)
+```
+
+Alternatively, you can use the `.write` attribute to export all results left in the generator to a file (if a filepath isn't provided, this will write to stdout).
+
+```parsed_report.write('hAMRonized_abricate_report.tsv')```
+
+You can also output a `json` formatted hAMRonized report:
+
+`parsed_report.write('all_hAMRonized_abricate_report.json', output_format='json')`
+
+If you want to write multiple reports to one file, this `.write` method can accept `append_mode=True` to append rather than overwrite the output file and not include the header (in tsv format).
+
+`parsed_report.write('all_hAMRonized_abricate_report.tsv', append_mode=True)`
 
 ## Parsers
 
 Parsers needing tested (both automated and just sanity checking output), see [test.sh](parsers/test.sh) for example invocations.
 `
-1. [abricate](parsers/abricate_report_parser.py) 
-2. [ariba](parsers/ariba_report_parser.py)
-3. [NCBI AMRFinderPlus](parsers/amrfinderplus_report_parser.py) 
-4. [RGI](parsers/rgi_report_parser.py) (includes RGI-BWT) 
-5. [resfinder](parsers/resfinder_report_parser.py) 
-6. [sraX](parsers/srax_report_parser.py) 
-7. [deepARG](parsers/deeparg_report_parser.py) 
-8. [kmerresistance](parsers/kmerresistance_report_parser.py) 
-9. [srst2](parsers/srst2_report_parser.py) 
-10. [staramr](parsers/staramr_report_parser.py) 
-11. [c-sstar](parsers/csstar_report_parser.py)
-12. [amrplusplus](parsers/amrplusplus_report_parser.py)
-13. [resfams](parsers/resfams_report_parser.py)
-14. [groot](parsers/groot_report_parser.py)
+1. [abricate](hAMRonization/AbricateIO.py)
+2. [ariba](hAMRonization/AribaIO.py)
+3. [NCBI AMRFinderPlus](hAMRonization/AmrFinderPlusIO.py)
+4. [RGI](hAMRonization/RgiIO.py) (includes RGI-BWT) 
+5. [resfinder](hAMRonization/ResFinderIO.py)
+6. [sraX](hAMRonization/SraxIO.py)
+7. [deepARG](hAMRonization/DeepArgIO.py)
+8. [kmerresistance](hAMRonization/KmerResistanceIO.py)
+9. [srst2](hAMRonization/Srst2IO.py)
+10. [staramr](hAMRonization/StarAmrIO.py)
+11. [c-sstar](hAMRonization/CSStarIO.py)
+12. [amrplusplus](hAMRonization/AmrPlusPlusIO.py)
+13. [resfams](hAMRonization/ResFamsIO.py)
+14. [groot](hAMRonization/GrootIO.py)
 
 Parsers excluded as needing variant specification to implement:
 1. [mykrobe](test/data/raw_outputs/mykrobe/report.json)
@@ -150,3 +249,13 @@ There is also an older set of test data in `test/data`, containing:
   * For the purposes of this project, a 'Report' is an output file (or collection of files) from an AMR analysis tool.
     A 'Result' is a single entry in a report. For example, a single line in an abricate report file is a single Antimicrobial
     Resistance 'Result'.
+    
+## Setting up a Development Environment
+
+```
+git clone https://github.com/pha4ge/hAMRonization
+conda create -n hAMRonization 
+conda activate hAMRonization
+cd hAMRonization
+pip install -e .
+```

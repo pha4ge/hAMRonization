@@ -2,6 +2,7 @@
 
 import dataclasses
 
+
 @dataclasses.dataclass
 class hAMRonizedResult():
     """
@@ -58,9 +59,10 @@ class hAMRonizedResult():
         """
         for field in dataclasses.fields(self):
             value = getattr(self, field.name)
-            if not isinstance(value, field.type) and not value is None:
+            if not isinstance(value, field.type) and value:
                 try:
                     setattr(self, field.name, field.type(value))
                 except ValueError:
-                    raise ValueError(f"Expected {field.name} to be {field.type}, "
-                            f"got {repr(value)}")
+                    raise ValueError(f"Expected {field.name} "
+                                     f"to be {field.type}, "
+                                     f"got {repr(value)}")

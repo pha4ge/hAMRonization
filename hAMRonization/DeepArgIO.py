@@ -1,12 +1,12 @@
 #!/usr/bin/env python
 
 import csv
-from .hAMRonizedResult import hAMRonizedResult
 from .Interfaces import hAMRonizedResultIterator
 
 required_metadata = ['analysis_software_version',
-                    'reference_database_version',
-                    'input_file_name']
+                     'reference_database_version',
+                     'input_file_name']
+
 
 class DeepArgIterator(hAMRonizedResultIterator):
 
@@ -19,7 +19,8 @@ class DeepArgIterator(hAMRonizedResultIterator):
             "#ARG": 'gene_symbol',
             'query-start': 'query_start_nt',
             'query-end': 'query_stop_nt',
-            'read_id': 'contig_id', # not really but most appropriate field
+            # not really but most appropriate field
+            'read_id': 'contig_id',
             'predicted_ARG-class': 'drug_class',
             'best-hit': 'gene_name',
             'probability': None,
@@ -28,28 +29,29 @@ class DeepArgIterator(hAMRonizedResultIterator):
             'alignment-bitscore': None,
             'alignment-evalue': None,
             'counts': None,
-            '_reference_accession': 'reference_accession' # gather from splititng besthit
-            #'': 'input_file_name',
-            #'': 'query_start_aa',
-            #'': 'query_stop_aa',
-            #'': 'subject_start_aa',
-            #'': 'subject_stop_aa',
-            #'': 'subject_start_nt',
-            #'': 'subject_stop_nt',
-            #'': 'strand_orientation',
-            #'': 'coverage_depth',
-            #'': 'coverage_percentage',
-            #'': 'coverage_ratio',
-            #'': 'reference_database_id',
-            #'': 'reference_database_version',
-            #'': 'reference_gene_length',
-            #'': 'reference_protein_length',
-            #'': 'target_gene_length',
-            #'': 'target_protein_length',
-            #'': 'antimicrobial_agent',
-            #'': 'resistance_mechanism',
-            #'': 'analysis_software_name',
-            #'': 'analysis_software_version'
+            # gather from splititng besthit
+            '_reference_accession': 'reference_accession'
+            # '': 'input_file_name',
+            # '': 'query_start_aa',
+            # '': 'query_stop_aa',
+            # '': 'subject_start_aa',
+            # '': 'subject_stop_aa',
+            # '': 'subject_start_nt',
+            # '': 'subject_stop_nt',
+            # '': 'strand_orientation',
+            # '': 'coverage_depth',
+            # '': 'coverage_percentage',
+            # '': 'coverage_ratio',
+            # '': 'reference_database_id',
+            # '': 'reference_database_version',
+            # '': 'reference_gene_length',
+            # '': 'reference_protein_length',
+            # '': 'target_gene_length',
+            # '': 'target_protein_length',
+            # '': 'antimicrobial_agent',
+            # '': 'resistance_mechanism',
+            # '': 'analysis_software_name',
+            # '': 'analysis_software_version'
         }
 
         super().__init__(source, self.field_mapping, self.metadata)

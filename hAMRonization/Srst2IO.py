@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
 import csv
-from .hAMRonizedResult import hAMRonizedResult
 from .Interfaces import hAMRonizedResultIterator
-
 
 required_metadata = ['analysis_software_version',
                      'reference_database_version',
                      'reference_database_id',
                      'input_file_name']
+
 
 class Srst2Iterator(hAMRonizedResultIterator):
 
@@ -26,32 +25,33 @@ class Srst2Iterator(hAMRonizedResultIterator):
             'diffs': None,
             'uncertainty': None,
             'divergence': None,
-            'length': 'reference_gene_length', #needs checked if this is correct
+            # needs checked if this is correct
+            'length': 'reference_gene_length',
             'maxMAF': None,
             'clusterid': None,
             'seqid': 'reference_accession',
             'annotation': None,
-            #'': 'contig_id',
-            #'': 'query_start_aa',
-            #'': 'query_stop_aa',
-            #'': 'query_start_nt',
-            #'': 'query_stop_nt',
-            #'': 'subject_start_aa',
-            #'': 'subject_stop_aa',
-            #'': 'subject_start_nt',
-            #'': 'subject_stop_nt',
-            #'': 'strand_orientation',
-            #'': 'coverage_ratio',
-            #'': 'sequence_identity',
-            #'': 'reference_database_version',
-            #'': 'reference_protein_length',
-            #'': 'target_gene_length',
-            #'': 'target_protein_length',
-            #'': 'drug_class',
-            #'': 'antimicrobial_agent',
-            #'': 'resistance_mechanism',
-            #'': 'analysis_software_name',
-            #'': 'analysis_software_version'
+            # '': 'contig_id',
+            # '': 'query_start_aa',
+            # '': 'query_stop_aa',
+            # '': 'query_start_nt',
+            # '': 'query_stop_nt',
+            # '': 'subject_start_aa',
+            # '': 'subject_stop_aa',
+            # '': 'subject_start_nt',
+            # '': 'subject_stop_nt',
+            # '': 'strand_orientation',
+            # '': 'coverage_ratio',
+            # '': 'sequence_identity',
+            # '': 'reference_database_version',
+            # '': 'reference_protein_length',
+            # '': 'target_gene_length',
+            # '': 'target_protein_length',
+            # '': 'drug_class',
+            # '': 'antimicrobial_agent',
+            # '': 'resistance_mechanism',
+            # '': 'analysis_software_name',
+            # '': 'analysis_software_version'
         }
 
         super().__init__(source, self.field_mapping, self.metadata)

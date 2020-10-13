@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import csv
-from .hAMRonizedResult import hAMRonizedResult
 from .Interfaces import hAMRonizedResultIterator
-
 
 required_metadata = ['analysis_software_version',
                      'reference_database_version',
                      'input_file_name']
+
 
 class AmrFinderPlusIterator(hAMRonizedResultIterator):
 
@@ -43,22 +42,22 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
                     'Name of closest sequence': None,
                     'HMM id': None,
                     'HMM description': None
-                    #'': 'input_file_name',
-                    #'': 'query_start_aa',
-                    #'': 'query_stop_aa',
-                    #'': 'subject_start_aa',
-                    #'': 'subject_stop_aa',
-                    #'': 'subject_start_nt',
-                    #'': 'subject_stop_nt',
-                    #'': 'coverage_depth',
-                    #'': 'coverage_ratio',
-                    #'': 'reference_database_id',
-                    #'': 'reference_database_version',
-                    #'': 'reference_protein_length',
-                    #'': 'target_protein_length',
-                    #'': 'resistance_mechanism',
-                    #'': 'analysis_software_name',
-                    #'': 'analysis_software_version'
+                    # '': 'input_file_name',
+                    # '': 'query_start_aa',
+                    # '': 'query_stop_aa',
+                    # '': 'subject_start_aa',
+                    # '': 'subject_stop_aa',
+                    # '': 'subject_start_nt',
+                    # '': 'subject_stop_nt',
+                    # '': 'coverage_depth',
+                    # '': 'coverage_ratio',
+                    # '': 'reference_database_id',
+                    # '': 'reference_database_version',
+                    # '': 'reference_protein_length',
+                    # '': 'target_protein_length',
+                    # '': 'resistance_mechanism',
+                    # '': 'analysis_software_name',
+                    # '': 'analysis_software_version'
                 }
             else:
                 self.field_mapping = {
@@ -80,27 +79,27 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
                     'Name of closest sequence': None,
                     'HMM id': None,
                     'HMM description': None,
-                    #'': 'input_file_name',
-                    #'': 'contig_id',
-                    #'': 'query_start_aa',
-                    #'': 'query_stop_aa',
-                    #'': 'query_start_nt',
-                    #'': 'query_stop_nt',
-                    #'': 'subject_start_aa',
-                    #'': 'subject_stop_aa',
-                    #'': 'subject_start_nt',
-                    #'': 'subject_stop_nt',
-                    #'': 'strand_orientation',
-                    #'': 'coverage_depth',
-                    #'': 'coverage_ratio',
-                    #'': 'sequence_identity',
-                    #'': 'reference_database_id',
-                    #'': 'reference_database_version',
-                    #'': 'reference_gene_length',
-                    #'': 'target_gene_length',
-                    #'': 'resistance_mechanism',
-                    #'': 'analysis_software_name',
-                    #'': 'analysis_software_version'
+                    # '': 'input_file_name',
+                    # '': 'contig_id',
+                    # '': 'query_start_aa',
+                    # '': 'query_stop_aa',
+                    # '': 'query_start_nt',
+                    # '': 'query_stop_nt',
+                    # '': 'subject_start_aa',
+                    # '': 'subject_stop_aa',
+                    # '': 'subject_start_nt',
+                    # '': 'subject_stop_nt',
+                    # '': 'strand_orientation',
+                    # '': 'coverage_depth',
+                    # '': 'coverage_ratio',
+                    # '': 'sequence_identity',
+                    # '': 'reference_database_id',
+                    # '': 'reference_database_version',
+                    # '': 'reference_gene_length',
+                    # '': 'target_gene_length',
+                    # '': 'resistance_mechanism',
+                    # '': 'analysis_software_name',
+                    # '': 'analysis_software_version'
                     }
 
         super().__init__(source, self.field_mapping, self.metadata)
