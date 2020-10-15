@@ -1,37 +1,64 @@
-## Dummy Data for Testing
+# hARMonization Testing
 
-Singular hits for the Escherichia coli pOLA52 oqxA gene (NG_048024.1).
+To ensure correct functionality and reproducibly of the parsing modules implemented in hAMRonization module, 
+a series of unit and output sanity checks are implemented through [pytest](https://docs.pytest.org/en/stable/contents.html#).
 
-Dummy files provided
-* [abricate](dummy/abricate)
-* [ariba](dummy/ariba) 
-* [NCBI AMRFinderPlus](dummy/amrfinder)
-* [RGI](dummy/rgi)
-* [resfinder](dummy/resfinder)
-* [sraX](dummy/srax)
-* [kmerresistance](dummy/kmerresistance) 
-* [staramr](dummy/staramr)
-* [amrplusplus](dummy/amrplusplus)
+For testing purposes, a set of dummy results, containing a singular hit for the Escherichia coli pOLA52 oqxA 
+gene (NG_048024.1) are provided in [dummy](dummy).
 
+Dummy outputs available:
+- [x] [abricate](dummy/abricate)
+- [x] [amrfinder](dummy/amrfinder)
+- [ ] [amrplusplus](dummy/amrplusplus)
+- [x] [ariba](dummy/ariba)
+- [ ] [deepARG](dummy/deepARG)
+- [ ] [groot](dummy/groot)
+- [x] [kmerresistance](dummy/kmerresistance)
+- [ ] ~~mykrobe~~
+- [ ] ~~pointfinder~~
+- [ ] [resfams](dummy/resfinder)
+- [x] [resfinder](dummy/resfinder)
+- [x] [rgi](dummy/rgi)
+- [x] [srax](dummy/srax)
+- [ ] ~~srst2~~
+- [ ] [c-sstar](dummy/sstar)
+- [x] [staramr](dummy/staramr)
 
-Dummy files that need verification:
-* 7. [deepARG](dummy/deepARG) - one hit per read? 
+## How to implement and run the tests
 
-Not implemented:
-* srst2 - not implemented in the hAMRmonization_workflow
+`pytest` is a python framework that makes building simple and scalable tests easy. It's available on PyPI 
+so installing is just a matter of running `pip install -U pytest` on the command line.
 
-TODO
-* c-sstar
-* resfams
-* groot
-
-## How to run the rests
-
+To invoke the execution of the test just run 
 `pytest`
 
-# How to implement new tests
+pytest will run all files of the form test_*.py or *_test.py. The [..%] refers to the overall progress of running all 
+test cases. After it finishes, pytest then shows a failure report or a success message.
 
-# tests to be implemented
+## tests to be implemented
+
+### Sanity 
+In [test_parsers.py](test_parsers.py) the out sanity tests for the following parsers:
+- [x] abricate 
+- [x] amrfinder
+- [x] amrplusplus
+- [x] ariba
+- [ ] deepARG
+- [ ] groot
+- [x] kmerresistance
+- [ ] ~~mykrobe~~
+- [ ] ~~pointfinder~~
+- [ ] resfams
+- [x] resfinder
+- [x] rgi
+- [ ] srax
+- [ ] srst2
+- [ ] c-sstar
+- [ ] staramr
+
+### Unit test
+
+## ToDo
 - input file format, input file structure
 - expected hamronization output file, json and tsv
 - unit testing
