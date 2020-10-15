@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import csv
+import warnings
 from .Interfaces import hAMRonizedResultIterator
 
 required_metadata = ['analysis_software_version',
@@ -109,10 +110,20 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
         Read each and return it
         """
         # skip any manually specified fields for later
+        skipped_mutational = 0
         reader = csv.DictReader(handle, delimiter='\t')
         for result in reader:
             # replace NA value with None for consitency
             for field, value in result.items():
                 if value == "NA":
                     result[field] = None
+
+            # "point" for mutational variants in this field, homolog are "AMR"
+            if result['Element subtype'] != 'AMR':
+                skipped_mutational += 1
+
             yield self.hAMRonize(result, self.metadata)
+
+        if skipped_mutational > 0:
+            warnings.warn(f"Skipping {skipped_mutational} mutational AMR "
+                          f"records from {self.metadata['input_file_name']}")
