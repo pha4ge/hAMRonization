@@ -29,10 +29,12 @@ Dummy outputs available:
 `pytest` is a python framework that makes building simple and scalable tests easy. It's available on PyPI 
 so installing is just a matter of running `pip install -U pytest` on the command line.
 
+Tests can be executed on the root directory of the repository or in the test folder. 
 To invoke the execution of the test just run 
+
 `pytest`
 
-pytest will run all files of the form test_*.py or *_test.py. The [..%] refers to the overall progress of running all 
+`pytest` will run all files of the form test_*.py or *_test.py. The [..%] refers to the overall progress of running all 
 test cases. After it finishes, pytest then shows a failure report or a success message.
 
 ## tests to be implemented
@@ -51,7 +53,7 @@ In [test_parsers.py](test_parsers.py) the out sanity tests for the following par
 - [ ] resfams
 - [x] resfinder
 - [x] rgi
-- [ ] srax
+- [x] srax
 - [ ] srst2
 - [ ] c-sstar
 - [ ] staramr
