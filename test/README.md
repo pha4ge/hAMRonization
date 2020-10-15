@@ -40,7 +40,7 @@ test cases. After it finishes, pytest then shows a failure report or a success m
 ## tests to be implemented
 
 ### Sanity 
-In [test_parsers.py](test_parsers.py) the out sanity tests for the following parsers:
+In [test_sanity.py](test_sanity.py) the output sanity tests for the following parsers are implemented:
 - [x] abricate 
 - [x] amrfinder
 - [x] amrplusplus
