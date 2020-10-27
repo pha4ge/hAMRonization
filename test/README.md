@@ -20,7 +20,7 @@ Dummy outputs available:
 - [x] [resfinder](dummy/resfinder)
 - [x] [rgi](dummy/rgi)
 - [x] [srax](dummy/srax)
-- [ ] [srst2](dummy/s)
+- [x] [srst2](dummy/s)
 - [ ] [c-sstar](dummy/sstar)
 - [x] [staramr](dummy/staramr)
 
