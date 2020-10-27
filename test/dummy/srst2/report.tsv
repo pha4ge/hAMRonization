@@ -1,0 +1,2 @@
+Sample	DB	gene	allele	coverage	depth	diffs	uncertainty	divergence	length	maxMAF	clusterid	seqid	annotation
+Dummy	ResFinder	oqxA	oqxA	100.0	75.852	1snp		0.152	660	0.037	470	1995	oqxA_1_V00622; V00622; fluoroquinolone

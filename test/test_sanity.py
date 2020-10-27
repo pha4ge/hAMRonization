@@ -345,6 +345,7 @@ def test_srax():
         assert result.subject_start_nt is None
         assert result.subject_stop_nt is None
 
+
 def test_groot():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
                 "input_file_name": "Dummy", 'reference_database_id': "argannot"}
@@ -385,3 +386,87 @@ def test_groot():
         assert result.drug_class is None
         assert result.sequence_identity is None
         assert result.coverage_percentage is None
+
+
+def test_deeparg():
+    metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
+                'input_file_name': 'Dummy'}
+    parsed_report = hAMRonization.parse("dummy/deepARG/output.mapping.ARG.", metadata, "deeparg")
+
+    for result in parsed_report:
+        # assert mandatory fields
+        assert result.input_file_name == 'Dummy'
+        assert result.gene_symbol == 'OQXA'
+        assert result.gene_name == 'YP_001693237.1|FEATURES|oqxA|multidrug|oqxA'
+        assert result.reference_database_id == 'deeparg_db'
+        assert result.reference_database_version == '2019-Jul-28'
+        assert result.reference_accession == 'YP_001693237.1'
+        assert result.analysis_software_name == 'deeparg'
+        assert result.analysis_software_version == '0.0.1'
+
+        # optional fields - present in dummy dataset
+        assert result.drug_class == 'multidrug'
+        assert result.sequence_identity == 94.6
+        assert result.contig_id == "SNL153:124:HLM5WBCXX:1:2207:7453:53826"
+        assert result.query_start_nt == 49
+        assert result.query_stop_nt == 84
+
+        # missing data in report
+        assert result.coverage_percentage is None
+        assert result.strand_orientation is None
+        assert result.reference_gene_length is None
+        assert result.target_gene_length is None
+        assert result.antimicrobial_agent is None
+        assert result.reference_protein_length is None
+        assert result.coverage_depth is None
+        assert result.coverage_ratio is None
+        assert result.target_protein_length is None
+        assert result.resistance_mechanism is None
+        assert result.query_start_aa is None
+        assert result.query_stop_aa is None
+        assert result.subject_start_aa is None
+        assert result.subject_stop_aa is None
+        assert result.subject_start_nt is None
+        assert result.subject_stop_nt is None
+
+
+def test_srst2():
+    metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
+                "input_file_name": "Dummy", "reference_database_id": 'resfinder'}  # TODO - why sample name and referenceDB id?
+    parsed_report = hAMRonization.parse("dummy/srst2/report.tsv", metadata, "srst2")
+
+    for result in parsed_report:
+        # assert mandatory fields
+        assert result.input_file_name == 'Dummy'
+        assert result.gene_symbol == 'oqxA'
+        assert result.gene_name == 'oqxA'
+        assert result.reference_database_id == 'ResFinder'
+        assert result.reference_database_version == '2019-Jul-28'
+        assert result.reference_accession == '1995'
+        assert result.analysis_software_name == 'srst2'
+        assert result.analysis_software_version == '0.0.1'
+
+        # optional fields - present in dummy dataset
+        assert result.coverage_percentage == 100
+        assert result.reference_gene_length == 660
+        assert result.coverage_depth == 75.852
+
+        # missing data in report
+        assert result.drug_class is None
+        assert result.sequence_identity is None
+        assert result.contig_id is None
+        assert result.query_start_nt is None
+        assert result.query_stop_nt is None
+        assert result.strand_orientation is None
+        assert result.target_gene_length is None
+        assert result.antimicrobial_agent is None
+        assert result.reference_protein_length is None
+        assert result.coverage_ratio is None
+        assert result.target_protein_length is None
+        assert result.resistance_mechanism is None
+        assert result.query_start_aa is None
+        assert result.query_stop_aa is None
+        assert result.subject_start_aa is None
+        assert result.subject_stop_aa is None
+        assert result.subject_start_nt is None
+        assert result.subject_stop_nt is None

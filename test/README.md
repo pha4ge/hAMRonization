@@ -9,9 +9,9 @@ gene (NG_048024.1) are provided in [dummy](dummy).
 Dummy outputs available:
 - [x] [abricate](dummy/abricate)
 - [x] [amrfinder](dummy/amrfinder)
-- [ ] [amrplusplus](dummy/amrplusplus)
+- [x] [amrplusplus](dummy/amrplusplus)
 - [x] [ariba](dummy/ariba)
-- [ ] [deepARG](dummy/deepARG)
+- [x] [deepARG](dummy/deepARG)
 - [x] [groot](dummy/groot)
 - [x] [kmerresistance](dummy/kmerresistance)
 - [ ] ~~mykrobe~~
