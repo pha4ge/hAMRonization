@@ -271,10 +271,10 @@ def test_rgi():
         # assert mandatory fields
         assert result.input_file_name == 'Dummy'
         assert result.gene_symbol == 'oqxA'
-        assert result.gene_name == 'resistance-nodulation-cell division (RND) antibiotic efflux pump'  # Wrong?
+        assert result.gene_name == 'resistance-nodulation-cell division (RND) antibiotic efflux pump'
         assert result.reference_database_id == 'CARD'
         assert result.reference_database_version == '2019-Jul-28'
-        assert result.reference_accession == '3003922'  # ??
+        assert result.reference_accession == '3003922'
         assert result.analysis_software_name == 'rgi'
         assert result.analysis_software_version == '5.1.0'
 

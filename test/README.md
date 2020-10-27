@@ -20,7 +20,7 @@ Dummy outputs available:
 - [x] [resfinder](dummy/resfinder)
 - [x] [rgi](dummy/rgi)
 - [x] [srax](dummy/srax)
-- [ ] ~~srst2~~
+- [ ] [srst2](dummy/s)
 - [ ] [c-sstar](dummy/sstar)
 - [x] [staramr](dummy/staramr)
 
@@ -62,6 +62,6 @@ In [test_sanity.py](test_sanity.py) the output sanity tests for the following pa
 
 ## ToDo
 - input file format, input file structure
-- expected hamronization output file, json and tsv
-- unit testing
+- expected hamronization output file, json and tsv yes
+- unit testing no
 - the json parsing of resfinder -> not working properly? passes silly assert tests without errors
