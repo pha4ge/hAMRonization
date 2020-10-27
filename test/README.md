@@ -12,7 +12,7 @@ Dummy outputs available:
 - [ ] [amrplusplus](dummy/amrplusplus)
 - [x] [ariba](dummy/ariba)
 - [ ] [deepARG](dummy/deepARG)
-- [ ] [groot](dummy/groot)
+- [x] [groot](dummy/groot)
 - [x] [kmerresistance](dummy/kmerresistance)
 - [ ] ~~mykrobe~~
 - [ ] ~~pointfinder~~
