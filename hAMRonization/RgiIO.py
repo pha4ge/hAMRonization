@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import csv
+import warnings
 import math
 from .Interfaces import hAMRonizedResultIterator
 
@@ -130,10 +131,21 @@ class RgiIterator(hAMRonizedResultIterator):
         """
         # skip any manually specified fields for later
         reader = csv.DictReader(handle, delimiter='\t')
+        skipped_mutational = 0
         for result in reader:
+            if 'Model_type' in result:
+                if result['Model_type'] != 'protein homolog model':
+                    skipped_mutational += 1
+                    continue
+
+
             # round down average length of coverage so its comparable to other
             # target lengths
             if 'Average Length Coverage (bp)' in result:
                 result['Average Length Coverage (bp)'] = \
                     math.floor(float(result['Average Length Coverage (bp)']))
             yield self.hAMRonize(result, self.metadata)
+
+        if skipped_mutational > 0:
+            warnings.warn(f"Skipping {skipped_mutational} mutational AMR "
+                          f"records from {self.metadata['input_file_name']}")
