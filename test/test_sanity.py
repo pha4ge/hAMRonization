@@ -470,3 +470,45 @@ def test_srst2():
         assert result.subject_stop_aa is None
         assert result.subject_start_nt is None
         assert result.subject_stop_nt is None
+
+
+def test_csstar():
+    metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
+                "input_file_name": "Dummy", "reference_database_id": 'ResFinder'}
+    parsed_report = hAMRonization.parse("dummy/sstar/report.tsv", metadata, "csstar")
+
+    for result in parsed_report:
+        # assert mandatory fields
+        assert result.input_file_name == 'Dummy'
+        assert result.gene_symbol == 'oqxA'
+        assert result.gene_name == 'oqxA'
+        assert result.reference_database_id == 'ResFinder'
+        assert result.reference_database_version == '2019-Jul-28'
+        assert result.reference_accession == 'oqxA'
+        assert result.analysis_software_name == 'csstar'
+        assert result.analysis_software_version == '0.0.1'
+
+        # optional fields - present in dummy dataset
+        assert result.reference_gene_length == 1176
+        assert result.target_gene_length == 1176
+        assert result.sequence_identity == 99.575
+        assert result.contig_id == 'NZ_LR792628.1'
+
+        # missing data in report
+        assert result.coverage_percentage is None
+        assert result.coverage_depth is None
+        assert result.drug_class is None
+        assert result.query_start_nt is None
+        assert result.query_stop_nt is None
+        assert result.strand_orientation is None
+        assert result.antimicrobial_agent is None
+        assert result.reference_protein_length is None
+        assert result.coverage_ratio is None
+        assert result.target_protein_length is None
+        assert result.resistance_mechanism is None
+        assert result.query_start_aa is None
+        assert result.query_stop_aa is None
+        assert result.subject_start_aa is None
+        assert result.subject_stop_aa is None
+        assert result.subject_start_nt is None
+        assert result.subject_stop_nt is None

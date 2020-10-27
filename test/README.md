@@ -21,7 +21,7 @@ Dummy outputs available:
 - [x] [rgi](dummy/rgi)
 - [x] [srax](dummy/srax)
 - [x] [srst2](dummy/s)
-- [ ] [c-sstar](dummy/sstar)
+- [x] [c-sstar](dummy/sstar)
 - [x] [staramr](dummy/staramr)
 
 ## How to implement and run the tests
