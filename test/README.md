@@ -45,8 +45,8 @@ In [test_sanity.py](test_sanity.py) the output sanity tests for the following pa
 - [x] amrfinder
 - [x] amrplusplus
 - [x] ariba
-- [ ] deepARG
-- [ ] groot
+- [x] deepARG
+- [x] groot
 - [x] kmerresistance
 - [ ] ~~mykrobe~~
 - [ ] ~~pointfinder~~
@@ -54,9 +54,9 @@ In [test_sanity.py](test_sanity.py) the output sanity tests for the following pa
 - [x] resfinder
 - [x] rgi
 - [x] srax
-- [ ] srst2
-- [ ] c-sstar
-- [ ] staramr
+- [x] srst2
+- [x] c-sstar
+- [x] staramr
 
 ### Unit test
 
