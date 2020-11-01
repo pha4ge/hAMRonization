@@ -8,6 +8,7 @@ import argparse
 import dataclasses
 from abc import ABC, abstractmethod
 import hAMRonization
+import hAMRonization.summarize
 from .hAMRonizedResult import hAMRonizedResult
 
 
@@ -238,15 +239,14 @@ def generic_cli_interface():
                                        usage=usage,
                                        help=summarize_help)
 
-    summarize_subparser.add_argument("-t", "--report_type",
+    summarize_subparser.add_argument("-t", "--summary_type",
                                      choices=['tsv', 'json', 'interactive'],
                                      default='tsv',
                                      help="Which summary report format to "
                                           "generate")
 
     summarize_subparser.add_argument("-o", "--output", type=str,
-                                     default=\
-                                       "hAMRonized_AMR_report.{html,json,tsv}",
+                                     default=None,
                                      help="Output file path for summary")
 
     summarize_subparser.add_argument("hamronized_reports", nargs="+",
@@ -276,7 +276,7 @@ def generic_cli_interface():
 
     elif args.analysis_tool == 'summarize':
         hAMRonization.summarize.summarize_reports(args.hamronized_reports,
-                                                  args.interactive,
+                                                  args.summary_type,
                                                   args.output)
         exit(0)
     else:
