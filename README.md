@@ -76,14 +76,40 @@ Therefore, hAMRonizing abricates output:
 hamronize abricate ../test/data/raw_outputs/abricate/report.tsv --reference_database_version db_v_1 --analysis_software_version tool_v_1 --format json
 ```
 
-To parser multiple reports from the same tool at once just give a list of reports as the argument,
+To parse multiple reports from the same tool at once just give a list of reports as the argument,
 and they will be concatenated appropriately (i.e. only one header for tsv)
 
 ```
 hamronize rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --reference_database_version card_v1 test/data/raw_outputs/rgi/rgi.txt test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt
 ```
 
+You can summarize hAMRonized reports regardless of format using the 'summarize'
+function:
 
+```
+> hamronize summarize -h
+usage: hamronize summarize <options> <list of reports>
+
+Concatenate and summarize AMR detection reports
+
+positional arguments:
+  hamronized_reports    list of hAMRonized reports
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -t {tsv,json,interactive}, --summary_type {tsv,json,interactive}
+                        Which summary report format to generate
+  -o OUTPUT, --output OUTPUT
+                        Output file path for summary
+```
+
+This will take a list of report and create single sorted report in the 
+specified format just containing the unique entries across input reports.
+This can handle mixed json and tsv hamronized report formats.
+
+```
+hamronize summarize -o combined_report.tsv -t tsv abricate.json ariba.tsv
+```
 
 ### Using within scripts
 
@@ -259,3 +285,4 @@ conda activate hAMRonization
 cd hAMRonization
 pip install -e .
 ```
+
