@@ -14,8 +14,6 @@ def generate_interactive_report(combined_report_data):
 
     raise NotImplementedError
 
-    return html_report
-
 
 def check_report_type(file_path):
     """
