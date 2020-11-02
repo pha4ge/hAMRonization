@@ -7,7 +7,8 @@ This is an implementation of the hAMRonization AMR detection specification schem
 
 ## Installation
 
-This tool requires python>=3.7 and can be installed directly from pip without cloning the repo.
+This tool requires python>=3.7 and [pandas](https://pandas.pydata.org/)
+and can be installed directly from pip without cloning the repo.
 
 ```
 pip install git+https://github.com/pha4ge/hAMRonization
