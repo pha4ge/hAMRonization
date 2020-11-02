@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Example</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <div class="container bg-light">
+    <div class="row">
+        <div class="container bg-light" id="dynamic-table">
+    <script>
+   //parse JSON
+    var obj = JSON.parse('[{"input_file_name": "Genome1", "Tool1": [{"gene_name": "geneA", "gene_data": [{"coverage_proportion": 0.99}, {"sequence_identity": 0.76}, {"drug_class": "penam"}]}, {"gene_name": "geneB", "gene_data": [{"coverage_proportion": 0.02}, {"sequence_identity": 0.53}, {"drug_class": "aminogylcoside"}]}], "Tool2": [{"gene_name": "geneC", "gene_data": [{"coverage_proportion": 0.89}, {"sequence_identity": 0.85}, {"drug_class": "penam"}]}, {"gene_name": "geneA", "gene_data": [{"coverage_proportion": 0.12}, {"sequence_identity": 0.63}, {"drug_class": "aminogylcoside"}]}], "Tool3": [{"gene_name": "geneB", "gene_data": [{"coverage_proportion": 0.93}, {"sequence_identity": 0.71}, {"drug_class": "penam"}]}, {"gene_name": "geneZ", "gene_data": [{"coverage_proportion": 0.12}, {"sequence_identity": 0.73}, {"drug_class": "aminogylcoside"}]}]}, {"input_file_name": "Genome2", "Tool1": [{"gene_name": "geneD", "gene_data": [{"condfidence": 0.01}, {"sequence_identity": 0.02}, {"drug_class": "unknown"}]}, {"gene_name": "geneF", "gene_data": [{"coverage_proportion": 1.000000001}, {"sequence_identity": 0.78}, {"drug_class": "cephalosporin"}]}], "Tool2": [{"gene_name": "geneD", "gene_data": [{"condfidence": 0.12}, {"sequence_identity": 0.2}, {"drug_class": "unknown"}]}, {"gene_name": "geneF", "gene_data": [{"coverage_proportion": 0.99}, {"sequence_identity": 0.8}, {"drug_class": "cephalosporin"}]}], "Tool3": [{"gene_name": "geneD", "gene_data": [{"condfidence": 0.21}, {"sequence_identity": 0.12}, {"drug_class": "unknown"}]}, {"gene_name": "geneF", "gene_data": [{"coverage_proportion": 0.76}, {"sequence_identity": 0.79}, {"drug_class": "cephalosporin"}]}, {"gene_name": "geneF", "gene_data": [{"coverage_proportion": 0.05}, {"sequence_identity": 0.5}, {"drug_class": "aminogylcoside"}]}]}]')
+
+
+    function CreateTableFromJSON(){
+      //get values for html header
+      // Tool1, Tool2, Tool3
+      var columns = [];
+      for (var i = 0; i < obj.length; i++){
+        for (var key in obj[i]){
+          if (columns.indexOf(key) === -1){
+            columns.push(key);
+          }
+        }
+      }
+      //Create Table
+      var table = document.createElement("table");
+
+      //make table header row
+      var tr = table.insertRow(-1);
+      for (var i = 0; i<columns.length; i++){
+        var th = document.createElement("th"); //Header
+        // skip putting the input_file_name as the row label header
+        if (i == 0) {
+            th.innerHTML = '';
+        } else {
+            th.innerHTML = columns[i];
+        }
+        tr.appendChild(th);
+      }
+      // Add other data as Rows
+      for (var i = 0; i < obj.length; i++){
+        tr = table.insertRow(-1);
+
+        for (var j=0; j<columns.length; j++){
+          var tableCell = tr.insertCell(-1);
+          var entry = obj[i][columns[j]];
+
+          //If type is object, we make a list for the entry
+          // This is the "list of genes"
+
+          if(typeof entry === 'object' && entry !== null){
+            console.log("CHECK");
+            //create a list
+            var list = document.createElement("ul");
+            list.setAttribute("class", "list-group");
+            //for each gene, put the name in the list
+            for (var k=0; k < entry.length; k++){
+              // we can use html5 data-attributes to store data on the cells.
+              //var entryID = 'entry'.concat(i,j,k);
+              var listBullet = document.createElement('li');
+
+              listBullet.setAttribute("class", "list-group-item gene");
+              // we can use html5 data-attributes to store data on the cells.
+              // The data must be type string.
+              var geneData = JSON.stringify(entry[k].gene_data);
+              listBullet.setAttribute("data-gene", geneData);
+              listBullet.innerHTML = entry[k].gene_name;
+              list.appendChild(listBullet);
+            }
+            tableCell.innerHTML = list.outerHTML;
+            console.log(list);
+          }
+
+          //otherwise, the entry is the genome name.
+          else{
+            tableCell.innerHTML = entry;
+            tableCell.setAttribute("class", "genome");
+          }
+        }
+      }
+      //Add the table to a container div
+      var divContainer = document.getElementById("dynamic-table");
+      divContainer.innerHTML = "";
+      divContainer.appendChild(table);
+
+      //Now that the table exists, add OnClick listeners to all the dna-gene class objects
+      var geneElements = document.getElementsByClassName('gene');
+      for (var i = 0; i < geneElements.length; i++){
+        geneElements[i].addEventListener('click', displayGeneData, false);
+      }
+    }
+
+    //function to display gene data
+    function displayGeneData(){
+      data = JSON.parse(this.getAttribute('data-gene'));
+
+      var list = document.createElement("ul");
+      list.setAttribute("class", "list-group-flush");
+
+      //retrieve the data, format it as strings
+      for (var i = 0; i < data.length; i++){
+        var entry = data[i];
+        var output = "";
+        for (j in entry){
+          output = output.concat(j, ": ", entry[j]);
+        }
+        console.log(output);
+        //add an entry to the list
+        var listBullet = document.createElement('li');
+        listBullet.setAttribute("class", "list-group-item");
+        listBullet.innerHTML = output;
+        console.log(output);
+        //console.log(listBullet);
+        list.appendChild(listBullet);
+      }
+      //display the list
+      var divContainer = document.getElementById('data-display');
+      divContainer.innerHTML = "";
+      divContainer.appendChild(list);
+    }
+
+
+        CreateTableFromJSON()
+        </script>
+          <!--<input type='button' onclick='CreateTableFromJSON()' value='make table'/>-->
+      </div>
+    </div>
+    <div class="row">
+      <div class="container bg-light" id="data-display">
+      </div>
+    </div>
+  </div>
+
+  </body>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type='text/javascript'>
+ 
+</html>
