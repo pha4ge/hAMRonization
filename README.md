@@ -112,6 +112,10 @@ This can handle mixed json and tsv hamronized report formats.
 hamronize summarize -o combined_report.tsv -t tsv abricate.json ariba.tsv
 ```
 
+The interactive report option will produce an html file that can be opened
+within the browser for navigable data exploration (feature developed
+with @alexmanuele).
+
 ### Using within scripts
 
 Alternatively, hAMRonization can be used within scripts (the metadata must contain the mandatory metadata that is not included in that tool's output, this can be checked by looking at the CLI flags in `hamronize <tool> --help`):
