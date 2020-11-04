@@ -27,7 +27,7 @@ def format_interactive_json(combined_records):
 
     tool_groups = configs.groupby('analysis_software_name')
     configs['display_name'] = configs['analysis_software_name'] + \
-                                    tool_groups.cumcount().apply(lambda x:f"\n(config {x})")
+                                    tool_groups.cumcount().apply(lambda x:f": config {x}")
 
     config_display_names = configs.set_index('config')['display_name'].to_dict()
     combined_records['config_display_name'] = combined_records['config'].apply(lambda x: config_display_names[x])
@@ -66,7 +66,10 @@ def generate_interactive_report(combined_report_data):
     """
     Generate interactive HTML/js report based on what alex sent
     """
+    # escape any single quotes
     tidied_json = format_interactive_json(combined_report_data)
+
+    tidied_json = tidied_json.replace("'", "\\'")
 
     html_template ="""<!DOCTYPE html>
 <html>
@@ -85,7 +88,7 @@ def generate_interactive_report(combined_report_data):
         <div class="container bg-light" id="dynamic-table">
     <script type='text/javascript'>
    //parse JSON
-    var hamronized_data = JSON.parse($json_data)
+    var hamronized_data = JSON.parse('$json_data')
 
 
     function CreateTableFromJSON(){
@@ -211,6 +214,12 @@ def generate_interactive_report(combined_report_data):
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <style type="text/css">
+    td
+    {
+        padding:0 15px;
+        }
+    </style>
 
 </html>"""
 
