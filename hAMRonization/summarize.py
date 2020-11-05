@@ -71,157 +71,252 @@ def generate_interactive_report(combined_report_data):
 
     tidied_json = tidied_json.replace("'", "\\'")
 
+
+
     html_template ="""<!DOCTYPE html>
-<html>
-  <head>
-    <title>Example</title>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-  </head>
-  <body>
-    <div class="container bg-light">
-    <div class="row">
-        <div class="container bg-light" id="dynamic-table">
-    <script type='text/javascript'>
-   //parse JSON
-    var hamronized_data = JSON.parse('$json_data')
-
-
-    function CreateTableFromJSON(){
-      //get values for html header
-      // Tool1, Tool2, Tool3
-      var columns = [];
-      for (var i = 0; i < hamronized_data.length; i++){
-        for (var toolconfig in hamronized_data[i]){
-          if (columns.indexOf(toolconfig) === -1){
-            columns.push(toolconfig);
+    <html>
+      <head>
+        <title>Example</title>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style>
+          .selected{
+            background-color: gold;
           }
-        }
-      }
+          .search_hit{
+            background-color: paleturquoise;
+          }
+          .amr_hit:hover{
+            background-color: lemonchiffon;
+          }
+          td
+            {
+              padding:0 15px;
+             }
+        </style>
+      </head>
+      <body>
+        <!-- Navbar -->
+        <nav class="navbar sticky-top navbar-light bg-light">
+          <div class="container">
+            <a class="navbar-brand" href="#">
+              <img src="https://pha4ge.org/wp-content/uploads/2020/04/logob.png" width="320" height="74" alt="">
+            </a>
+            <form class="form-inline my-2 my-lg-0">
+          <input id="gene-search" class="form-control mr-sm-2" onkeyup="geneSearch()" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        </div>
+        </nav>
+        <div class="container bg-light">
+        <div class="row">
+          <div class="container bg-light" id="dynamic-table">
+              <!--<input type='button' onclick='CreateTableFromJSON()' value='make table'/>-->
+          </div>
+        </div>
+        <div class="row">
+          <div class="container" id="data-display">
+          </div>
+        </div>
+      </div>
+     <!-- JavaScript -->
+     <script type='text/javascript'>
+    //parse JSON
+     var hamronized_data = JSON.parse('$json_data');
 
-     //Create Table
-      var table = document.createElement("table");
+     function CreateTableFromJSON(){
+       //get values for html header
+       // Tool1, Tool2, Tool3
+       var columns = [];
+       for (var i = 0; i < hamronized_data.length; i++){
+         for (var toolconfig in hamronized_data[i]){
+           if (columns.indexOf(toolconfig) === -1){
+             columns.push(toolconfig);
+           }
+         }
+       }
 
-      //make table header row
-      var tr = table.insertRow(-1);
-      for (var i = 0; i < columns.length; i++){
-        var th = document.createElement("th"); //Header
-        // skip putting the input_file_name as the row label header
-        if (i == 0) {
-            th.innerHTML = '';
-        } else {
-            th.innerHTML = columns[i];
-        }
-        tr.appendChild(th);
-      }
+      //Create Table
+       var table = document.createElement("table");
+       table.setAttribute("class", "table table-striped table-hover");
+       table.setAttribute("id", "results-table");
+       //make table header row
+       var tr = table.insertRow(-1);
+       for (var i = 0; i < columns.length; i++){
+         var th = document.createElement("th"); //Header
+         // skip putting the input_file_name as the row label header
+         if (i == 0) {
+             th.innerHTML = '';
+         } else {
+             th.innerHTML = columns[i];
+         }
+         tr.appendChild(th);
+       }
 
-      // Add other data as Rows
-      for (var i = 0; i < hamronized_data.length; i++){
-        tr = table.insertRow(-1);
+       // Add other data as Rows
+       for (var i = 0; i < hamronized_data.length; i++){
+         tr = table.insertRow(-1);
 
-		// for each row add the data to the appropriate column
-        for (var j=0; j<columns.length; j++){
-          var tableCell = tr.insertCell(-1);
-          var entry = hamronized_data[i][columns[j]];
+     // for each row add the data to the appropriate column
+         for (var j=0; j<columns.length; j++){
 
-          //If type is object, we make a list for the entry
-          // This is the "list of AMR hits"
+           var entry = hamronized_data[i][columns[j]];
 
-          if(typeof entry === 'object' && entry !== null){
-            //create a list
-            var list = document.createElement("ul");
-            list.setAttribute("class", "list-group");
-            //for each amr hit, put the gene_symbol in the list
-            for (var k=0; k < entry.length; k++){
-              // we can use html5 data-attributes to store data on the cells.
-              var listBullet = document.createElement('li');
+           //If type is object, we make a list for the entry
+           // This is the "list of AMR hits"
 
-              listBullet.setAttribute("class", "list-group-item amr_hit");
-              // we can use html5 data-attributes to store data on the cells.
-              // The data must be type string.
+           if(typeof entry === 'object' && entry !== null){
+             var tableCell = tr.insertCell(-1);
+             //we'll make the list collapsible for better looking table.
+             //create a collapse <p> and <button> and add it to the cell
+             var numResults = entry.length;
+             var dataID = "collapse" + i + j;
+             var collapse = document.createElement("p");
+             collapse.setAttribute("class", "list-group-item");
+             var collapseButton = document.createElement("button");
+             collapseButton.setAttribute("class", "btn btn-link");
+             collapseButton.setAttribute("type", "button");
+             collapseButton.innerHTML = numResults + " hits";
+             collapseButton.setAttribute("data-toggle", "collapse");
+             collapseButton.setAttribute("data-target", "#"+dataID);
+             collapse.appendChild(collapseButton);
+             tableCell.appendChild(collapse);
 
-              var amrData = JSON.stringify(entry[k]);
-              listBullet.setAttribute("hamronized_result", amrData);
-              listBullet.innerHTML = entry[k].gene_symbol;
-              list.appendChild(listBullet);
+             //create a list
+             var list = document.createElement("ul");
+             list.setAttribute("class", "list-group collapse");
+             list.setAttribute("id", dataID);
+             //for each amr hit, put the gene_symbol in the list
+             for (var k=0; k < entry.length; k++){
+               // we can use html5 data-attributes to store data on the cells.
+               //var listBullet = document.createElement('li');
+               var listBullet = document.createElement("a")
+               listBullet.setAttribute("class", "list-group-item list-group-item-action amr_hit");
+               listBullet.setAttribute("href", "#data-display");
+               // we can use html5 data-attributes to store data on the cells.
+               // The data must be type string.
+
+               var amrData = JSON.stringify(entry[k]);
+               listBullet.setAttribute("hamronized_result", amrData);
+               listBullet.innerHTML = entry[k].gene_symbol;
+               list.appendChild(listBullet);
+             }
+             tableCell.appendChild(list);
+           }
+
+           // if there were no hits
+           else if (entry==null){
+             var tableCell = tr.insertCell(-1);
+             var cell = document.createElement("p");
+             cell.setAttribute("class", "list-group-item list-group-item-action disabled");
+             cell.innerHTML = "No hits";
+             tableCell.appendChild(cell);
+
+           }
+
+           //otherwise, the entry is the input file name
+           else{
+             //instead of insertCell, manually create the <th> element
+             var tableCell = document.createElement("th");
+             tableCell.innerHTML = entry;
+             //tableCell.setAttribute("class", "input_file_name");
+             tableCell.setAttribute("scope", "row");
+             tr.appendChild(tableCell);
+           }
+         }
+       }
+       //Add the table to a container div
+       var divContainer = document.getElementById("dynamic-table");
+       divContainer.innerHTML = "";
+       divContainer.appendChild(table);
+
+       //Now that the table exists, add OnClick listeners to all the dna-gene class objects
+       var geneElements = document.getElementsByClassName('amr_hit');
+       for (var i = 0; i < geneElements.length; i++){
+         geneElements[i].addEventListener('click', displayAmrData, false);
+       }
+     }
+
+     //function to display gene data
+     function displayAmrData(){
+       amr_data = JSON.parse(this.getAttribute('hamronized_result'));
+       // flag the item as "selected". first remove "selected" from anything else
+       var selected = document.getElementsByClassName("selected");
+       for (var i = 0; i < selected.length; i++){
+         selected[i].classList.remove("selected");
+       }
+       this.classList.add("selected");
+       var list = document.createElement("ul");
+       list.setAttribute("class", "list-group-flush");
+
+
+       //retrieve the data, format it as strings
+       for (var field in amr_data){
+         var data = amr_data[field];
+     if (data !== null){
+           var output = "";
+       output = output.concat(field, ": ", data);
+
+           //add an entry to the list
+           var listBullet = document.createElement('li');
+           listBullet.setAttribute("class", "list-group-item");
+           listBullet.innerHTML = output;
+           list.appendChild(listBullet);
+     }
+       }
+       //display the list
+       var divContainer = document.getElementById('data-display');
+       divContainer.innerHTML = "";
+       divContainer.appendChild(list);
+     }
+
+    // Search Function
+    function geneSearch() {
+      // Declare variables
+      var input, filter, table, tr, cells, txtValue;
+      input = document.getElementById("gene-search");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("results-table");
+      cells = table.getElementsByTagName("td");
+      // Loop through table cells
+      for (var i = 0; i < cells.length; i++) {
+        //check if the cell has a list of results
+        //TODO give these elements classes/ids instead of using tag
+        var results = cells[i].getElementsByTagName("a");
+        var cellHeader = cells[i].getElementsByTagName("p")[0];
+        if (results.length > 0){
+          //check if any of the results match the query
+          for(var j=0; j < results.length; j++){
+            txtValue = results[j].textContent || results[j].innerText;
+            // if gene name matches query: (TODO check json for full gene name)
+            if (txtValue.toUpperCase().indexOf(filter) > -1 && filter != "") {
+              //console.log(cellHeader);
+              //console.log(results[j]);
+              results[j].classList.add("search_hit");
+              cellHeader.classList.add("search_hit");
             }
-            tableCell.innerHTML = list.outerHTML;
-          }
-          //otherwise, the entry is the input file name
-          else{
-            tableCell.innerHTML = entry;
-            tableCell.setAttribute("class", "input_file_name");
+            else{
+              results[j].classList.remove("search_hit");
+              cellHeader.classList.remove("search_hit");
+            }
           }
         }
       }
-      //Add the table to a container div
-      var divContainer = document.getElementById("dynamic-table");
-      divContainer.innerHTML = "";
-      divContainer.appendChild(table);
-
-      //Now that the table exists, add OnClick listeners to all the dna-gene class objects
-      var geneElements = document.getElementsByClassName('amr_hit');
-      for (var i = 0; i < geneElements.length; i++){
-        geneElements[i].addEventListener('click', displayAmrData, false);
-      }
-    }
-
-    //function to display gene data
-    function displayAmrData(){
-      amr_data = JSON.parse(this.getAttribute('hamronized_result'));
-      var list = document.createElement("ul");
-      list.setAttribute("class", "list-group-flush");
-
-
-      //retrieve the data, format it as strings
-      for (var field in amr_data){
-        var data = amr_data[field];
-		if (data !== null){
-        	var output = "";
-			output = output.concat(field, ": ", data);
-
-        	//add an entry to the list
-        	var listBullet = document.createElement('li');
-        	listBullet.setAttribute("class", "list-group-item");
-        	listBullet.innerHTML = output;
-        	list.appendChild(listBullet);
-		}
-      }
-      //display the list
-      var divContainer = document.getElementById('data-display');
-      divContainer.innerHTML = "";
-      divContainer.appendChild(list);
     }
 
 
-        CreateTableFromJSON()
+         CreateTableFromJSON()
         </script>
-          <!--<input type='button' onclick='CreateTableFromJSON()' value='make table'/>-->
-      </div>
-    </div>
-    <div class="row">
-      <div class="container bg-light" id="data-display">
-      </div>
-    </div>
-  </div>
-
-  </body>
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-    <style type="text/css">
-    td
-    {
-        padding:0 15px;
-        }
-    </style>
-
-</html>"""
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+      </body>
+    </html>
+"""
 
     html_template = Template(html_template)
 
@@ -312,4 +407,3 @@ def summarize_reports(report_paths, summary_type, output_path=None):
               f"{unique_records} unique results to {output_path}",
               file=sys.stderr)
         out_fh.close()
-
