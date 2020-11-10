@@ -647,8 +647,8 @@ def generate_interactive_report(combined_report_data):
 
         CreateTableFromJSON()
         //initialize tool tips
-        $(function () {
-           $('[data-toggle="tooltip"]').tooltip()
+        $$(function () {
+           $$('[data-toggle="tooltip"]').tooltip()
          })
 
 
