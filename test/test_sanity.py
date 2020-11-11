@@ -264,8 +264,7 @@ def test_resfinder():
 def test_rgi():
     metadata = {"analysis_software_version": "5.1.0", "reference_database_version": "2019-Jul-28",
                 "input_file_name": "Dummy"}
-    parsed_report = hAMRonization.parse("dummy/rgi/rgi.txt", metadata, "rgi")  # parsing the txt and not the json? support both?
-    # TODO - no error when passing a file that is not .txt
+    parsed_report = hAMRonization.parse("dummy/rgi/rgi.txt", metadata, "rgi")
 
     for result in parsed_report:
         # assert mandatory fields
@@ -354,11 +353,11 @@ def test_groot():
     for result in parsed_report:
         # assert mandatory fields
         assert result.input_file_name == 'Dummy'
-        assert result.gene_symbol == 'argannot~~~(Flq)OqxA~~~EU370913:46652-47827'
-        assert result.gene_name == 'argannot~~~(Flq)OqxA~~~EU370913:46652-47827'  # TODO -  same as gene_symbol?
+        assert result.gene_symbol == 'OqxA'
+        assert result.gene_name == 'OqxA.3003470.EU370913'
         assert result.reference_database_id == 'argannot'
         assert result.reference_database_version == '2019-Jul-28'
-        assert result.reference_accession == 'argannot~~~(Flq)OqxA~~~EU370913:46652-47827'  # TODO - lazy parsing?
+        assert result.reference_accession == 'OqxA.3003470.EU370913.4407527-4408202.4553'
         assert result.analysis_software_name == 'groot'
         assert result.analysis_software_version == '0.0.1'
 
