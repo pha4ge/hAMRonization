@@ -362,7 +362,7 @@ def test_groot():
         assert result.analysis_software_version == '0.0.1'
 
         # optional fields - present in dummy dataset
-        assert result.reference_gene_length == 657
+        assert result.reference_gene_length == 1176
         assert result.coverage_depth == 266
 
         # missing data in report
