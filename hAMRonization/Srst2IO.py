@@ -5,7 +5,6 @@ from .Interfaces import hAMRonizedResultIterator
 
 required_metadata = ['analysis_software_version',
                      'reference_database_version',
-                     'reference_database_id',
                      'input_file_name']
 
 
