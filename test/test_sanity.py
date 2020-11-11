@@ -431,7 +431,7 @@ def test_deeparg():
 
 def test_srst2():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
-                "input_file_name": "Dummy", "reference_database_id": 'resfinder'}  # TODO - why sample name and referenceDB id?
+                "input_file_name": "Dummy"}
     parsed_report = hAMRonization.parse("dummy/srst2/report.tsv", metadata, "srst2")
 
     for result in parsed_report:
