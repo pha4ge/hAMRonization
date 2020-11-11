@@ -8,6 +8,7 @@ import argparse
 import dataclasses
 from abc import ABC, abstractmethod
 import hAMRonization
+import hAMRonization.summarize
 from .hAMRonizedResult import hAMRonizedResult
 
 
@@ -90,17 +91,18 @@ class hAMRonizedResultIterator(ABC):
         Start parsing the file and return an hAMRonizedResult iterator
         """
 
-    def write(self, output_location=None, output_format='tsv',
-              append_mode=False):
+    def write(self, report_number=0, total_report_count=1,
+              output_location=None, output_format='tsv'):
         """
         Class to write to output the hAMRonized report (to either stdout or
         a filehandle) in TSV or json format
 
-        If append mode is used then the tsv header is not printed
+        Get number of reports and which report this one is
         """
 
         if output_location:
-            if os.path.exists(output_location) and append_mode == True:
+            # appending if more than one report
+            if os.path.exists(output_location) and total_report_count > 1:
                 out_fh = open(output_location, 'a')
             else:
                 out_fh = open(output_location, 'w')
@@ -116,8 +118,8 @@ class hAMRonizedResultIterator(ABC):
                                         fieldnames=fieldnames,
                                         lineterminator=os.linesep)
 
-                # don't write header if appending
-                if not append_mode:
+                # donly write header for first report
+                if report_number == 0:
                     writer.writeheader()
                 writer.writerow(dataclasses.asdict(first_result))
                 for result in self:
@@ -127,10 +129,40 @@ class hAMRonizedResultIterator(ABC):
                 pass
 
 
+        # this is painful to do streaming for json validly (requires
+        # tinkering with sublcassing the json encoder)
         elif output_format == 'json':
+
+            if report_number == 0:
+                first_entry = True
+            else:
+                first_entry = False
+
             for result in self:
-                json_entry = json.dumps(dataclasses.asdict(result))
-                out_fh.write(json_entry)
+                # replace none entries with empty string for compatibility
+                # with csv and non-python
+                clean_results = {}
+                for key, value in dataclasses.asdict(result).items():
+                    if value:
+                        clean_results[key] = str(value)
+                    else:
+                        clean_results[key] = ''
+
+                json_entry = json.dumps(clean_results)
+
+                # add json list opening if first entry
+                if first_entry:
+                    out_fh.write("[")
+                    out_fh.write(json_entry)
+                    first_entry = False
+                else:
+                    out_fh.write(", ")
+                    out_fh.write(json_entry)
+
+            # i.e. if last report then close list in json
+            if (total_report_count - 1) == report_number:
+                out_fh.write(']\n')
+
         else:
             raise ValueError("Unknown output format. "
                              "Valid options are: csv or json")
@@ -180,20 +212,50 @@ def generic_cli_interface():
                                                  "hAMRonization specification"
                                                  " format",
                                      prog='hamronize',
-                                     usage='hamronize.py <tool> <options>')
+                                     usage='hamronize <tool> <options>')
 
     parser.add_argument('-v', '--version', action='version',
                         version=f"%(prog)s {hAMRonization.__version__}")
 
+    # add tool specific parsers
     subparser = parser.add_subparsers(title="Tools with hAMRonizable reports",
                                       help='', dest='analysis_tool')
+
 
     for analysis_tool in hAMRonization._RequiredToolMetadata.keys():
         subparser = generate_tool_subparser(subparser, analysis_tool)
 
+    # add summarize subparser
+    # not very pretty to have this tied into the analysis tools list
+    # but there still doesn't seem a good way to group subparsers in
+    # the argparse library
+    description = "Concatenate and summarize AMR detection reports"
+    usage = "hamronize summarize <options> <list of reports>"
+    summarize_help = "Provide a list of paths to the reports you wish "\
+                     "to summarize"
+
+    summarize_subparser = subparser.add_parser("summarize",
+                                       description=description,
+                                       usage=usage,
+                                       help=summarize_help)
+
+    summarize_subparser.add_argument("-t", "--summary_type",
+                                     choices=['tsv', 'json', 'interactive'],
+                                     default='tsv',
+                                     help="Which summary report format to "
+                                          "generate")
+
+    summarize_subparser.add_argument("-o", "--output", type=str,
+                                     default=None,
+                                     help="Output file path for summary")
+
+    summarize_subparser.add_argument("hamronized_reports", nargs="+",
+                                    help="list of hAMRonized reports")
+
+
     args = parser.parse_args()
 
-    if args.analysis_tool:
+    if args.analysis_tool and args.analysis_tool != 'summarize':
         required_mandatory_metadata = \
                 hAMRonization._RequiredToolMetadata[args.analysis_tool]
         metadata = {field: getattr(args, field)
@@ -201,18 +263,22 @@ def generic_cli_interface():
 
         # parse reports and write as appropriate (only first report with head
         # in tsv mode)
-        for ix, report in enumerate(args.report):
+        # check number of reports and append correctly if >1
+        total_report_count = len(args.report)
+        for report_number, report in enumerate(args.report):
             parsed_report = hAMRonization.parse(report, metadata,
                                                 args.analysis_tool)
-            if ix == 0:
-                parsed_report.write(output_location=args.output,
+
+            parsed_report.write(report_number=report_number,
+                                total_report_count=total_report_count,
+                                output_location=args.output,
                                 output_format=args.format)
-            else:
-                parsed_report.write(output_location=args.output,
-                                    output_format=args.format,
-                                    append_mode=True)
 
-
+    elif args.analysis_tool == 'summarize':
+        hAMRonization.summarize.summarize_reports(args.hamronized_reports,
+                                                  args.summary_type,
+                                                  args.output)
+        exit(0)
     else:
         parser.print_help()
         exit(1)

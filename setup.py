@@ -20,6 +20,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/pha4ge/hAMRonization",
+    install_requires=['pandas'],
     entry_points={
         'console_scripts': [
             'hamronize = hAMRonization.hamronize:main'

@@ -43,7 +43,7 @@ _ReportFileToUse = {
     "resfinder": "data_resfinder.json",
     "srax": "sraX_detected_ARGs.tsv",
     "deeparg": "OUTDIR/OUTPUT.mapping.ARG",
-    "kmerresistance": "OUTPUT.KmerRes",
+    "kmerresistance": "OUTPUT.res",
     "srst2": "OUTPUT_srst2_report.tsv",
     "groot": "OUTPUT.tsv (from `groot report`)",
     "staramr": "resfinder.tsv",

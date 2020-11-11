@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import os
 import dataclasses
 
 
@@ -56,6 +57,9 @@ class hAMRonizedResult():
         """
         Use type hints to check if field value is correct value and if not
         try to cast the type (failing with a valueerror)
+
+        Ensure the input_file_name path is just the basename due to different
+        tools reporting this differently
         """
         for field in dataclasses.fields(self):
             value = getattr(self, field.name)
@@ -66,3 +70,19 @@ class hAMRonizedResult():
                     raise ValueError(f"Expected {field.name} "
                                      f"to be {field.type}, "
                                      f"got {repr(value)}")
+
+        # normalise input filename to just basename without extension
+        # this is to ensure compatibility with all tools using the lowest
+        # commen denominator staramr which does this
+        input_file_name = getattr(self, 'input_file_name')
+        input_file_name = os.path.basename(input_file_name)
+
+        if input_file_name.endswith(".gz"):
+            input_file_name = input_file_name.replace(".gz", '')
+
+        for fasta_suffix in [".fna", ".fasta", ".faa", ".fa"]:
+            if input_file_name.endswith(fasta_suffix):
+                input_file_name = input_file_name.replace(fasta_suffix, '')
+
+        setattr(self, 'input_file_name', input_file_name)
+
