@@ -31,33 +31,7 @@ class KmerResistanceIterator(hAMRonizedResultIterator):
             'p_value': None,
             # will be parsed from #Template (only works for resfinder)
             '_gene_name': 'gene_name',
-            '_gene_symbol': 'gene_symbol'
-            # '': 'input_file_name',
-            # '': 'contig_id',
-            # '': 'query_start_aa',
-            # '': 'query_stop_aa',
-            # '': 'query_start_nt',
-            # '': 'query_stop_nt',
-            # '': 'subject_start_aa',
-            # '': 'subject_stop_aa',
-            # '': 'subject_start_nt',
-            # '': 'subject_stop_nt',
-            # '': 'strand_orientation',
-            # '': 'gene_symbol',
-            # '': 'gene_name',
-            # '': 'coverage_ratio',
-            # '': 'sequence_identity',
-            # '': 'reference_database_id',
-            # '': 'reference_database_version',
-            # '': 'reference_protein_length',
-            # '': 'target_gene_length',
-            # '': 'target_protein_length',
-            # '': 'drug_class',
-            # '': 'antimicrobial_agent',
-            # '': 'resistance_mechanism',
-            # '': 'analysis_software_name',
-            # '': 'analysis_software_version'
-            }
+            '_gene_symbol': 'gene_symbol'}
 
         super().__init__(source, self.field_mapping, self.metadata)
 

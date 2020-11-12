@@ -17,10 +17,10 @@ class DeepArgIterator(hAMRonizedResultIterator):
 
         self.field_mapping = {
             "#ARG": 'gene_symbol',
-            'query-start': 'query_start_nt',
-            'query-end': 'query_stop_nt',
+            'query-start': 'input_gene_start',
+            'query-end': 'input_gene_stop',
             # not really but most appropriate field
-            'read_id': 'contig_id',
+            'read_id': 'input_sequence_id',
             'predicted_ARG-class': 'drug_class',
             'best-hit': 'gene_name',
             'probability': None,
@@ -30,29 +30,7 @@ class DeepArgIterator(hAMRonizedResultIterator):
             'alignment-evalue': None,
             'counts': None,
             # gather from splititng besthit
-            '_reference_accession': 'reference_accession'
-            # '': 'input_file_name',
-            # '': 'query_start_aa',
-            # '': 'query_stop_aa',
-            # '': 'subject_start_aa',
-            # '': 'subject_stop_aa',
-            # '': 'subject_start_nt',
-            # '': 'subject_stop_nt',
-            # '': 'strand_orientation',
-            # '': 'coverage_depth',
-            # '': 'coverage_percentage',
-            # '': 'coverage_ratio',
-            # '': 'reference_database_id',
-            # '': 'reference_database_version',
-            # '': 'reference_gene_length',
-            # '': 'reference_protein_length',
-            # '': 'target_gene_length',
-            # '': 'target_protein_length',
-            # '': 'antimicrobial_agent',
-            # '': 'resistance_mechanism',
-            # '': 'analysis_software_name',
-            # '': 'analysis_software_version'
-        }
+            '_reference_accession': 'reference_accession'}
 
         super().__init__(source, self.field_mapping, self.metadata)
 

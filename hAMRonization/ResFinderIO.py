@@ -20,7 +20,7 @@ class ResFinderIterator(hAMRonizedResultIterator):
             'HSP_length': None,
             'template_length': "reference_gene_length",
             'position_in_ref': None,
-            'contig_name': 'contig_id',
+            'contig_name': 'input_sequence_id',
             'positions_in_contig': None,
             'note': None,
             'accession': 'reference_accession',
@@ -28,8 +28,8 @@ class ResFinderIterator(hAMRonizedResultIterator):
             'coverage': 'coverage_percentage',
             'hit_id': None,
             # decomposed from positions_in_contig field e.g "314193..314738"
-            '_start': 'query_start_nt',
-            '_stop': 'query_stop_nt',
+            '_start': 'input_gene_start',
+            '_stop': 'input_gene_stop',
             # infered from positions_in_contig field
             '_strand': 'strand_orientation',
             # grabbed from user_input section

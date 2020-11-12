@@ -37,7 +37,7 @@ class RgiIterator(hAMRonizedResultIterator):
                     'Mapped Reads with Flanking Sequence': None,
                     'All Mapped Reads': None,
                     'Average Percent Coverage': 'coverage_percentage',
-                    'Average Length Coverage (bp)': 'target_gene_length',
+                    'Average Length Coverage (bp)': 'input_gene_length',
                     'Average MAPQ (Completely Mapped Reads)': None,
                     'Number of Mapped Baits': None,
                     'Number of Mapped Baits with Reads': None,
@@ -52,35 +52,14 @@ class RgiIterator(hAMRonizedResultIterator):
                     'Reference Length': 'reference_gene_length',
                     'AMR Gene Family': 'gene_name',
                     'Drug Class': 'drug_class',
-                    'Resistance Mechanism': 'resistance_mechanism'
-                    # '': 'input_file_name',
-                    # '': 'contig_id',
-                    # '': 'query_start_aa',
-                    # '': 'query_stop_aa',
-                    # '': 'query_start_nt',
-                    # '': 'query_stop_nt',
-                    # '': 'subject_start_aa',
-                    # '': 'subject_stop_aa',
-                    # '': 'subject_start_nt',
-                    # '': 'subject_stop_nt',
-                    # '': 'strand_orientation',
-                    # '': 'coverage_depth',
-                    # '': 'coverage_ratio',
-                    # '': 'reference_database_id',
-                    # '': 'reference_database_version',
-                    # '': 'reference_protein_length',
-                    # '': 'target_protein_length',
-                    # '': 'antimicrobial_agent',
-                    # '': 'analysis_software_name',
-                    # '': 'analysis_software_version'
-                }
+                    'Resistance Mechanism': 'resistance_mechanism'}
             else:
                 # normal RGI mode
                 self.field_mapping = {
                     'ORF_ID': None,
-                    'Contig': 'contig_id',
-                    'Start': 'query_start_nt',
-                    'Stop': 'query_stop_nt',
+                    'Contig': 'input_sequence_id',
+                    'Start': 'input_gene_start',
+                    'Stop': 'input_gene_stop',
                     'Orientation': 'strand_orientation',
                     'Cut_Off': None,
                     'Pass_Bitscore': None,
@@ -102,26 +81,7 @@ class RgiIterator(hAMRonizedResultIterator):
                     'ID': None,
                     'Model_ID': None,
                     'Nudged': None,
-                    'Note': None,
-                    # '': 'input_file_name',
-                    # '': 'query_start_aa',
-                    # '': 'query_stop_aa',
-                    # '': 'subject_start_aa',
-                    # '': 'subject_stop_aa',
-                    # '': 'subject_start_nt',
-                    # '': 'subject_stop_nt',
-                    # '': 'coverage_depth',
-                    # '': 'coverage_ratio',
-                    # '': 'reference_database_id',
-                    # '': 'reference_database_version',
-                    # '': 'reference_gene_length',
-                    # '': 'reference_protein_length',
-                    # '': 'target_gene_length',
-                    # '': 'target_protein_length',
-                    # '': 'antimicrobial_agent',
-                    # '': 'analysis_software_name',
-                    # '': 'analysis_software_version'
-                }
+                    'Note': None}
 
         super().__init__(source, self.field_mapping, self.metadata)
 
