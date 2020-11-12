@@ -1,4 +1,4 @@
-# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+#This workflow will install Python dependencies, run tests and lint with a variety of Python versions
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
 name: Python package
@@ -44,7 +44,7 @@ jobs:
     - name: Run crude test of CLI parser for all tools
       run: |
           pushd test
-          bash run_test.sh > /dev/null 
+          bash run_test.sh
           popd
 
     #- name: Validate all harmonized .json files with SALAD schema
