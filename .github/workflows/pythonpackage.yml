@@ -40,9 +40,12 @@ jobs:
       run: |
           pushd test 
           pytest
+          popd
     - name: Run crude test of CLI parser for all tools
       run: |
+          pushd test
           bash run_test.sh > /dev/null 
+          popd
 
     #- name: Validate all harmonized .json files with SALAD schema
     #  run: |
