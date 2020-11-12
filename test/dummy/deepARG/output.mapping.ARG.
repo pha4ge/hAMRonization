@@ -1,0 +1,2 @@
+#ARG	query-start	query-end	read_id	predicted_ARG-class	best-hit	probability	identity	alignment-length	alignment-bitscore	alignment-evalue	counts
+OQXA	49	84	SNL153:124:HLM5WBCXX:1:2207:7453:53826	multidrug	YP_001693237.1|FEATURES|oqxA|multidrug|oqxA	0.999982734251	94.6	37	70.5	2.6e-13	1
