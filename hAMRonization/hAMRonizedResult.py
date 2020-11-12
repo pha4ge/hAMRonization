@@ -22,7 +22,7 @@ class hAMRonizedResult():
 
     # optional fields
     sequence_identity: float = None
-    contig_id: str = None
+    input_sequence_id: str = None
     input_protein_start: int = None
     input_protein_stop: int = None
     input_gene_start: int = None

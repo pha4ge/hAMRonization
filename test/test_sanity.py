@@ -28,7 +28,7 @@ def test_abricate():
 
         # optional fields - present in dummy dataset
         assert result.sequence_identity == 99.58
-        assert result.contig_id == 'NZ_LR792628.1'
+        assert result.input_sequence_id == 'NZ_LR792628.1'
         assert result.input_gene_start == 1333608
         assert result.input_gene_stop == 1334783
         assert result.strand_orientation == '-'
@@ -70,7 +70,7 @@ def test_amrfinder():
 
         # optional fields - present in dummy dataset
         assert result.sequence_identity == 99.49
-        assert result.contig_id == 'NZ_LR792628.1'
+        assert result.input_sequence_id == 'NZ_LR792628.1'
         assert result.input_gene_start == 1333611
         assert result.input_gene_stop == 1334783
         assert result.strand_orientation == '-'
@@ -116,7 +116,7 @@ def test_amrplusplus():
 
         # missing data in report
         assert result.sequence_identity is None
-        assert result.contig_id is None
+        assert result.input_sequence_id is None
         assert result.input_gene_start is None
         assert result.input_gene_stop is None
         assert result.strand_orientation is None
@@ -154,7 +154,7 @@ def test_ariba():
 
         # optional fields - present in dummy dataset
         assert result.sequence_identity == 99.57
-        assert result.contig_id == 'oqxA.l15.c17.ctg.1'
+        assert result.input_sequence_id == 'oqxA.l15.c17.ctg.1'
         assert result.reference_gene_length == 1176
         assert result.coverage_depth == 64.2
 
@@ -201,7 +201,7 @@ def test_kmerresistance():
         assert result.coverage_percentage == 100
 
         # missing data in report
-        assert result.contig_id is None
+        assert result.input_sequence_id is None
         assert result.input_gene_start is None
         assert result.input_gene_stop is None
         assert result.strand_orientation is None
@@ -236,7 +236,7 @@ def test_resfinder():
         assert result.analysis_software_version == '0.0.1'
 
         # optional fields - present in dummy dataset
-        assert result.contig_id == 'NZ_LR792628.1 Klebsiella pneumoniae isolate SB5881 chromosome SB5881_omosome'
+        assert result.input_sequence_id == 'NZ_LR792628.1 Klebsiella pneumoniae isolate SB5881 chromosome SB5881_omosome'
         assert result.input_gene_start == 1333608
         assert result.input_gene_stop == 1334783
         assert result.strand_orientation == '-'
@@ -278,7 +278,7 @@ def test_rgi():
         assert result.analysis_software_version == '5.1.0'
 
         # optional fields - present in dummy dataset
-        assert result.contig_id == 'NZ_LR792628.1_1289'
+        assert result.input_sequence_id == 'NZ_LR792628.1_1289'
         assert result.input_gene_start == 1333608
         assert result.input_gene_stop == 1334783
         assert result.strand_orientation == '-'
@@ -325,7 +325,7 @@ def test_srax():
         assert result.coverage_percentage == 100
 
         # missing data in report
-        assert result.contig_id is None
+        assert result.input_sequence_id is None
         assert result.input_gene_start is None
         assert result.input_gene_stop is None
         assert result.strand_orientation is None
@@ -366,7 +366,7 @@ def test_groot():
         assert result.coverage_depth == 266
 
         # missing data in report
-        assert result.contig_id is None
+        assert result.input_sequence_id is None
         assert result.input_gene_start is None
         assert result.input_gene_stop is None
         assert result.strand_orientation is None
@@ -406,7 +406,7 @@ def test_deeparg():
         # optional fields - present in dummy dataset
         assert result.drug_class == 'multidrug'
         assert result.sequence_identity == 94.6
-        assert result.contig_id == "SNL153:124:HLM5WBCXX:1:2207:7453:53826"
+        assert result.input_sequence_id == "SNL153:124:HLM5WBCXX:1:2207:7453:53826"
         assert result.input_gene_start == 49
         assert result.input_gene_stop == 84
 
@@ -453,7 +453,7 @@ def test_srst2():
         # missing data in report
         assert result.drug_class is None
         assert result.sequence_identity is None
-        assert result.contig_id is None
+        assert result.input_sequence_id is None
         assert result.input_gene_start is None
         assert result.input_gene_stop is None
         assert result.strand_orientation is None
@@ -491,7 +491,7 @@ def test_csstar():
         assert result.reference_gene_length == 1176
         assert result.input_gene_length == 1176
         assert result.sequence_identity == 99.575
-        assert result.contig_id == 'NZ_LR792628.1'
+        assert result.input_sequence_id == 'NZ_LR792628.1'
 
         # missing data in report
         assert result.coverage_percentage is None
