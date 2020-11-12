@@ -5,6 +5,8 @@ disparate antimicrobial resistance gene detection tools into a single unified fo
 
 This is an implementation of the hAMRonization AMR detection specification scheme.
 
+This supports a variety of summary options including an [interactive report](https://htmlpreview.github.io/?https://github.com/pha4ge/hAMRonization/tree/master/docs/interactive_report_demo.html)
+
 ## Installation
 
 This tool requires python>=3.7 and [pandas](https://pandas.pydata.org/)
@@ -112,8 +114,7 @@ This can handle mixed json and tsv hamronized report formats.
 hamronize summarize -o combined_report.tsv -t tsv abricate.json ariba.tsv
 ```
 
-The interactive report option will produce an html file that can be opened
-within the browser for navigable data exploration (feature developed
+The [interactive report](https://htmlpreview.github.io/?https://github.com/pha4ge/hAMRonization/tree/master/docs/interactive_report_demo.html) option will produce an html file that can be opened within the browser for navigable data exploration (feature developed
 with @alexmanuele).
 
 ### Using within scripts
