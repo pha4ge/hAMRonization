@@ -1,3 +1,5 @@
+![Python package](https://github.com/pha4ge/hAMRonization/workflows/Python%20package/badge.svg)
+
 # hAMRonization 
 
 This repo contains the hAMRonization module and CLI parser tools combine the outputs of 
