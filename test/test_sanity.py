@@ -29,8 +29,8 @@ def test_abricate():
         # optional fields - present in dummy dataset
         assert result.sequence_identity == 99.58
         assert result.contig_id == 'NZ_LR792628.1'
-        assert result.query_start_nt == 1333608
-        assert result.query_stop_nt == 1334783
+        assert result.input_gene_start == 1333608
+        assert result.input_gene_stop == 1334783
         assert result.strand_orientation == '-'
         assert result.coverage_percentage == 100
         assert result.drug_class == 'PHENICOL;QUINOLONE'
@@ -40,16 +40,16 @@ def test_abricate():
         assert result.coverage_ratio is None
         assert result.reference_gene_length is None
         assert result.reference_protein_length is None
-        assert result.target_gene_length is None
-        assert result.target_protein_length is None
+        assert result.input_gene_length is None
+        assert result.input_protein_length is None
         assert result.antimicrobial_agent is None
         assert result.resistance_mechanism is None
-        assert result.query_start_aa is None
-        assert result.query_stop_aa is None
-        assert result.subject_start_aa is None
-        assert result.subject_stop_aa is None
-        assert result.subject_start_nt is None
-        assert result.subject_stop_nt is None
+        assert result.input_protein_start is None
+        assert result.input_protein_stop is None
+        assert result.reference_protein_start is None
+        assert result.reference_protein_stop is None
+        assert result.reference_gene_start is None
+        assert result.reference_gene_stop is None
 
 
 def test_amrfinder():
@@ -71,27 +71,27 @@ def test_amrfinder():
         # optional fields - present in dummy dataset
         assert result.sequence_identity == 99.49
         assert result.contig_id == 'NZ_LR792628.1'
-        assert result.query_start_nt == 1333611
-        assert result.query_stop_nt == 1334783
+        assert result.input_gene_start == 1333611
+        assert result.input_gene_stop == 1334783
         assert result.strand_orientation == '-'
         assert result.coverage_percentage == 100
         assert result.drug_class == 'PHENICOL/QUINOLONE'
         assert result.reference_gene_length == 391
-        assert result.target_gene_length == 391
+        assert result.input_gene_length == 391
         assert result.antimicrobial_agent == 'PHENICOL/QUINOLONE'
 
         # missing data in report
         assert result.reference_protein_length is None
         assert result.coverage_depth is None
         assert result.coverage_ratio is None
-        assert result.target_protein_length is None
+        assert result.input_protein_length is None
         assert result.resistance_mechanism is None
-        assert result.query_start_aa is None
-        assert result.query_stop_aa is None
-        assert result.subject_start_aa is None
-        assert result.subject_stop_aa is None
-        assert result.subject_start_nt is None
-        assert result.subject_stop_nt is None
+        assert result.input_protein_start is None
+        assert result.input_protein_stop is None
+        assert result.reference_protein_start is None
+        assert result.reference_protein_stop is None
+        assert result.reference_gene_start is None
+        assert result.reference_gene_stop is None
 
 
 def test_amrplusplus():
@@ -117,23 +117,23 @@ def test_amrplusplus():
         # missing data in report
         assert result.sequence_identity is None
         assert result.contig_id is None
-        assert result.query_start_nt is None
-        assert result.query_stop_nt is None
+        assert result.input_gene_start is None
+        assert result.input_gene_stop is None
         assert result.strand_orientation is None
         assert result.reference_gene_length is None
-        assert result.target_gene_length is None
+        assert result.input_gene_length is None
         assert result.antimicrobial_agent is None
         assert result.reference_protein_length is None
         assert result.coverage_depth is None
         assert result.coverage_ratio is None
-        assert result.target_protein_length is None
+        assert result.input_protein_length is None
         assert result.resistance_mechanism is None
-        assert result.query_start_aa is None
-        assert result.query_stop_aa is None
-        assert result.subject_start_aa is None
-        assert result.subject_stop_aa is None
-        assert result.subject_start_nt is None
-        assert result.subject_stop_nt is None
+        assert result.input_protein_start is None
+        assert result.input_protein_stop is None
+        assert result.reference_protein_start is None
+        assert result.reference_protein_stop is None
+        assert result.reference_gene_start is None
+        assert result.reference_gene_stop is None
 
 
 def test_ariba():
@@ -159,23 +159,23 @@ def test_ariba():
         assert result.coverage_depth == 64.2
 
         # missing data in report
-        assert result.query_start_nt is None
-        assert result.query_stop_nt is None
+        assert result.input_gene_start is None
+        assert result.input_gene_stop is None
         assert result.strand_orientation is None
         assert result.coverage_percentage is None
         assert result.drug_class is None
-        assert result.target_gene_length is None
+        assert result.input_gene_length is None
         assert result.antimicrobial_agent is None
         assert result.reference_protein_length is None
         assert result.coverage_ratio is None
-        assert result.target_protein_length is None
+        assert result.input_protein_length is None
         assert result.resistance_mechanism is None
-        assert result.query_start_aa is None
-        assert result.query_stop_aa is None
-        assert result.subject_start_aa is None
-        assert result.subject_stop_aa is None
-        assert result.subject_start_nt is None
-        assert result.subject_stop_nt is None
+        assert result.input_protein_start is None
+        assert result.input_protein_stop is None
+        assert result.reference_protein_start is None
+        assert result.reference_protein_stop is None
+        assert result.reference_gene_start is None
+        assert result.reference_gene_stop is None
 
 
 def test_kmerresistance():
@@ -202,22 +202,22 @@ def test_kmerresistance():
 
         # missing data in report
         assert result.contig_id is None
-        assert result.query_start_nt is None
-        assert result.query_stop_nt is None
+        assert result.input_gene_start is None
+        assert result.input_gene_stop is None
         assert result.strand_orientation is None
         assert result.drug_class is None
-        assert result.target_gene_length is None
+        assert result.input_gene_length is None
         assert result.antimicrobial_agent is None
         assert result.reference_protein_length is None
         assert result.coverage_ratio is None
-        assert result.target_protein_length is None
+        assert result.input_protein_length is None
         assert result.resistance_mechanism is None
-        assert result.query_start_aa is None
-        assert result.query_stop_aa is None
-        assert result.subject_start_aa is None
-        assert result.subject_stop_aa is None
-        assert result.subject_start_nt is None
-        assert result.subject_stop_nt is None
+        assert result.input_protein_start is None
+        assert result.input_protein_stop is None
+        assert result.reference_protein_start is None
+        assert result.reference_protein_stop is None
+        assert result.reference_gene_start is None
+        assert result.reference_gene_stop is None
 
 
 def test_resfinder():
@@ -237,8 +237,8 @@ def test_resfinder():
 
         # optional fields - present in dummy dataset
         assert result.contig_id == 'NZ_LR792628.1 Klebsiella pneumoniae isolate SB5881 chromosome SB5881_omosome'
-        assert result.query_start_nt == 1333608
-        assert result.query_stop_nt == 1334783
+        assert result.input_gene_start == 1333608
+        assert result.input_gene_stop == 1334783
         assert result.strand_orientation == '-'
         assert result.drug_class == 'Quinolone resistance'
         assert result.sequence_identity == 99.57
@@ -247,18 +247,18 @@ def test_resfinder():
         assert result.coverage_percentage == 100
 
         # missing data in report
-        assert result.target_gene_length is None
+        assert result.input_gene_length is None
         assert result.antimicrobial_agent is None
         assert result.reference_protein_length is None
         assert result.coverage_ratio is None
-        assert result.target_protein_length is None
+        assert result.input_protein_length is None
         assert result.resistance_mechanism is None
-        assert result.query_start_aa is None
-        assert result.query_stop_aa is None
-        assert result.subject_start_aa is None
-        assert result.subject_stop_aa is None
-        assert result.subject_start_nt is None
-        assert result.subject_stop_nt is None
+        assert result.input_protein_start is None
+        assert result.input_protein_stop is None
+        assert result.reference_protein_start is None
+        assert result.reference_protein_stop is None
+        assert result.reference_gene_start is None
+        assert result.reference_gene_stop is None
 
 
 def test_rgi():
@@ -279,8 +279,8 @@ def test_rgi():
 
         # optional fields - present in dummy dataset
         assert result.contig_id == 'NZ_LR792628.1_1289'
-        assert result.query_start_nt == 1333608
-        assert result.query_stop_nt == 1334783
+        assert result.input_gene_start == 1333608
+        assert result.input_gene_stop == 1334783
         assert result.strand_orientation == '-'
         assert result.drug_class == 'fluoroquinolone antibiotic; glycylcycline; tetracycline antibiotic; diaminopyrimidine antibiotic; nitrofuran antibiotic'
         assert result.sequence_identity == 99.49
@@ -290,17 +290,17 @@ def test_rgi():
         # missing data in report
         assert result.reference_gene_length is None
         assert result.coverage_depth is None
-        assert result.target_gene_length is None
+        assert result.input_gene_length is None
         assert result.antimicrobial_agent is None
         assert result.reference_protein_length is None
         assert result.coverage_ratio is None
-        assert result.target_protein_length is None
-        assert result.query_start_aa is None
-        assert result.query_stop_aa is None
-        assert result.subject_start_aa is None
-        assert result.subject_stop_aa is None
-        assert result.subject_start_nt is None
-        assert result.subject_stop_nt is None
+        assert result.input_protein_length is None
+        assert result.input_protein_start is None
+        assert result.input_protein_stop is None
+        assert result.reference_protein_start is None
+        assert result.reference_protein_stop is None
+        assert result.reference_gene_start is None
+        assert result.reference_gene_stop is None
 
 
 def test_srax():
@@ -326,23 +326,23 @@ def test_srax():
 
         # missing data in report
         assert result.contig_id is None
-        assert result.query_start_nt is None
-        assert result.query_stop_nt is None
+        assert result.input_gene_start is None
+        assert result.input_gene_stop is None
         assert result.strand_orientation is None
         assert result.resistance_mechanism is None
         assert result.reference_gene_length is None
         assert result.coverage_depth is None
-        assert result.target_gene_length is None
+        assert result.input_gene_length is None
         assert result.antimicrobial_agent is None
         assert result.reference_protein_length is None
         assert result.coverage_ratio is None
-        assert result.target_protein_length is None
-        assert result.query_start_aa is None
-        assert result.query_stop_aa is None
-        assert result.subject_start_aa is None
-        assert result.subject_stop_aa is None
-        assert result.subject_start_nt is None
-        assert result.subject_stop_nt is None
+        assert result.input_protein_length is None
+        assert result.input_protein_start is None
+        assert result.input_protein_stop is None
+        assert result.reference_protein_start is None
+        assert result.reference_protein_stop is None
+        assert result.reference_gene_start is None
+        assert result.reference_gene_stop is None
 
 
 def test_groot():
@@ -367,21 +367,21 @@ def test_groot():
 
         # missing data in report
         assert result.contig_id is None
-        assert result.query_start_nt is None
-        assert result.query_stop_nt is None
+        assert result.input_gene_start is None
+        assert result.input_gene_stop is None
         assert result.strand_orientation is None
         assert result.resistance_mechanism is None
-        assert result.target_gene_length is None
+        assert result.input_gene_length is None
         assert result.antimicrobial_agent is None
         assert result.reference_protein_length is None
         assert result.coverage_ratio is None
-        assert result.target_protein_length is None
-        assert result.query_start_aa is None
-        assert result.query_stop_aa is None
-        assert result.subject_start_aa is None
-        assert result.subject_stop_aa is None
-        assert result.subject_start_nt is None
-        assert result.subject_stop_nt is None
+        assert result.input_protein_length is None
+        assert result.input_protein_start is None
+        assert result.input_protein_stop is None
+        assert result.reference_protein_start is None
+        assert result.reference_protein_stop is None
+        assert result.reference_gene_start is None
+        assert result.reference_gene_stop is None
         assert result.drug_class is None
         assert result.sequence_identity is None
         assert result.coverage_percentage is None
@@ -407,26 +407,26 @@ def test_deeparg():
         assert result.drug_class == 'multidrug'
         assert result.sequence_identity == 94.6
         assert result.contig_id == "SNL153:124:HLM5WBCXX:1:2207:7453:53826"
-        assert result.query_start_nt == 49
-        assert result.query_stop_nt == 84
+        assert result.input_gene_start == 49
+        assert result.input_gene_stop == 84
 
         # missing data in report
         assert result.coverage_percentage is None
         assert result.strand_orientation is None
         assert result.reference_gene_length is None
-        assert result.target_gene_length is None
+        assert result.input_gene_length is None
         assert result.antimicrobial_agent is None
         assert result.reference_protein_length is None
         assert result.coverage_depth is None
         assert result.coverage_ratio is None
-        assert result.target_protein_length is None
+        assert result.input_protein_length is None
         assert result.resistance_mechanism is None
-        assert result.query_start_aa is None
-        assert result.query_stop_aa is None
-        assert result.subject_start_aa is None
-        assert result.subject_stop_aa is None
-        assert result.subject_start_nt is None
-        assert result.subject_stop_nt is None
+        assert result.input_protein_start is None
+        assert result.input_protein_stop is None
+        assert result.reference_protein_start is None
+        assert result.reference_protein_stop is None
+        assert result.reference_gene_start is None
+        assert result.reference_gene_stop is None
 
 
 def test_srst2():
@@ -454,21 +454,21 @@ def test_srst2():
         assert result.drug_class is None
         assert result.sequence_identity is None
         assert result.contig_id is None
-        assert result.query_start_nt is None
-        assert result.query_stop_nt is None
+        assert result.input_gene_start is None
+        assert result.input_gene_stop is None
         assert result.strand_orientation is None
-        assert result.target_gene_length is None
+        assert result.input_gene_length is None
         assert result.antimicrobial_agent is None
         assert result.reference_protein_length is None
         assert result.coverage_ratio is None
-        assert result.target_protein_length is None
+        assert result.input_protein_length is None
         assert result.resistance_mechanism is None
-        assert result.query_start_aa is None
-        assert result.query_stop_aa is None
-        assert result.subject_start_aa is None
-        assert result.subject_stop_aa is None
-        assert result.subject_start_nt is None
-        assert result.subject_stop_nt is None
+        assert result.input_protein_start is None
+        assert result.input_protein_stop is None
+        assert result.reference_protein_start is None
+        assert result.reference_protein_stop is None
+        assert result.reference_gene_start is None
+        assert result.reference_gene_stop is None
 
 
 def test_csstar():
@@ -489,7 +489,7 @@ def test_csstar():
 
         # optional fields - present in dummy dataset
         assert result.reference_gene_length == 1176
-        assert result.target_gene_length == 1176
+        assert result.input_gene_length == 1176
         assert result.sequence_identity == 99.575
         assert result.contig_id == 'NZ_LR792628.1'
 
@@ -497,17 +497,17 @@ def test_csstar():
         assert result.coverage_percentage is None
         assert result.coverage_depth is None
         assert result.drug_class is None
-        assert result.query_start_nt is None
-        assert result.query_stop_nt is None
+        assert result.input_gene_start is None
+        assert result.input_gene_stop is None
         assert result.strand_orientation is None
         assert result.antimicrobial_agent is None
         assert result.reference_protein_length is None
         assert result.coverage_ratio is None
-        assert result.target_protein_length is None
+        assert result.input_protein_length is None
         assert result.resistance_mechanism is None
-        assert result.query_start_aa is None
-        assert result.query_stop_aa is None
-        assert result.subject_start_aa is None
-        assert result.subject_stop_aa is None
-        assert result.subject_start_nt is None
-        assert result.subject_stop_nt is None
+        assert result.input_protein_start is None
+        assert result.input_protein_stop is None
+        assert result.reference_protein_start is None
+        assert result.reference_protein_stop is None
+        assert result.reference_gene_start is None
+        assert result.reference_gene_stop is None
