@@ -21,9 +21,9 @@ class StarAmrIterator(hAMRonizedResultIterator):
                 '%Identity': 'sequence_identity',
                 '%Overlap': 'coverage_percentage',
                 'HSP Length/Total Length': 'coverage_ratio',
-                'Contig': 'contig_id',
-                'Start': 'query_start_nt',
-                'End': 'query_stop_nt',
+                'Contig': 'input_sequence_id',
+                'Start': 'input_gene_start',
+                'End': 'input_gene_stop',
                 'Accession': 'reference_accession',
                 # Gene is mapped to both symbol and name
                 '_gene_name': 'gene_name'}

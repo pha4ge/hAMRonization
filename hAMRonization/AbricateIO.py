@@ -15,9 +15,9 @@ class AbricateIterator(hAMRonizedResultIterator):
 
         self.field_mapping = {
                 '#FILE': 'input_file_name',
-                'SEQUENCE': 'contig_id',
-                'START': 'query_start_nt',
-                'END': 'query_stop_nt',
+                'SEQUENCE': 'input_sequence_id',
+                'START': 'input_gene_start',
+                'END': 'input_gene_stop',
                 'STRAND': 'strand_orientation',
                 'GENE': 'gene_symbol',
                 'PRODUCT': 'gene_name',

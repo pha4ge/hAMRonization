@@ -24,31 +24,7 @@ class AmrPlusPlusIterator(hAMRonizedResultIterator):
                 "_reference_accession": "reference_accession",
                 "_gene_name": "gene_name",
                 "_gene_symbol": "gene_symbol",
-                "_drug_class": "drug_class",
-                # '': 'contig_id',
-                # '': 'query_start_aa',
-                # '': 'query_stop_aa',
-                # '': 'query_start_nt',
-                # '': 'query_stop_nt',
-                # '': 'subject_start_aa',
-                # '': 'subject_stop_aa',
-                # '': 'subject_start_nt',
-                # '': 'subject_stop_nt',
-                # '': 'strand_orientation',
-                # '': 'coverage_depth',
-                # '': 'coverage_ratio',
-                # '': 'sequence_identity',
-                # '': 'reference_database_id',
-                # '': 'reference_database_version',
-                # '': 'reference_gene_length',
-                # '': 'reference_protein_length',
-                # '': 'target_gene_length',
-                # '': 'target_protein_length',
-                # '': 'antimicrobial_agent',
-                # '': 'resistance_mechanism',
-                # '': 'analysis_software_name',
-                # '': 'analysis_software_version'
-        }
+                "_drug_class": "drug_class"}
 
         super().__init__(source, self.field_mapping, self.metadata)
 
