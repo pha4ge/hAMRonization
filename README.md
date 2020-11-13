@@ -5,7 +5,7 @@
 This repo contains the hAMRonization module and CLI parser tools combine the outputs of 
 disparate antimicrobial resistance gene detection tools into a single unified format.
 
-This is an implementation of the hAMRonization AMR detection specification scheme.
+This is an implementation of the [hAMRonization AMR detection specification scheme](docs/hAMRonization_specification_details.tsv).
 
 This supports a variety of summary options including an [interactive summary](https://htmlpreview.github.io/?https://github.com/pha4ge/hAMRonization/blob/master/docs/interactive_report_demo.html).
 
