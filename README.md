@@ -7,7 +7,7 @@ disparate antimicrobial resistance gene detection tools into a single unified fo
 
 This is an implementation of the [hAMRonization AMR detection specification scheme](docs/hAMRonization_specification_details.csv).
 
-This supports a variety of summary options including an [interactive summary](https://htmlpreview.github.io/?https://github.com/pha4ge/hAMRonization/blob/master/docs/interactive_report_demo.html).
+This supports a variety of summary options including an [interactive summary](https://finlaymagui.re/assets/interactive_report_demo.html).
 
 
 ## Installation
