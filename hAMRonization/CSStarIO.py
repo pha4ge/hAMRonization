@@ -9,7 +9,7 @@ required_metadata = ['analysis_software_version',
                      'reference_database_version',
                      'input_file_name',
                      'reference_database_id']
-
+optional_metadata = []
 
 class CSStarIterator(hAMRonizedResultIterator):
 

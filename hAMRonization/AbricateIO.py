@@ -5,7 +5,7 @@ from .Interfaces import hAMRonizedResultIterator
 
 required_metadata = ['analysis_software_version',
                      'reference_database_version']
-
+optional_metadata = []
 
 class AbricateIterator(hAMRonizedResultIterator):
 

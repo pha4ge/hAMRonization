@@ -70,6 +70,22 @@ _RequiredToolMetadata = {
     "groot": GrootIO.required_metadata,
 }
 
+_OptionalToolMetadata = {
+    "abricate": AbricateIO.optional_metadata,
+    "amrfinderplus": AmrFinderPlusIO.optional_metadata,
+    "ariba": AribaIO.optional_metadata,
+    "rgi": RgiIO.optional_metadata,
+    "resfinder": ResFinderIO.optional_metadata,
+    "srax": SraxIO.optional_metadata,
+    "deeparg": DeepArgIO.optional_metadata,
+    "kmerresistance": KmerResistanceIO.optional_metadata,
+    "srst2": Srst2IO.optional_metadata,
+    "staramr": StarAmrIO.optional_metadata,
+    "csstar": CSStarIO.optional_metadata,
+    "amrplusplus": AmrPlusPlusIO.optional_metadata,
+    "resfams": ResFamsIO.optional_metadata,
+    "groot": GrootIO.optional_metadata,
+}
 
 def parse(handle, metadata, tool):
     r"""Turn a sequence file into an iterator returning SeqRecords.

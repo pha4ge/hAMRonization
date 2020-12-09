@@ -199,6 +199,13 @@ def generate_tool_subparser(subparser, analysis_tool):
         tool_parser.add_argument(f"--{field}", required=True,
                                  help=f"Input string containing the {field} "
                                  f"for {analysis_tool}")
+    # any missing optional fields need supplied as CLI argument
+    optional_metadata = \
+        hAMRonization._OptionalToolMetadata[analysis_tool]
+    for field in optional_metadata:
+        tool_parser.add_argument(f"--{field}",
+                                 help=f"Input string containing the {field} "
+                                 f"for {analysis_tool}")
     return subparser
 
 

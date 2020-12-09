@@ -7,7 +7,7 @@ from .Interfaces import hAMRonizedResultIterator
 required_metadata = ['analysis_software_version',
                      'reference_database_version',
                      'input_file_name']
-
+optional_metadata = []
 
 class AmrPlusPlusIterator(hAMRonizedResultIterator):
 
