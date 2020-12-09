@@ -82,6 +82,7 @@ class ResFinderIterator(hAMRonizedResultIterator):
                                     "results"][drug_class][
                                         drug_class.lower()][
                                             gene_name][field]
+                                    if _start > _stop:
 
                 yield self.hAMRonize(result, self.metadata)
                 result = {}
