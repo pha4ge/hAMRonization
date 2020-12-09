@@ -20,8 +20,11 @@ hamronize rgi --input_file_name rgi_bwt_report --analysis_software_version rgi_b
 # test multi-report usage
 hamronize rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --reference_database_version card_v1 data/raw_outputs/rgi/rgi.txt data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt --output hamronized_rgi_and_rgibwt.tsv
 
-hamronize resfinder --analysis_software_version resfinder_v1 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/data_resfinder.json --format json --output hamronized_resfinder.json
-hamronize resfinder --analysis_software_version resfinder_v1 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/data_resfinder.json --format tsv --output hamronized_resfinder.tsv
+hamronize resfinder --analysis_software_version resfinder_v1 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/data_resfinder.json --format json --output hamronized_resfinder3.json
+hamronize resfinder --analysis_software_version resfinder_v1 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/data_resfinder.json --format tsv --output hamronized_resfinder3.tsv
+hamronize resfinder --input_file_name resfinder4_report --analysis_software_version resfinder_v1 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/ResFinder4_results_tab.txt --format json --output hamronized_resfinder4.json
+hamronize resfinder --input_file_name resfinder4_report --analysis_software_version resfinder_v1 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/ResFinder4_results_tab.txt --format tsv --output hamronized_resfinder4.tsv
+
 
 hamronize srax --reference_database_id srax_default --input_file_name srax_report --reference_database_version srax_db_v1 --analysis_software_version srax_v1 --format json data/raw_outputs/srax/sraX_detected_ARGs.tsv --output hamronized_srax.json
 hamronize srax --reference_database_id srax_default --input_file_name srax_report --reference_database_version srax_db_v1 --analysis_software_version srax_v1 --format tsv data/raw_outputs/srax/sraX_detected_ARGs.tsv --output hamronized_srax.tsv

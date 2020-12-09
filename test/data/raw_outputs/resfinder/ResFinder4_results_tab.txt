@@ -1,0 +1,17 @@
+Resistance gene	Identity	Alignment Length/Gene Length	Coverage	Position in reference	Contig	Position in contig	Phenotype	Accession no.
+rmtC	100.00	846/846	100.0	1..846	NODE_14_length_98505_cov_19.634799	10432..11277	Aminoglycoside resistance	AB194779
+aac(3)-IIa	99.77	861/861	100.0	1..861	NODE_27_length_2798_cov_14.473509	143..1003	Aminoglycoside resistance	X51534
+aac(6')-Ib-cr	100.00	600/600	100.0	1..600	NODE_30_length_2382_cov_14.597898	1640..2239	Fluoroquinolone and aminoglycoside resistance	DQ303918
+blaOKP-B-15	99.42	860/861	99.88385598141696	1..860	NODE_9_length_261278_cov_7.764227	178633..179492	Beta-lactam resistance	AM850917
+blaOKP-B-2	99.30	861/861	100.0	1..861	NODE_9_length_261278_cov_7.764227	178633..179493	Beta-lactam resistance	AM051151
+blaNDM-1	100.00	813/813	100.0	1..813	NODE_14_length_98505_cov_19.634799	11835..12647	Beta-lactam resistance	FN396876
+blaOXA-1	100.00	831/831	100.0	1..831	NODE_30_length_2382_cov_14.597898	679..1509	Beta-lactam resistance	HQ170510
+fosA	92.86	420/420	100.0	1..420	NODE_6_length_370679_cov_11.470840	347102..347521	Fosfomycin resistance	ACZD01000244
+fosA	92.86	420/420	100.0	1..420	NODE_6_length_370679_cov_11.470840	347102..347521	Fosfomycin resistance	ACWO01000079
+oqxB	95.59	3153/3153	100.0	1..3153	NODE_2_length_744173_cov_11.475942	45335..48487	Quinolone resistance	EU370913
+oqxA	93.88	1176/1176	100.0	1..1176	NODE_2_length_744173_cov_11.475942	44136..45311	Quinolone resistance	EU370913
+qnrB1	100.00	645/645	100.0	1..645	NODE_12_length_120343_cov_13.933826	917..1561	Quinolone resistance	DQ351241
+aac(6')-Ib-cr	100.00	600/600	100.0	1..600	NODE_30_length_2382_cov_14.597898	1640..2239	Fluoroquinolone and aminoglycoside resistance	DQ303918
+sul1	99.88	840/840	100.0	1..840	NODE_14_length_98505_cov_19.634799	3268..4107	Sulphonamide resistance	X15024
+sul1	99.88	840/840	100.0	1..840	NODE_14_length_98505_cov_19.634799	3268..4107	Sulphonamide resistance	JF262165
+dfrA14	100.00	474/474	100.0	1..474	NODE_21_length_8231_cov_13.939252	1750..2223	Trimethoprim resistance	KF921535
