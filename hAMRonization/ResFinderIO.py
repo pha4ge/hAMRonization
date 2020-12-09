@@ -47,7 +47,7 @@ class ResFinderIterator(hAMRonizedResultIterator):
             'Resistance gene': 'gene_symbol',
             'Identity': 'sequence_identity',
             'HSP_length': None,
-            'Alignment Length/Gene Length': 'reference_gene_length',
+            'Alignment Length/Gene Length': None,
             'Position in reference': None,
             'Contig': 'input_sequence_id',
             'Position in contig': None,
@@ -60,6 +60,10 @@ class ResFinderIterator(hAMRonizedResultIterator):
             '_stop': 'input_gene_stop',
             # infered from Position in contig field
             '_strand': 'strand_orientation',
+            # Resistance gene is mapped to both symbol and name
+            '_gene_name': 'gene_name',
+            # decomposed from Alignment Length/Gene Length e.g 1176/1176
+            '_reference_gene_length': 'reference_gene_length'
         }
         self.metadata = metadata
 
@@ -114,6 +118,7 @@ class ResFinderIterator(hAMRonizedResultIterator):
         elif self.metadata['analysis_software_name'] == 'resfinder 4':
             reader = csv.DictReader(handle, delimiter='\t')
             for result in reader:
+                result['_gene_name'] = result['Resistance gene']
                 _start, _stop = result['Position in contig'].split('..')
                 if _start > _stop:
                     _strand = "-"
@@ -122,4 +127,8 @@ class ResFinderIterator(hAMRonizedResultIterator):
                 result['_start'] = _start
                 result['_stop']  = _stop
                 result["_strand"] = _strand
+                _reference_gene_length = result['Alignment Length/Gene Length'].split("/")[0]
+                result['_reference_gene_length'] = _reference_gene_length
+                yield self.hAMRonize(result, self.metadata)
+                result = {}
     

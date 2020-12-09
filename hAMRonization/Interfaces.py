@@ -265,8 +265,14 @@ def generic_cli_interface():
     if args.analysis_tool and args.analysis_tool != 'summarize':
         required_mandatory_metadata = \
                 hAMRonization._RequiredToolMetadata[args.analysis_tool]
+        optional_metadata = \
+                hAMRonization._OptionalToolMetadata[args.analysis_tool]
+        
+        metadata_fields = required_mandatory_metadata
+        metadata_fields.extend(optional_metadata)
+
         metadata = {field: getattr(args, field)
-                    for field in required_mandatory_metadata}
+                    for field in metadata_fields}
 
         # parse reports and write as appropriate (only first report with head
         # in tsv mode)
