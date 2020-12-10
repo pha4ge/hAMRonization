@@ -18,6 +18,7 @@ Dummy outputs available:
 - [ ] ~~pointfinder~~
 - [ ] [resfams](dummy/resfinder)
 - [x] [resfinder](dummy/resfinder)
+- [x] [resfinder4](dummy/resfinder4)
 - [x] [rgi](dummy/rgi)
 - [x] [srax](dummy/srax)
 - [x] [srst2](dummy/s)
@@ -52,6 +53,7 @@ In [test_sanity.py](test_sanity.py) the output sanity tests for the following pa
 - [ ] ~~pointfinder~~
 - [ ] resfams
 - [x] resfinder
+- [x] resfinder4
 - [x] rgi
 - [x] srax
 - [x] srst2

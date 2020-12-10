@@ -39,12 +39,13 @@ optional arguments:
   -v, --version         show program's version number and exit
 
 Tools with hAMRonizable reports:
-  {abricate,amrfinderplus,ariba,rgi,resfinder,srax,deeparg,kmerresistance,srst2,staramr,csstar,amrplusplus,resfams,groot}
+  {abricate,amrfinderplus,ariba,rgi,resfinder,resfinder4,srax,deeparg,kmerresistance,srst2,staramr,csstar,amrplusplus,resfams,groot}
     abricate            hAMRonize abricate's output report i.e., OUTPUT.tsv
     amrfinderplus       hAMRonize amrfinderplus's output report i.e., OUTPUT.tsv
     ariba               hAMRonize ariba's output report i.e., OUTDIR/OUTPUT.tsv
     rgi                 hAMRonize rgi's output report i.e., OUTPUT.txt or OUTPUT_bwtoutput.gene_mapping_data.txt
     resfinder           hAMRonize resfinder's output report i.e., data_resfinder.json
+    resfinder4          hAMRonize resfinder4's tabular output report i.e., ResFinder_results_tab.txt
     srax                hAMRonize srax's output report i.e., sraX_detected_ARGs.tsv
     deeparg             hAMRonize deeparg's output report i.e., OUTDIR/OUTPUT.mapping.ARG
     kmerresistance      hAMRonize kmerresistance's output report i.e., OUTPUT.KmerRes
@@ -158,15 +159,16 @@ Parsers needing tested (both automated and just sanity checking output), see [te
 3. [NCBI AMRFinderPlus](hAMRonization/AmrFinderPlusIO.py)
 4. [RGI](hAMRonization/RgiIO.py) (includes RGI-BWT)
 5. [resfinder](hAMRonization/ResFinderIO.py)
-6. [sraX](hAMRonization/SraxIO.py)
-7. [deepARG](hAMRonization/DeepArgIO.py)
-8. [kmerresistance](hAMRonization/KmerResistanceIO.py) 
-9. [srst2](hAMRonization/Srst2IO.py)
-10. [staramr](hAMRonization/StarAmrIO.py)
-11. [c-sstar](hAMRonization/CSStarIO.py)
-12. [amrplusplus](hAMRonization/AmrPlusPlusIO.py)
-13. [resfams](hAMRonization/ResFamsIO.py)
-14. [groot](hAMRonization/GrootIO.py)
+6. [resfinder4](hAMRonization/ResFinder4IO.py)
+7. [sraX](hAMRonization/SraxIO.py)
+8. [deepARG](hAMRonization/DeepArgIO.py)
+9. [kmerresistance](hAMRonization/KmerResistanceIO.py) 
+10. [srst2](hAMRonization/Srst2IO.py)
+11. [staramr](hAMRonization/StarAmrIO.py)
+12. [c-sstar](hAMRonization/CSStarIO.py)
+13. [amrplusplus](hAMRonization/AmrPlusPlusIO.py)
+14. [resfams](hAMRonization/ResFamsIO.py)
+15. [groot](hAMRonization/GrootIO.py)
 
 Parsers excluded as needing variant specification to implement:
 1. [mykrobe](test/data/raw_outputs/mykrobe/report.json)

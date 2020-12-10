@@ -1,0 +1,2 @@
+Resistance gene	Identity	Alignment Length/Gene Length	Coverage	Position in reference	Contig	Position in contig	Phenotype	Accession no.
+oqxA	99.58	1176/1176	100.0	1..1176	NZ_LR792628.1 Klebsiella pneumoniae isolate SB5881 chromosome SB5881_omosome	1333608..1334783	Quinolone resistance	EU370913

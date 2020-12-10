@@ -239,7 +239,7 @@ def test_resfinder():
         assert result.input_sequence_id == 'NZ_LR792628.1 Klebsiella pneumoniae isolate SB5881 chromosome SB5881_omosome'
         assert result.input_gene_start == 1333608
         assert result.input_gene_stop == 1334783
-        assert result.strand_orientation == '-'
+        assert result.strand_orientation == '+'
         assert result.drug_class == 'Quinolone resistance'
         assert result.sequence_identity == 99.57
         assert result.reference_gene_length == 1176
@@ -260,6 +260,45 @@ def test_resfinder():
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
 
+def test_resfinder4():
+    metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28", "input_file_name": "Dummy"}
+    parsed_report = hAMRonization.parse("dummy/resfinder4/ResFinder_results_tab.txt", metadata, "resfinder4")
+
+    for result in parsed_report:
+        # assert mandatory fields
+        assert result.input_file_name == 'Dummy'
+        assert result.gene_symbol == 'oqxA'
+        assert result.gene_name == 'oqxA'
+        assert result.reference_database_id == 'resfinder'
+        assert result.reference_database_version == '2019-Jul-28'
+        assert result.reference_accession == 'EU370913'
+        assert result.analysis_software_name == 'resfinder 4'  # drop the .py?
+        assert result.analysis_software_version == '0.0.1'
+
+        # optional fields - present in dummy dataset
+        assert result.input_sequence_id == 'NZ_LR792628.1 Klebsiella pneumoniae isolate SB5881 chromosome SB5881_omosome'
+        assert result.input_gene_start == 1333608
+        assert result.input_gene_stop == 1334783
+        assert result.strand_orientation == '+'
+        assert result.drug_class == 'Quinolone resistance'
+        assert result.sequence_identity == 99.58
+        assert result.reference_gene_length == 1176
+        assert result.coverage_depth is None
+        assert result.coverage_percentage == 100
+
+        # missing data in report
+        assert result.input_gene_length is None
+        assert result.antimicrobial_agent is None
+        assert result.reference_protein_length is None
+        assert result.coverage_ratio is None
+        assert result.input_protein_length is None
+        assert result.resistance_mechanism is None
+        assert result.input_protein_start is None
+        assert result.input_protein_stop is None
+        assert result.reference_protein_start is None
+        assert result.reference_protein_stop is None
+        assert result.reference_gene_start is None
+        assert result.reference_gene_stop is None
 
 def test_rgi():
     metadata = {"analysis_software_version": "5.1.0", "reference_database_version": "2019-Jul-28",
