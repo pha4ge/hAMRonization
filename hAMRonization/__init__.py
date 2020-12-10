@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 from hAMRonization import AbricateIO
 from hAMRonization import AmrFinderPlusIO
 from hAMRonization import AribaIO
 from hAMRonization import RgiIO
 from hAMRonization import ResFinderIO
+from hAMRonization import ResFinder4IO
 from hAMRonization import SraxIO
 from hAMRonization import DeepArgIO
 from hAMRonization import KmerResistanceIO
@@ -24,6 +25,7 @@ _FormatToIterator = {
     "ariba": AribaIO.AribaIterator,
     "rgi": RgiIO.RgiIterator,
     "resfinder": ResFinderIO.ResFinderIterator,
+    "resfinder4": ResFinder4IO.ResFinder4Iterator,
     "srax": SraxIO.SraxIterator,
     "deeparg": DeepArgIO.DeepArgIterator,
     "kmerresistance": KmerResistanceIO.KmerResistanceIterator,
@@ -41,6 +43,7 @@ _ReportFileToUse = {
     "ariba": "OUTDIR/OUTPUT.tsv",
     "rgi": "OUTPUT.txt or OUTPUT_bwtoutput.gene_mapping_data.txt",
     "resfinder": "data_resfinder.json",
+    "resfinder4": "ResFinder_results_tab.txt",
     "srax": "sraX_detected_ARGs.tsv",
     "deeparg": "OUTDIR/OUTPUT.mapping.ARG",
     "kmerresistance": "OUTPUT.res",
@@ -59,6 +62,7 @@ _RequiredToolMetadata = {
     "ariba": AribaIO.required_metadata,
     "rgi": RgiIO.required_metadata,
     "resfinder": ResFinderIO.required_metadata,
+    "resfinder4": ResFinder4IO.required_metadata,
     "srax": SraxIO.required_metadata,
     "deeparg": DeepArgIO.required_metadata,
     "kmerresistance": KmerResistanceIO.required_metadata,
