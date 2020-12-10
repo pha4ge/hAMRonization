@@ -72,7 +72,7 @@ class ResFinderIterator(hAMRonizedResultIterator):
                                 _start = int(coordinates[0])
                                 _stop = int(coordinates[1])
                                 _strand = "+"
-                                if _start < _stop:
+                                if _start > _stop:
                                     _strand = "-"
                                 result["_start"] = _start
                                 result["_stop"] = _stop
