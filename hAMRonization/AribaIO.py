@@ -46,6 +46,7 @@ class AribaIterator(hAMRonizedResultIterator):
             "smtls_nts_depth": None,
             "var_description": None,
             "free_text": None,
+            '_gene_symbol': 'gene_symbol'
         }
         super().__init__(source, self.field_mapping, self.metadata)
 
@@ -56,4 +57,6 @@ class AribaIterator(hAMRonizedResultIterator):
         # skip any manually specified fields for later
         reader = csv.DictReader(handle, delimiter='\t')
         for result in reader:
+            _gene_symbol = result['ref_name'].split(".")[0]
+            result['_gene_symbol'] = _gene_symbol
             yield self.hAMRonize(result, self.metadata)
