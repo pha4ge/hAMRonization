@@ -76,15 +76,15 @@ def test_amrfinder():
         assert result.strand_orientation == '-'
         assert result.coverage_percentage == 100
         assert result.drug_class == 'PHENICOL/QUINOLONE'
-        assert result.reference_gene_length == 391
-        assert result.input_gene_length == 391
         assert result.antimicrobial_agent == 'PHENICOL/QUINOLONE'
+        assert result.reference_protein_length == 391
+        assert result.input_protein_length == 391
 
         # missing data in report
-        assert result.reference_protein_length is None
+        assert result.reference_gene_length == None
+        assert result.input_gene_length == None
         assert result.coverage_depth is None
         assert result.coverage_ratio is None
-        assert result.input_protein_length is None
         assert result.resistance_mechanism is None
         assert result.input_protein_start is None
         assert result.input_protein_stop is None
