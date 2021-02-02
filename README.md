@@ -13,13 +13,18 @@ This supports a variety of summary options including an [interactive summary](ht
 ## Installation
 
 This tool requires python>=3.7 and [pandas](https://pandas.pydata.org/)
-and can be installed directly from pip without cloning the repo.
+and the latest release can be installed directly from pip or conda (requires the [bioconda channel](https://bioconda.github.io/user/install.html#set-up-channels)). 
 
 ```
-pip install git+https://github.com/pha4ge/hAMRonization
+pip install hAMRonization
+```
+Or
+
+```
+conda create -n hamronization hamronziation
 ```
 
-Or just clone the repo and run pip:
+Alternatively, to install the latest development version:
 
 ```
 git clone https://github.com/pha4ge/hAMRonization
