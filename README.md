@@ -1,4 +1,4 @@
-![Python package](https://github.com/pha4ge/hAMRonization/workflows/Python%20package/badge.svg)
+![Python package](https://github.com/pha4ge/hAMRonization/workflows/test_package/badge.svg)
 
 # hAMRonization 
 
