@@ -13,7 +13,7 @@ This supports a variety of summary options including an [interactive summary](ht
 ## Installation
 
 This tool requires python>=3.7 and [pandas](https://pandas.pydata.org/)
-and the latest release can be installed directly from pip or conda (requires the [bioconda channel](https://bioconda.github.io/user/install.html#set-up-channels)). 
+and the latest release can be installed directly from pip or conda:
 
 ```
 pip install hAMRonization
@@ -21,7 +21,7 @@ pip install hAMRonization
 Or
 
 ```
-conda create -n hamronization -c bioconda hamronization
+conda create --name hamronization --channel conda-forge --channel bioconda --channel defaults hamronization
 ```
 ![conda-download](https://anaconda.org/bioconda/hamronization/badges/downloads.svg)
 ![version-on-conda](https://anaconda.org/bioconda/hamronization/badges/version.svg)
