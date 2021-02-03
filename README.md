@@ -21,8 +21,11 @@ pip install hAMRonization
 Or
 
 ```
-conda create -n hamronization hamronziation
+conda create -n hamronization -c bioconda hamronization
 ```
+![conda-download](https://anaconda.org/bioconda/hamronization/badges/downloads.svg)
+![version-on-conda](https://anaconda.org/bioconda/hamronization/badges/version.svg)
+![last-update-on-conda](https://anaconda.org/bioconda/hamronization/badges/latest_release_date.svg)
 
 Alternatively, to install the latest development version:
 
