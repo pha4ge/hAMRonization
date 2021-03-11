@@ -9,7 +9,6 @@ This is an implementation of the [hAMRonization AMR detection specification sche
 
 This supports a variety of summary options including an [interactive summary](https://finlaymagui.re/assets/interactive_report_demo.html).
 
-
 ## Installation
 
 This tool requires python>=3.7 and [pandas](https://pandas.pydata.org/)
@@ -18,21 +17,27 @@ and the latest release can be installed directly from pip or conda:
 ```
 pip install hAMRonization
 ```
+[![PyPI version](https://badge.fury.io/py/hAMRonization.svg)](https://badge.fury.io/py/hAMRonization)
+[![PyPI downloads](https://img.shields.io/pypi/dm/hAMRonization.svg)](https://img.shields.io/pypi/dm/hAMRonization)
+
 Or
 
 ```
 conda create --name hamronization --channel conda-forge --channel bioconda --channel defaults hamronization
 ```
-![conda-download](https://anaconda.org/bioconda/hamronization/badges/downloads.svg)
 ![version-on-conda](https://anaconda.org/bioconda/hamronization/badges/version.svg)
+![conda-download](https://anaconda.org/bioconda/hamronization/badges/downloads.svg)
 ![last-update-on-conda](https://anaconda.org/bioconda/hamronization/badges/latest_release_date.svg)
 
-Alternatively, to install the latest development version:
+Or to install the latest development version:
 
 ```
 git clone https://github.com/pha4ge/hAMRonization
 pip install hAMRonization
 ```
+
+
+Alternatively, hAMRonization can also be installed and used in [galaxy](https://galaxyproject.org/) via the [galaxy toolshed](https://toolshed.g2.bx.psu.edu/view/thanhlv/hamronization/5fca34360c12).
 
 ## Usage
 
