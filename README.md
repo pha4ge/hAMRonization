@@ -9,6 +9,8 @@ This is an implementation of the [hAMRonization AMR detection specification sche
 
 This supports a variety of summary options including an [interactive summary](https://finlaymagui.re/assets/interactive_report_demo.html).
 
+![hAMRonization overview](https://github.com/pha4ge/hAMRonization/blob/master/docs/overview_figure.png?raw=true)
+
 ## Installation
 
 This tool requires python>=3.7 and [pandas](https://pandas.pydata.org/)
