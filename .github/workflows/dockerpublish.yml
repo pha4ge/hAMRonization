@@ -28,7 +28,7 @@ jobs:
           push: true
           tags: finlaymaguire/hamronization:latest
           build-args: |
-            software_version=${{ github.event.release.tag_name }}
+            SOFTWARE_VERSION=${{ github.event.release.tag_name }}
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}

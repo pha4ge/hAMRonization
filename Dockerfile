@@ -4,6 +4,8 @@ FROM python:3.9
 # metadata
 LABEL base.image="pathon:3.9"
 LABEL software="hAMRonization"
+ARG SOFTWARE_VERSION=unspecified
+LABEL software_version=$SOFTWARE_VERSION
 LABEL description="Tool to identify resistance genes using the CARD database"
 LABEL website="https://github.com/pha4ge/hAMRonization"
 LABEL documentation="https://github.com/pha4ge/hAMRonization/blob/master/README.md"
