@@ -43,7 +43,7 @@ git clone https://github.com/pha4ge/hAMRonization
 pip install hAMRonization
 ```
 
-Alternatively, hAMRonization can also be installed and used in [galaxy](https://galaxyproject.org/) via the [galaxy toolshed](https://toolshed.g2.bx.psu.edu/view/thanhlv/hamronization/5fca34360c12).
+Alternatively, hAMRonization can also be installed and used in [galaxy](https://galaxyproject.org/) via the [galaxy toolshed](https://toolshed.g2.bx.psu.edu/view/iuc/suite_hamronization/904ab154f8f4).
 
 ## Usage
 
