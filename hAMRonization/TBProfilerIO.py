@@ -22,7 +22,8 @@ class TBProfilerIterator(hAMRonizedResultIterator):
                 'db_name': 'reference_database_id',
                 'db_version': 'reference_database_version',
                 'software_name': 'analysis_software_version',
-                'tbprofiler_version': 'analysis_software_version'
+                'tbprofiler_version': 'analysis_software_version',
+                'reference_accession': 'reference_accession'
                 }
 
         super().__init__(source, self.field_mapping, self.metadata)
@@ -45,7 +46,8 @@ class TBProfilerIterator(hAMRonizedResultIterator):
                     'db_name': json_obj['db_version']['name'],
                     'db_version': json_obj['db_version']['commit'],
                     'tbprofiler_version': json_obj['tbprofiler_version'],
-                    'software_name': 'tb-profiler'
+                    'software_name': 'tb-profiler',
+                    'reference_accession': variant['feature_id']
                 }
                 yield self.hAMRonize(result, self.metadata)
 

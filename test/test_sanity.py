@@ -567,12 +567,12 @@ def test_tbprofiler():
         assert result.analysis_software_name == 'tb-profiler'
         assert result.analysis_software_version == '3.0.8'
         assert result.genetic_variation_type == 'protein_variant'
+        assert result.reference_accession == 'CCP43410'
 
         # optional fields - present in dummy dataset
         assert result.drug_class == 'rifampicin'
 
         # mandatory but missing 
-        assert result.reference_accession is None
         assert result.sequence_identity is None 
 
         # missing data in report
