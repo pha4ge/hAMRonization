@@ -19,6 +19,10 @@ class hAMRonizedResult():
     reference_accession: str
     analysis_software_name: str
     analysis_software_version: str
+    
+    # variant specific optional fields
+    variant_frequency: float = None
+    genetic_variation_type: str = None
 
     # optional fields
     sequence_identity: float = None

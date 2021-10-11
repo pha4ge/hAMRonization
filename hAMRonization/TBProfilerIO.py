@@ -3,8 +3,7 @@
 import json
 from .Interfaces import hAMRonizedResultIterator
 
-required_metadata = ['analysis_software_version',
-                     'reference_database_version']
+required_metadata = []
 
 
 class TBProfilerIterator(hAMRonizedResultIterator):
@@ -15,15 +14,16 @@ class TBProfilerIterator(hAMRonizedResultIterator):
 
         self.field_mapping = {
                 'filename': 'input_file_name', 
-                'gene': 'gene_symbol',
-                'gene': 'gene_name',
+                'gene_symbol': 'gene_symbol',
+                'gene_name': 'gene_name',
                 'drug': 'drug_class',
                 'type': 'genetic_variation_type',
                 'frequency': 'variant_frequency',
                 'db_name': 'reference_database_id',
                 'db_version': 'reference_database_version',
-                'tbprofiler_version': 'analysis_software_version'
-
+                'software_name': 'analysis_software_version',
+                'tbprofiler_version': 'analysis_software_version',
+                'reference_accession': 'reference_accession'
                 }
 
         super().__init__(source, self.field_mapping, self.metadata)
@@ -38,14 +38,16 @@ class TBProfilerIterator(hAMRonizedResultIterator):
             for drug in variant["drugs"]:
                 result = {
                     'filename': handle.name,
-                    'gene': variant['gene'],
+                    'gene_symbol': variant['gene'],
                     'gene_name': variant['gene'],
                     'drug': drug['drug'],
                     'type': 'protein_variant' if variant['change'][0]=="p" else "nucleotide_variant",
                     'frequency': variant['freq'],
                     'db_name': json_obj['db_version']['name'],
                     'db_version': json_obj['db_version']['commit'],
-                    'tbprofiler_version': json_obj['tbprofiler_version']
+                    'tbprofiler_version': json_obj['tbprofiler_version'],
+                    'software_name': 'tb-profiler',
+                    'reference_accession': variant['feature_id']
                 }
                 yield self.hAMRonize(result, self.metadata)
 

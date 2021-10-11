@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+
+hamronize tbprofiler data/raw_outputs/tbprofiler/tbprofiler.json --format json --output hamronized_tbprofiler.json
+
 hamronize abricate data/raw_outputs/abricate/report.tsv --reference_database_version db_v_1 --analysis_software_version tool_v_1 --format json --output hamronized_abricate.json
 hamronize abricate data/raw_outputs/abricate/report.tsv --reference_database_version db_v_1 --analysis_software_version tool_v_1 --format tsv --output hamronized_abricate.tsv
 
