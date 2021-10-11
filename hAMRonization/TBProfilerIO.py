@@ -41,7 +41,7 @@ class TBProfilerIterator(hAMRonizedResultIterator):
                     'gene': variant['gene'],
                     'gene_name': variant['gene'],
                     'drug': drug['drug'],
-                    'type': 'variant', 
+                    'type': 'protein_variant' if variant['change'][0]=="p" else "nucleotide_variant",
                     'frequency': variant['freq'],
                     'db_name': json_obj['db_version']['name'],
                     'db_version': json_obj['db_version']['commit'],
