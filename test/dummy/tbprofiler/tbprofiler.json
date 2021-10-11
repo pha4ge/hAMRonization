@@ -52,7 +52,7 @@
       "genome_pos": 761155,
       "ref": "C",
       "alt": "T",
-      "freq": 0.5754716981132075,
+      "freq": 1,
       "feature_id": "CCP43410",
       "type": "missense_variant",
       "nucleotide_change": "c.1349C>T",
