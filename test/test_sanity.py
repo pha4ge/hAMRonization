@@ -569,12 +569,11 @@ def test_csstar():
         assert result.genetic_variation_type is None
 
 def test_tbprofiler():
-    metadata = {"input_file_name": "Dummy"}
     parsed_report = hAMRonization.parse("dummy/tbprofiler/tbprofiler.json", metadata, "tbprofiler")
 
     for result in parsed_report:
         # assert mandatory fields
-        assert result.input_file_name == 'Dummy'
+        assert result.input_file_name == 'dummy/tbprofiler/tbprofiler.json'
         assert result.gene_symbol == 'rpoB'
         assert result.gene_name == 'rpoB'
         assert result.reference_database_id == 'tbdb'
