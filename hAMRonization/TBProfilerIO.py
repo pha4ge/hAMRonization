@@ -3,8 +3,7 @@
 import json
 from .Interfaces import hAMRonizedResultIterator
 
-required_metadata = ['analysis_software_version',
-                     'reference_database_version']
+required_metadata = []
 
 
 class TBProfilerIterator(hAMRonizedResultIterator):
