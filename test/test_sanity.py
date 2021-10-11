@@ -574,7 +574,7 @@ def test_tbprofiler():
 
     for result in parsed_report:
         # assert mandatory fields
-        assert result.input_file_name == 'dummy/tbprofiler/tbprofiler.json'
+        assert result.input_file_name == 'tbprofiler.json'
         assert result.gene_symbol == 'rpoB'
         assert result.gene_name == 'rpoB'
         assert result.reference_database_id == 'tbdb'
