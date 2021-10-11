@@ -569,6 +569,7 @@ def test_csstar():
         assert result.genetic_variation_type is None
 
 def test_tbprofiler():
+    metadata = {}
     parsed_report = hAMRonization.parse("dummy/tbprofiler/tbprofiler.json", metadata, "tbprofiler")
 
     for result in parsed_report:
