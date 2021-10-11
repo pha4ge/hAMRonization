@@ -1,0 +1,91 @@
+{
+  "qc": {
+    "pct_reads_mapped": 97.16,
+    "num_reads_mapped": 4232866,
+    "median_coverage": 121,
+    "gene_coverage": [
+      {
+        "fraction": 0,
+        "cutoff": 0,
+        "locus_tag": "Rv3919c",
+        "gene": "gid"
+      }
+    ],
+    "missing_positions": []
+  },
+  "delly": "success",
+  "lineage": [
+    {
+      "lin": "lineage3",
+      "family": "East-African-Indian",
+      "spoligotype": "CAS",
+      "rd": "RD750",
+      "frac": 0.4586267605633803
+    },
+    {
+      "lin": "lineage2",
+      "family": "East-Asian",
+      "spoligotype": "Beijing",
+      "rd": "RD105",
+      "frac": 0.5208510638297872
+    },
+    {
+      "lin": "lineage2.2",
+      "family": "East-Asian (Beijing)",
+      "spoligotype": "Beijing-RD207",
+      "rd": "RD105;RD207",
+      "frac": 0.5471512770137524
+    },
+    {
+      "lin": "lineage2.2.1",
+      "family": "East-Asian (Beijing)",
+      "spoligotype": "Beijing-RD181",
+      "rd": "RD105;RD207;RD181",
+      "frac": 0.5304114490161002
+    }
+  ],
+  "main_lin": "lineage2;lineage3",
+  "sublin": "lineage3;lineage2.2.1",
+  "dr_variants": [
+    {
+      "chrom": "Chromosome",
+      "genome_pos": 761155,
+      "ref": "C",
+      "alt": "T",
+      "freq": 0.5754716981132075,
+      "feature_id": "CCP43410",
+      "type": "missense_variant",
+      "nucleotide_change": "c.1349C>T",
+      "protein_change": "p.Ser450Leu",
+      "alternate_consequences": [],
+      "change": "p.Ser450Leu",
+      "locus_tag": "Rv0667",
+      "gene": "rpoB",
+      "drugs": [
+        {
+          "type": "drug",
+          "drug": "rifampicin",
+          "confidence": "high",
+          "literature": "10.1128/AAC.01093-18"
+        }
+      ]
+    }
+  ],
+  "other_variants": [
+    
+  ],
+  "drtype": "Pre-XDR",
+  "db_version": {
+    "name": "tbdb",
+    "commit": "a800e0a",
+    "Author": "jodyphelan <jody.phelan@lshtm.ac.uk>",
+    "Date": "Mon Sep 27 08:31:28 2021 +0100"
+  },
+  "id": "SRR6916544",
+  "tbprofiler_version": "3.0.8",
+  "pipeline": {
+    "mapper": "bwa",
+    "variant_caller": "bcftools"
+  },
+  "timestamp": "11-10-2021 16:43:40"
+}

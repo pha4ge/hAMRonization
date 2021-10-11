@@ -550,3 +550,48 @@ def test_csstar():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
+
+
+
+def test_tbprofiler():
+    metadata = {"input_file_name": "Dummy"}
+    parsed_report = hAMRonization.parse("dummy/tbprofiler/tbprofiler.json", metadata, "csstar")
+
+    for result in parsed_report:
+        # assert mandatory fields
+        assert result.input_file_name == 'Dummy'
+        assert result.gene_symbol == 'rpoB'
+        assert result.gene_name == 'rpoB'
+        assert result.reference_database_id == 'tbdb'
+        assert result.reference_database_version == 'a800e0a'
+        assert result.analysis_software_name == 'tb-profiler'
+        assert result.analysis_software_version == '3.0.8'
+        assert result.genetic_variation_type == 'protein_variant'
+
+        # optional fields - present in dummy dataset
+        assert result.drug_class == 'rifampicin'
+
+        # mandatory but missing 
+        assert result.reference_accession is None
+        assert result.sequence_identity is None 
+
+        # missing data in report
+        assert result.reference_gene_length is None 
+        assert result.input_gene_length is None 
+        assert result.input_sequence_id is None 
+        assert result.coverage_percentage is None
+        assert result.coverage_depth is None
+        assert result.input_gene_start is None
+        assert result.input_gene_stop is None
+        assert result.strand_orientation is None
+        assert result.antimicrobial_agent is None
+        assert result.reference_protein_length is None
+        assert result.coverage_ratio is None
+        assert result.input_protein_length is None
+        assert result.resistance_mechanism is None
+        assert result.input_protein_start is None
+        assert result.input_protein_stop is None
+        assert result.reference_protein_start is None
+        assert result.reference_protein_stop is None
+        assert result.reference_gene_start is None
+        assert result.reference_gene_stop is None
