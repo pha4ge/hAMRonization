@@ -17,7 +17,7 @@ from hAMRonization import StarAmrIO
 from hAMRonization import CSStarIO
 from hAMRonization import AmrPlusPlusIO
 from hAMRonization import ResFamsIO
-
+from hAMRonization import TBProfilerIO
 
 _FormatToIterator = {
     "abricate": AbricateIO.AbricateIterator,
@@ -34,7 +34,8 @@ _FormatToIterator = {
     "staramr": StarAmrIO.StarAmrIterator,
     "csstar": CSStarIO.CSStarIterator,
     "amrplusplus": AmrPlusPlusIO.AmrPlusPlusIterator,
-    "resfams": ResFamsIO.ResFamsIterator
+    "resfams": ResFamsIO.ResFamsIterator,
+    "tbprofiler": TBProfilerIO.TBProfilerIterator
     }
 
 _ReportFileToUse = {
@@ -52,7 +53,8 @@ _ReportFileToUse = {
     "staramr": "resfinder.tsv",
     "csstar": "OUTPUT.tsv",
     "amrplusplus": "gene.tsv",
-    "resfams": "resfams.tblout"
+    "resfams": "resfams.tblout",
+    "tbprofiler": "OUTPUT.results.json"
     }
 
 
@@ -72,6 +74,7 @@ _RequiredToolMetadata = {
     "amrplusplus": AmrPlusPlusIO.required_metadata,
     "resfams": ResFamsIO.required_metadata,
     "groot": GrootIO.required_metadata,
+    "tbprofiler": TBProfilerIO.required_metadata,
 }
 
 
