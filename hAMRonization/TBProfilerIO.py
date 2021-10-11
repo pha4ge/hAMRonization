@@ -14,8 +14,8 @@ class TBProfilerIterator(hAMRonizedResultIterator):
 
         self.field_mapping = {
                 'filename': 'input_file_name', 
-                'gene': 'gene_symbol',
-                'gene': 'gene_name',
+                'gene_symbol': 'gene_symbol',
+                'gene_name': 'gene_name',
                 'drug': 'drug_class',
                 'type': 'genetic_variation_type',
                 'frequency': 'variant_frequency',
@@ -38,7 +38,7 @@ class TBProfilerIterator(hAMRonizedResultIterator):
             for drug in variant["drugs"]:
                 result = {
                     'filename': handle.name,
-                    'gene': variant['gene'],
+                    'gene_symbol': variant['gene'],
                     'gene_name': variant['gene'],
                     'drug': drug['drug'],
                     'type': 'protein_variant' if variant['change'][0]=="p" else "nucleotide_variant",
