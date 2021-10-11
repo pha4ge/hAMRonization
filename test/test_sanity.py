@@ -579,7 +579,7 @@ def test_tbprofiler():
         assert result.gene_name == 'rpoB'
         assert result.reference_database_id == 'tbdb'
         assert result.reference_database_version == 'a800e0a'
-        assert result.analysis_software_name == 'tb-profiler'
+        assert result.analysis_software_name == 'TBProfiler'
         assert result.analysis_software_version == '3.0.8'
         assert result.genetic_variation_type == 'protein_variant'
         assert result.reference_accession == 'CCP43410'
