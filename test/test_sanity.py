@@ -555,7 +555,7 @@ def test_csstar():
 
 def test_tbprofiler():
     metadata = {"input_file_name": "Dummy"}
-    parsed_report = hAMRonization.parse("dummy/tbprofiler/tbprofiler.json", metadata, "csstar")
+    parsed_report = hAMRonization.parse("dummy/tbprofiler/tbprofiler.json", metadata, "tbprofiler")
 
     for result in parsed_report:
         # assert mandatory fields
