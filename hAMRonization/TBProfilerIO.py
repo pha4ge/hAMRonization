@@ -14,7 +14,7 @@ class TBProfilerIterator(hAMRonizedResultIterator):
         self.metadata = metadata
 
         self.field_mapping = {
-                'filename': 'input_file_name', #<- todo
+                'filename': 'input_file_name', 
                 'gene': 'gene_symbol',
                 'gene': 'gene_name',
                 'drug': 'drug_class',
@@ -41,7 +41,7 @@ class TBProfilerIterator(hAMRonizedResultIterator):
                     'gene': variant['gene'],
                     'gene_name': variant['gene'],
                     'drug': drug['drug'],
-                    'type': variant['type'],
+                    'type': 'variant', 
                     'frequency': variant['freq'],
                     'db_name': json_obj['db_version']['name'],
                     'db_version': json_obj['db_version']['commit'],
