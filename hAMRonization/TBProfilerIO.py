@@ -39,23 +39,23 @@ class TBProfilerIterator(hAMRonizedResultIterator):
         # skip any manually specified fields for later
         json_obj = json.load(handle)
         for variant in json_obj["dr_variants"]:
+            result = {
+                'filename': handle.name,
+                'gene_symbol': variant['gene'],
+                'gene_name': variant['gene'],
+                'drug': ";".join([d['drug'] for d in variant['drugs']]),
+                'type': 'protein_variant' if variant['change'][0]=="p" else "nucleotide_variant",
+                'frequency': variant['freq'],
+                'db_name': json_obj['db_version']['name'],
+                'db_version': json_obj['db_version']['commit'],
+                'tbprofiler_version': json_obj['tbprofiler_version'],
+                'software_name': 'tb-profiler',
+                'reference_accession': variant['feature_id'],
+                'nucleotide_mutation': variant['nucleotide_change'],
+                'protein_mutation': variant['protein_change'],
+                'nucleotide_mutation_interpretation': None, ### These will need to be added in
+                'protein_mutation_interpretation': None ### These will need to be added in
+            }
             for drug in variant["drugs"]:
-                result = {
-                    'filename': handle.name,
-                    'gene_symbol': variant['gene'],
-                    'gene_name': variant['gene'],
-                    'drug': drug['drug'],
-                    'type': 'protein_variant' if variant['change'][0]=="p" else "nucleotide_variant",
-                    'frequency': variant['freq'],
-                    'db_name': json_obj['db_version']['name'],
-                    'db_version': json_obj['db_version']['commit'],
-                    'tbprofiler_version': json_obj['tbprofiler_version'],
-                    'software_name': 'tb-profiler',
-                    'reference_accession': variant['feature_id'],
-                    'nucleotide_mutation': variant['nucleotide_change'],
-                    'protein_mutation': variant['protein_change'],
-                    'nucleotide_mutation_interpretation': None, ### These will need to be added in
-                    'protein_mutation_interpretation': None ### These will need to be added in
-                }
                 yield self.hAMRonize(result, self.metadata)
 
