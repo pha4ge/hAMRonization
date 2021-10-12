@@ -9,7 +9,7 @@ required_metadata = []
 class TBProfilerIterator(hAMRonizedResultIterator):
 
     def __init__(self, source, metadata):
-        metadata['analysis_software_name'] = 'TBProfiler'
+        metadata['analysis_software_name'] = 'tb-profiler'
         self.metadata = metadata
 
         self.field_mapping = {
@@ -21,7 +21,6 @@ class TBProfilerIterator(hAMRonizedResultIterator):
                 'frequency': 'variant_frequency',
                 'db_name': 'reference_database_id',
                 'db_version': 'reference_database_version',
-                'software_name': 'analysis_software_version',
                 'tbprofiler_version': 'analysis_software_version',
                 'reference_accession': 'reference_accession',
                 'nucleotide_mutation': 'nucleotide_mutation',
@@ -49,7 +48,6 @@ class TBProfilerIterator(hAMRonizedResultIterator):
                 'db_name': json_obj['db_version']['name'],
                 'db_version': json_obj['db_version']['commit'],
                 'tbprofiler_version': json_obj['tbprofiler_version'],
-                'software_name': 'tb-profiler',
                 'reference_accession': variant['feature_id'],
                 'nucleotide_mutation': variant['nucleotide_change'],
                 'protein_mutation': variant['protein_change'],
