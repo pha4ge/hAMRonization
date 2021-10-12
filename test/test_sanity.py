@@ -587,6 +587,12 @@ def test_tbprofiler():
         # optional fields - present in dummy dataset
         assert result.drug_class == 'rifampicin'
         assert result.variant_frequency == 1
+        assert result.nucleotide_mutation == 'c.1349C>T'
+        assert result.protein_mutation == 'p.Ser450Leu'
+
+        # todo
+        assert result.protein_mutation_interpretation is None
+        assert result.protein_mutation_interpretation is None
 
         # missing data in report
         assert result.sequence_identity is None 

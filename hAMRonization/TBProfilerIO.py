@@ -23,7 +23,11 @@ class TBProfilerIterator(hAMRonizedResultIterator):
                 'db_version': 'reference_database_version',
                 'software_name': 'analysis_software_version',
                 'tbprofiler_version': 'analysis_software_version',
-                'reference_accession': 'reference_accession'
+                'reference_accession': 'reference_accession',
+                'nucleotide_mutation': 'nucleotide_mutation',
+                'protein_mutation': 'protein_mutation',
+                'nucleotide_mutation_interpretation': 'nucleotide_mutation_interpretation',
+                'protein_mutation_interpretation': 'protein_mutation_interpretation'
                 }
 
         super().__init__(source, self.field_mapping, self.metadata)
@@ -47,7 +51,11 @@ class TBProfilerIterator(hAMRonizedResultIterator):
                     'db_version': json_obj['db_version']['commit'],
                     'tbprofiler_version': json_obj['tbprofiler_version'],
                     'software_name': 'tb-profiler',
-                    'reference_accession': variant['feature_id']
+                    'reference_accession': variant['feature_id'],
+                    'nucleotide_mutation': variant['nucleotide_change'],
+                    'protein_mutation': variant['protein_change'],
+                    'nucleotide_mutation_interpretation': None, ### These will need to be added in
+                    'protein_mutation_interpretation': None ### These will need to be added in
                 }
                 yield self.hAMRonize(result, self.metadata)
 
