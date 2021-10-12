@@ -18,6 +18,7 @@ from hAMRonization import CSStarIO
 from hAMRonization import AmrPlusPlusIO
 from hAMRonization import ResFamsIO
 from hAMRonization import TBProfilerIO
+from hAMRonization import MykrobeIO
 
 _FormatToIterator = {
     "abricate": AbricateIO.AbricateIterator,
@@ -35,7 +36,8 @@ _FormatToIterator = {
     "csstar": CSStarIO.CSStarIterator,
     "amrplusplus": AmrPlusPlusIO.AmrPlusPlusIterator,
     "resfams": ResFamsIO.ResFamsIterator,
-    "tbprofiler": TBProfilerIO.TBProfilerIterator
+    "tbprofiler": TBProfilerIO.TBProfilerIterator,
+    "mykrobe": MykrobeIO.MykrobeIterator,
     }
 
 _ReportFileToUse = {
@@ -54,7 +56,8 @@ _ReportFileToUse = {
     "csstar": "OUTPUT.tsv",
     "amrplusplus": "gene.tsv",
     "resfams": "resfams.tblout",
-    "tbprofiler": "OUTPUT.results.json"
+    "tbprofiler": "OUTPUT.results.json",
+    "mykrobe": "OUTPUT.json"
     }
 
 
@@ -75,6 +78,7 @@ _RequiredToolMetadata = {
     "resfams": ResFamsIO.required_metadata,
     "groot": GrootIO.required_metadata,
     "tbprofiler": TBProfilerIO.required_metadata,
+    "mykrobe": MykrobeIO.required_metadata
 }
 
 

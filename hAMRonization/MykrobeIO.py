@@ -1,0 +1,118 @@
+#!/usr/bin/env python
+
+import json
+import re
+from .Interfaces import hAMRonizedResultIterator
+
+required_metadata = []
+
+
+class MykrobeIterator(hAMRonizedResultIterator):
+    reference_genomes = {
+        'sonnei': 'NC_016822.1',  # Shigella sonnei
+        'staph': 'BX571856.1',  # Staphylococcus aureus
+        'tb': 'NC_000962.3',  # Mycobacterium tuberculosis,
+        'typhi': 'AL513382.1'  # Salmonella typhi
+    }
+
+    aa_symbols = {
+        'A': 'Ala',
+        'C': 'Cys',
+        'D': 'Asp',
+        'E': 'Glu',
+        'F': 'Phe',
+        'G': 'Gly',
+        'H': 'His',
+        'I': 'Ile',
+        'K': 'Lys',
+        'L': 'Leu',
+        'M': 'Met',
+        'N': 'Asn',
+        'P': 'Pro',
+        'Q': 'Gln',
+        'R': 'Arg',
+        'S': 'Ser',
+        'T': 'Thr',
+        'V': 'Val',
+        'W': 'Trp',
+        'Y': 'Tyr'
+    }
+
+    def __init__(self, source, metadata):
+        metadata['analysis_software_name'] = 'Mykrobe'
+        self.metadata = metadata
+
+        self.field_mapping = {
+                'filename': 'input_file_name', 
+                'gene_symbol': 'gene_symbol',
+                'gene_name': 'gene_name',
+                'drug': 'drug_class',
+                'type': 'genetic_variation_type',
+                'frequency': 'variant_frequency',
+                'db_name': 'reference_database_id',
+                'db_version': 'reference_database_version',
+                'software_name': 'analysis_software_name',
+                'mykrobe_version': 'analysis_software_version',
+                'reference_accession': 'reference_accession',
+                'nucleotide_mutation': 'nucleotide_mutation',
+                'protein_mutation': 'protein_mutation',
+                'nucleotide_mutation_interpretation': 'nucleotide_mutation_interpretation',
+                'protein_mutation_interpretation': 'protein_mutation_interpretation'            
+        }
+
+        super().__init__(source, self.field_mapping, self.metadata)
+
+
+    def parse(self, handle):
+        variant_info_re = re.compile(r'(?P<gene_symbol>[^_]+)_(?P<aa_change>(?P<aa_from>[A-Z])(?P<aa_pos>\d+)(?P<aa_to>[A-Z]))-(?P<codon_change>(?P<codon_from>[ACTG]{1,3})(?P<codon_pos>\d+)(?P<codon_to>[ACTG]{1,3}))')
+        panel_name_re = re.compile(r'.*mykrobe/data/(?P<panel>.*)/')
+        data = json.load(handle)
+
+        sample_names = list(data.keys())
+        assert len(sample_names) == 1, "can only parse output with a single sample currently, found {}".format(len(sample_names))
+        sample_name = sample_names[0]
+        panel_name_match = panel_name_re.match(data[sample_name]['probe_sets'][0])
+        assert panel_name_match is not None, "can't match panel name from {}".format(data[sample_name]['probe_sets'][0])
+        panel_name = panel_name_match.group('panel')
+        if panel_name not in self.reference_genomes:
+            raise ValueError('Unknown panel {}'.format(panel_name))
+        reference_accession = self.reference_genomes[panel_name]
+        mykrobe_version = data[sample_name]['version']['mykrobe-predictor']
+        mykrobe_atlas_version = data[sample_name]['version']['mykrobe-atlas']
+        db_name = ';'.join([ re.sub(r'.*mykrobe/data/(.*)', r'\1', probe_set) for probe_set in data[sample_name]['probe_sets'] ])
+
+        for drug_name in data[sample_name]['susceptibility']:
+            drug = data[sample_name]['susceptibility'][drug_name]
+            if drug['predict'] == 'S':
+                continue
+            for variant in drug['called_by']:
+                #katG_S315T-GCT2155167GGT
+                variant_match = variant_info_re.match(variant)
+                assert variant_match is not None, "variant_info_re failed to match {}".format(variant)
+                gene_symbol = variant_match.group('gene_symbol')
+                frequency = drug['called_by'][variant]['info']['coverage']['alternate']['percent_coverage'] / 100
+                if len(variant_match.group('codon_from')) == 1:
+                    # this not a protein change
+                    variant_type = 'nucleotide_variant'  # TODO: should we have 'rrna_change' ??
+                    protein_mutation = None,
+                else:
+                    variant_type = 'protein_variant'
+                    protein_mutation = 'p.' + self.aa_symbols[variant_match.group('aa_from')] + variant_match.group('aa_pos') + self.aa_symbols[variant_match.group('aa_to')]
+                result = {
+                    'filename': handle.name,
+                    'gene_symbol': gene_symbol,
+                    'gene_name': gene_symbol,
+                    'drug': drug_name,
+                    'type': variant_type,
+                    'frequency': frequency,
+                    'software_name': 'mykrobe',
+                    'mykrobe_version': mykrobe_version,
+                    'db_name': db_name,
+                    'db_version': mykrobe_atlas_version,
+                    'reference_accession': reference_accession,
+                    'nucleotide_mutation': variant_match.group('codon_change'),  # TODO: make this work using lookup table of gene positions
+                    'protein_mutation': protein_mutation,
+                    'nucleotide_mutation_interpretation': None,
+                    'protein_mutation_interpretation': None
+                }
+                yield self.hAMRonize(result, self.metadata)

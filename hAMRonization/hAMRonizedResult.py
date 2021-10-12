@@ -23,7 +23,11 @@ class hAMRonizedResult():
     # variant specific optional fields
     variant_frequency: float = None
     genetic_variation_type: str = None
-
+    nucleotide_mutation: str = None
+    nucleotide_mutation_interpretation: str = None
+    protein_mutation: str = None
+    protein_mutation_interpretation: str = None
+    
     # optional fields
     sequence_identity: float = None
     input_sequence_id: str = None
