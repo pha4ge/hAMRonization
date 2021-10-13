@@ -579,7 +579,7 @@ def test_tbprofiler():
         assert result.gene_name == 'rpoB'
         assert result.reference_database_id == 'tbdb'
         assert result.reference_database_version == 'a800e0a'
-        assert result.analysis_software_name == 'TBProfiler'
+        assert result.analysis_software_name == 'tb-profiler'
         assert result.analysis_software_version == '3.0.8'
         assert result.genetic_variation_type == 'protein_variant'
         assert result.reference_accession == 'CCP43410'
@@ -587,6 +587,12 @@ def test_tbprofiler():
         # optional fields - present in dummy dataset
         assert result.drug_class == 'rifampicin'
         assert result.variant_frequency == 1
+        assert result.nucleotide_mutation == 'c.1349C>T'
+        assert result.protein_mutation == 'p.Ser450Leu'
+
+        # todo
+        assert result.protein_mutation_interpretation is None
+        assert result.protein_mutation_interpretation is None
 
         # missing data in report
         assert result.sequence_identity is None 

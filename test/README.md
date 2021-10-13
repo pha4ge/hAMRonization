@@ -24,6 +24,7 @@ Dummy outputs available:
 - [x] [srst2](dummy/s)
 - [x] [c-sstar](dummy/sstar)
 - [x] [staramr](dummy/staramr)
+- [x] [tb-profiler](dummy/tbprofiler)
 
 ## How to implement and run the tests
 
@@ -59,6 +60,7 @@ In [test_sanity.py](test_sanity.py) the output sanity tests for the following pa
 - [x] srst2
 - [x] c-sstar
 - [x] staramr
+- [x] tb-profiler
 
 ### Unit test
 Yet to be implemented
