@@ -637,7 +637,7 @@ def test_mykrobe():
         assert result.coverage_percentage == 100
         assert result.coverage_depth == 60
         assert result.protein_mutation == "p.Ser450Leu"
-        # assert result.frequency == ""  # TODO: this is not working yet
+        assert result.variant_frequency == 0.6  # TODO: confirm with tool authors that this is correct calculation
         # assert result.nucleotide_mutation == ""  # TODO: this is not working yet
 
         # missing data in report

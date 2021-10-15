@@ -58,7 +58,8 @@ class MykrobeIterator(hAMRonizedResultIterator):
                 'nucleotide_mutation_interpretation': 'nucleotide_mutation_interpretation',
                 'protein_mutation_interpretation': 'protein_mutation_interpretation',
                 'coverage_percentage': 'coverage_percentage',
-                'median_coverage_depth': 'coverage_depth'
+                'median_coverage_depth': 'coverage_depth',
+                'frequency': 'variant_frequency'
         }
 
         super().__init__(source, self.field_mapping, self.metadata)
@@ -91,6 +92,8 @@ class MykrobeIterator(hAMRonizedResultIterator):
                 gene_symbol = variant_match.group('gene_symbol')
                 coverage_percentage = drug['called_by'][variant]['info']['coverage']['alternate']['percent_coverage']
                 median_coverage_depth = drug['called_by'][variant]['info']['coverage']['alternate']['median_depth']
+                ref_median_coverage_depth = drug['called_by'][variant]['info']['coverage']['reference']['median_depth']
+                frequency = median_coverage_depth / (median_coverage_depth + ref_median_coverage_depth)
 
                 if len(variant_match.group('codon_from')) == 1:
                     # this not a protein change
@@ -115,6 +118,7 @@ class MykrobeIterator(hAMRonizedResultIterator):
                     'nucleotide_mutation_interpretation': None,
                     'protein_mutation_interpretation': None,
                     'coverage_percentage': coverage_percentage,
-                    'median_coverage_depth': median_coverage_depth
+                    'median_coverage_depth': median_coverage_depth,
+                    'frequency': frequency
                 }
                 yield self.hAMRonize(result, self.metadata)
