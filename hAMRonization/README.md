@@ -17,3 +17,4 @@ Original parser and mapping authors:
 - SraxIO.py: @fmaguire
 - Srst2IO.py: @fmaguire
 - StarAmrIO.py: @fmaguire
+- TBProfilerIO.py: @jodyphelan
