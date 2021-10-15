@@ -43,12 +43,11 @@ class MykrobeIterator(hAMRonizedResultIterator):
         self.metadata = metadata
 
         self.field_mapping = {
-                'filename': 'input_file_name', 
+                'filename': 'input_file_name',
                 'gene_symbol': 'gene_symbol',
                 'gene_name': 'gene_name',
                 'drug': 'drug_class',
                 'type': 'genetic_variation_type',
-                'frequency': 'variant_frequency',
                 'db_name': 'reference_database_id',
                 'db_version': 'reference_database_version',
                 'software_name': 'analysis_software_name',
@@ -57,11 +56,12 @@ class MykrobeIterator(hAMRonizedResultIterator):
                 'nucleotide_mutation': 'nucleotide_mutation',
                 'protein_mutation': 'protein_mutation',
                 'nucleotide_mutation_interpretation': 'nucleotide_mutation_interpretation',
-                'protein_mutation_interpretation': 'protein_mutation_interpretation'            
+                'protein_mutation_interpretation': 'protein_mutation_interpretation',
+                'coverage_percentage': 'coverage_percentage',
+                'median_coverage_depth': 'coverage_depth'
         }
 
         super().__init__(source, self.field_mapping, self.metadata)
-
 
     def parse(self, handle):
         variant_info_re = re.compile(r'(?P<gene_symbol>[^_]+)_(?P<aa_change>(?P<aa_from>[A-Z])(?P<aa_pos>\d+)(?P<aa_to>[A-Z]))-(?P<codon_change>(?P<codon_from>[ACTG]{1,3})(?P<codon_pos>\d+)(?P<codon_to>[ACTG]{1,3}))')
@@ -79,18 +79,19 @@ class MykrobeIterator(hAMRonizedResultIterator):
         reference_accession = self.reference_genomes[panel_name]
         mykrobe_version = data[sample_name]['version']['mykrobe-predictor']
         mykrobe_atlas_version = data[sample_name]['version']['mykrobe-atlas']
-        db_name = ';'.join([ re.sub(r'.*mykrobe/data/(.*)', r'\1', probe_set) for probe_set in data[sample_name]['probe_sets'] ])
+        db_name = ';'.join([re.sub(r'.*mykrobe/data/(.*)', r'\1', probe_set) for probe_set in data[sample_name]['probe_sets']])
 
         for drug_name in data[sample_name]['susceptibility']:
             drug = data[sample_name]['susceptibility'][drug_name]
             if drug['predict'] == 'S':
                 continue
             for variant in drug['called_by']:
-                #katG_S315T-GCT2155167GGT
                 variant_match = variant_info_re.match(variant)
                 assert variant_match is not None, "variant_info_re failed to match {}".format(variant)
                 gene_symbol = variant_match.group('gene_symbol')
-                frequency = drug['called_by'][variant]['info']['coverage']['alternate']['percent_coverage'] / 100
+                coverage_percentage = drug['called_by'][variant]['info']['coverage']['alternate']['percent_coverage']
+                median_coverage_depth = drug['called_by'][variant]['info']['coverage']['alternate']['median_depth']
+
                 if len(variant_match.group('codon_from')) == 1:
                     # this not a protein change
                     variant_type = 'nucleotide_variant'  # TODO: should we have 'rrna_change' ??
@@ -104,7 +105,6 @@ class MykrobeIterator(hAMRonizedResultIterator):
                     'gene_name': gene_symbol,
                     'drug': drug_name,
                     'type': variant_type,
-                    'frequency': frequency,
                     'software_name': 'mykrobe',
                     'mykrobe_version': mykrobe_version,
                     'db_name': db_name,
@@ -113,6 +113,8 @@ class MykrobeIterator(hAMRonizedResultIterator):
                     'nucleotide_mutation': variant_match.group('codon_change'),  # TODO: make this work using lookup table of gene positions
                     'protein_mutation': protein_mutation,
                     'nucleotide_mutation_interpretation': None,
-                    'protein_mutation_interpretation': None
+                    'protein_mutation_interpretation': None,
+                    'coverage_percentage': coverage_percentage,
+                    'median_coverage_depth': median_coverage_depth
                 }
                 yield self.hAMRonize(result, self.metadata)

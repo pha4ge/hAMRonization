@@ -609,3 +609,47 @@ def test_tbprofiler():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
+
+def test_mykrobe():
+    metadata = {}
+    parsed_report = hAMRonization.parse("dummy/mykrobe/mykrobe.json", metadata, "mykrobe")
+    
+    for result in parsed_report:
+        # assert mandatory fields
+        assert result.input_file_name == 'mykrobe.json'
+        assert result.gene_symbol == 'rpoB'
+        assert result.gene_name == 'rpoB'
+        assert result.reference_database_id == 'tb/tb-species-170421.fasta.gz;tb/tb-hunt-probe-set-jan-03-2019.fasta.gz;tb/tb.lineage.20200930.probes.fa.gz'
+        assert result.reference_database_version == 'v0.10.0'
+        assert result.reference_accession == 'NC_000962.3'
+        assert result.analysis_software_name == 'mykrobe'
+        assert result.analysis_software_version == 'v0.10.0'
+        assert result.genetic_variation_type == 'protein_variant'
+
+        # optional fields - present in dummy dataset
+        assert result.drug_class == 'Rifampicin'  # TODO: this is not following the spec as this is not an ARO term, what to do?
+        assert result.coverage_percentage == 100
+        assert result.coverage_depth == 60
+        assert result.protein_mutation == "p.Ser450Leu"
+        # assert result.frequency == ""  # TODO: this is not working yet
+        # assert result.nucleotide_mutation == ""  # TODO: this is not working yet
+
+        # missing data in report
+        assert result.sequence_identity is None 
+        assert result.reference_gene_length is None 
+        assert result.input_gene_length is None 
+        assert result.input_sequence_id is None 
+        assert result.input_gene_start is None
+        assert result.input_gene_stop is None
+        assert result.strand_orientation is None
+        assert result.antimicrobial_agent is None
+        assert result.reference_protein_length is None
+        assert result.coverage_ratio is None
+        assert result.input_protein_length is None
+        assert result.resistance_mechanism is None
+        assert result.input_protein_start is None
+        assert result.input_protein_stop is None
+        assert result.reference_protein_start is None
+        assert result.reference_protein_stop is None
+        assert result.reference_gene_start is None
+        assert result.reference_gene_stop is None
