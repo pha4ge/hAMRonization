@@ -23,10 +23,6 @@ class hAMRonizedResult():
     # variant specific optional fields
     genetic_variation_type: str = None # To be made mandatory?
     variant_frequency: float = None
-<<<<<<< HEAD
-    genetic_variation_type: str = None
-=======
->>>>>>> 92356c4049ced11cf3bdda965a207b4749c87836
     nucleotide_mutation: str = None
     nucleotide_mutation_interpretation: str = None
     protein_mutation: str = None
