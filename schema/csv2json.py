@@ -4,6 +4,7 @@ import argparse
 import csv
 import json
 import re
+from datetime import datetime
 from ast import literal_eval
 
 FIELDNAMES = ['Interface Label','Required/Optional','Definition','Ontology','Value Type','Example','Guidance','Values']
@@ -141,6 +142,7 @@ def main(args):
     
     schema = {
         "$schema": "http://json-schema.org/draft/2019-09/schema#",
+        "version": datetime.now().isoformat(),
         "type": "object",
         "properties": {},
         "required": [],

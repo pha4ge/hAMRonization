@@ -1,16 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft/2019-09/schema#",
-  "required": [
-    "reference_accession",
-    "analysis_software_name",
-    "reference_database_version",
-    "gene_symbol",
-    "analysis_software_version",
-    "input_file_name",
-    "reference_database_name",
-    "genetic_variation_type",
-    "gene_name"
-  ],
+  "version": "2022-01-18T16:50:30.983919",
   "type": "object",
   "properties": {
     "coverage_ratio": {
@@ -236,5 +226,16 @@
       "description": "The name of a gene, (typically) assigned by a person and/or according to a naming scheme. It may contain white space characters and is typically more intuitive and readable than a gene symbol. It (typically) may be used to identify similar genes in different species and to derive a gene symbol.",
       "examples": ["type A-1 chloramphenicol O-acetyltransferase"]
     }
-  }
+  },
+  "required": [
+    "reference_accession",
+    "analysis_software_name",
+    "reference_database_version",
+    "gene_symbol",
+    "analysis_software_version",
+    "input_file_name",
+    "reference_database_name",
+    "genetic_variation_type",
+    "gene_name"
+  ]
 }
