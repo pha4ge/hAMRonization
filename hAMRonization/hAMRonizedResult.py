@@ -48,7 +48,7 @@ class hAMRonizedResult():
     reference_protein_stop: int = None
     resistance_mechanism: str = None
     strand_orientation: str = None
-    sequence_identity: str = None
+    sequence_identity: float = None
 
 
     def __post_init__(self):

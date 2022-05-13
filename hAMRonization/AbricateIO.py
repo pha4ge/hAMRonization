@@ -11,6 +11,7 @@ class AbricateIterator(hAMRonizedResultIterator):
 
     def __init__(self, source, metadata):
         metadata['analysis_software_name'] = 'abricate'
+        metadata['genetic_variation_type'] = 'Gene presence detected'
         self.metadata = metadata
 
         self.field_mapping = {
@@ -24,7 +25,7 @@ class AbricateIterator(hAMRonizedResultIterator):
                 '%COVERAGE': 'coverage_percentage',
                 'COVERAGE': None,
                 '%IDENTITY': 'sequence_identity',
-                'DATABASE': 'reference_database_id',
+                'DATABASE': 'reference_database_name',
                 'ACCESSION': 'reference_accession',
                 'RESISTANCE': 'drug_class',
                 'COVERAGE_MAP': None,
