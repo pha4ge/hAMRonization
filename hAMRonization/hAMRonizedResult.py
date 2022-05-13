@@ -19,7 +19,15 @@ class hAMRonizedResult():
     reference_accession: str
     analysis_software_name: str
     analysis_software_version: str
-
+    
+    # variant specific optional fields
+    genetic_variation_type: str = None # To be made mandatory?
+    variant_frequency: float = None
+    nucleotide_mutation: str = None
+    nucleotide_mutation_interpretation: str = None
+    protein_mutation: str = None
+    protein_mutation_interpretation: str = None
+    
     # optional fields
     sequence_identity: float = None
     input_sequence_id: str = None

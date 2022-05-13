@@ -50,7 +50,8 @@ def test_abricate():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
-
+        assert result.variant_frequency is None
+        assert result.genetic_variation_type is None
 
 def test_amrfinder():
     metadata = {"analysis_software_version": "3.6.10", "reference_database_version": "2019-Jul-28",
@@ -92,7 +93,8 @@ def test_amrfinder():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
-
+        assert result.variant_frequency is None
+        assert result.genetic_variation_type is None
 
 def test_amrplusplus():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
@@ -134,7 +136,8 @@ def test_amrplusplus():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
-
+        assert result.variant_frequency is None
+        assert result.genetic_variation_type is None
 
 def test_ariba():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
@@ -176,7 +179,8 @@ def test_ariba():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
-
+        assert result.variant_frequency is None
+        assert result.genetic_variation_type is None
 
 def test_kmerresistance():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
@@ -218,7 +222,8 @@ def test_kmerresistance():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
-
+        assert result.variant_frequency is None
+        assert result.genetic_variation_type is None
 
 def test_resfinder():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28"}
@@ -259,6 +264,8 @@ def test_resfinder():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
+        assert result.variant_frequency is None
+        assert result.genetic_variation_type is None
 
 def test_resfinder4():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28", "input_file_name": "Dummy"}
@@ -299,6 +306,9 @@ def test_resfinder4():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
+        assert result.variant_frequency is None
+        assert result.genetic_variation_type is None
+
 
 def test_rgi():
     metadata = {"analysis_software_version": "5.1.0", "reference_database_version": "2019-Jul-28",
@@ -340,7 +350,8 @@ def test_rgi():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
-
+        assert result.variant_frequency is None
+        assert result.genetic_variation_type is None
 
 def test_srax():
     metadata = {"analysis_software_version": "5.1.0", "reference_database_version": "2019-Jul-28",
@@ -382,7 +393,8 @@ def test_srax():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
-
+        assert result.variant_frequency is None
+        assert result.genetic_variation_type is None
 
 def test_groot():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
@@ -424,7 +436,8 @@ def test_groot():
         assert result.drug_class is None
         assert result.sequence_identity is None
         assert result.coverage_percentage is None
-
+        assert result.variant_frequency is None
+        assert result.genetic_variation_type is None
 
 def test_deeparg():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
@@ -466,7 +479,8 @@ def test_deeparg():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
-
+        assert result.variant_frequency is None
+        assert result.genetic_variation_type is None
 
 def test_srst2():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
@@ -508,7 +522,8 @@ def test_srst2():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
-
+        assert result.variant_frequency is None
+        assert result.genetic_variation_type is None
 
 def test_csstar():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
@@ -536,6 +551,100 @@ def test_csstar():
         assert result.coverage_percentage is None
         assert result.coverage_depth is None
         assert result.drug_class is None
+        assert result.input_gene_start is None
+        assert result.input_gene_stop is None
+        assert result.strand_orientation is None
+        assert result.antimicrobial_agent is None
+        assert result.reference_protein_length is None
+        assert result.coverage_ratio is None
+        assert result.input_protein_length is None
+        assert result.resistance_mechanism is None
+        assert result.input_protein_start is None
+        assert result.input_protein_stop is None
+        assert result.reference_protein_start is None
+        assert result.reference_protein_stop is None
+        assert result.reference_gene_start is None
+        assert result.reference_gene_stop is None
+        assert result.variant_frequency is None
+        assert result.genetic_variation_type is None
+
+def test_tbprofiler():
+    metadata = {}
+    parsed_report = hAMRonization.parse("dummy/tbprofiler/tbprofiler.json", metadata, "tbprofiler")
+
+    for result in parsed_report:
+        # assert mandatory fields
+        assert result.input_file_name == 'tbprofiler.json'
+        assert result.gene_symbol == 'rpoB'
+        assert result.gene_name == 'rpoB'
+        assert result.reference_database_id == 'tbdb'
+        assert result.reference_database_version == 'a800e0a'
+        assert result.analysis_software_name == 'tb-profiler'
+        assert result.analysis_software_version == '3.0.8'
+        assert result.genetic_variation_type == 'protein_variant'
+        assert result.reference_accession == 'CCP43410'
+
+        # optional fields - present in dummy dataset
+        assert result.drug_class == 'rifampicin'
+        assert result.variant_frequency == 1
+        assert result.nucleotide_mutation == 'c.1349C>T'
+        assert result.protein_mutation == 'p.Ser450Leu'
+
+        # todo
+        assert result.protein_mutation_interpretation is None
+        assert result.protein_mutation_interpretation is None
+
+        # missing data in report
+        assert result.sequence_identity is None 
+        assert result.reference_gene_length is None 
+        assert result.input_gene_length is None 
+        assert result.input_sequence_id is None 
+        assert result.coverage_percentage is None
+        assert result.coverage_depth is None
+        assert result.input_gene_start is None
+        assert result.input_gene_stop is None
+        assert result.strand_orientation is None
+        assert result.antimicrobial_agent is None
+        assert result.reference_protein_length is None
+        assert result.coverage_ratio is None
+        assert result.input_protein_length is None
+        assert result.resistance_mechanism is None
+        assert result.input_protein_start is None
+        assert result.input_protein_stop is None
+        assert result.reference_protein_start is None
+        assert result.reference_protein_stop is None
+        assert result.reference_gene_start is None
+        assert result.reference_gene_stop is None
+
+def test_mykrobe():
+    metadata = {}
+    parsed_report = hAMRonization.parse("dummy/mykrobe/mykrobe.json", metadata, "mykrobe")
+    
+    for result in parsed_report:
+        # assert mandatory fields
+        assert result.input_file_name == 'mykrobe.json'
+        assert result.gene_symbol == 'rpoB'
+        assert result.gene_name == 'rpoB'
+        assert result.reference_database_id == 'tb/tb-species-170421.fasta.gz;tb/tb-hunt-probe-set-jan-03-2019.fasta.gz;tb/tb.lineage.20200930.probes.fa.gz'
+        assert result.reference_database_version == 'v0.10.0'
+        assert result.reference_accession == 'NC_000962.3'
+        assert result.analysis_software_name == 'mykrobe'
+        assert result.analysis_software_version == 'v0.10.0'
+        assert result.genetic_variation_type == 'protein_variant'
+
+        # optional fields - present in dummy dataset
+        assert result.drug_class == 'Rifampicin'  # TODO: this is not following the spec as this is not an ARO term, what to do?
+        assert result.coverage_percentage == 100
+        assert result.coverage_depth == 60
+        assert result.protein_mutation == "p.Ser450Leu"
+        assert result.variant_frequency == 0.6  # TODO: confirm with tool authors that this is correct calculation
+        # assert result.nucleotide_mutation == ""  # TODO: this is not working yet
+
+        # missing data in report
+        assert result.sequence_identity is None 
+        assert result.reference_gene_length is None 
+        assert result.input_gene_length is None 
+        assert result.input_sequence_id is None 
         assert result.input_gene_start is None
         assert result.input_gene_stop is None
         assert result.strand_orientation is None

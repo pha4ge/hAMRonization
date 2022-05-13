@@ -137,7 +137,7 @@ This can handle mixed json and tsv hamronized report formats.
 hamronize summarize -o combined_report.tsv -t tsv abricate.json ariba.tsv
 ```
 
-The [interactive summary](https://htmlpreview.github.io/?https://github.com/pha4ge/hAMRonization/blob/master/docs/interactive_report_demo.html) option will produce an html file that can be opened within the browser for navigable data exploration (feature developed
+The [interactive summary](https://finlaymagui.re/assets/interactive_report_demo.html) option will produce an html file that can be opened within the browser for navigable data exploration (feature developed
 with @alexmanuele).
 
 ### Using within scripts
