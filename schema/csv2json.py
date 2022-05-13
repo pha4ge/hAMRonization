@@ -87,7 +87,6 @@ def parse_properties_table(path_to_properties_table):
                                 delimiter=SEPARATOR,
                                 quotechar=QUOTE)
         for row in reader:
-            print(row)
             property_key = interface_label_to_property_key(row['Interface Label'])
             properties[property_key] = {}
             properties[property_key]['description'] = row['Definition']
