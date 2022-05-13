@@ -14,42 +14,42 @@ class hAMRonizedResult():
     input_file_name: str
     gene_symbol: str
     gene_name: str
-    reference_database_id: str
+    reference_database_name: str
     reference_database_version: str
     reference_accession: str
     analysis_software_name: str
     analysis_software_version: str
-    
-    # variant specific optional fields
-    genetic_variation_type: str = None # To be made mandatory?
-    variant_frequency: float = None
-    nucleotide_mutation: str = None
-    nucleotide_mutation_interpretation: str = None
-    protein_mutation: str = None
-    protein_mutation_interpretation: str = None
+    genetic_variation_type: str
     
     # optional fields
-    sequence_identity: float = None
-    input_sequence_id: str = None
-    input_protein_start: int = None
-    input_protein_stop: int = None
+    antimicrobial_agent: str = None
+    coverage_percentage: float = None
+    coverage_depth: float = None
+    coverage_ratio: float = None
+    drug_class: str = None
+    input_gene_length: int = None
     input_gene_start: int = None
     input_gene_stop: int = None
-    reference_protein_start: int = None
-    reference_protein_stop: int = None
+    input_protein_length: int = None
+    input_protein_start: int = None
+    input_protein_stop: int = None
+    input_sequence_id: str = None
+    nucleotide_mutation: str = None
+    nucleotide_mutation_interpretation: str = None
+    predicted_phenotype: str = None
+    predicted_phenotype_confidence_level: str = None
+    amino_acid_mutation: str = None
+    amino_acid_mutation_interpretation: str = None
+    reference_gene_length: int = None
     reference_gene_start: int = None
     reference_gene_stop: int = None
-    strand_orientation: str = None
-    coverage_depth: float = None
-    coverage_percentage: float = None
-    coverage_ratio: float = None
-    reference_gene_length: int = None
     reference_protein_length: int = None
-    input_gene_length: int = None
-    input_protein_length: int = None
-    drug_class: str = None
-    antimicrobial_agent: str = None
+    reference_protein_start: int = None
+    reference_protein_stop: int = None
     resistance_mechanism: str = None
+    strand_orientation: str = None
+    sequence_identity: str = None
+
 
     def __post_init__(self):
         """
@@ -71,7 +71,7 @@ class hAMRonizedResult():
 
         # normalise input filename to just basename without extension
         # this is to ensure compatibility with all tools using the lowest
-        # commen denominator staramr which does this
+        # common denominator staramr which does this
         input_file_name = getattr(self, 'input_file_name')
         input_file_name = os.path.basename(input_file_name)
 
