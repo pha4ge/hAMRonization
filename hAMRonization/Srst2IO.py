@@ -12,11 +12,12 @@ class Srst2Iterator(hAMRonizedResultIterator):
 
     def __init__(self, source, metadata):
         metadata['analysis_software_name'] = 'srst2'
+        metadata['genetic_variation_type'] = 'Gene presence detected'
         self.metadata = metadata
 
         self.field_mapping = {
             'Sample': 'input_file_name',
-            'DB': 'reference_database_id',
+            'DB': 'reference_database_name',
             'gene': 'gene_symbol',
             'allele': 'gene_name',
             'coverage': 'coverage_percentage',

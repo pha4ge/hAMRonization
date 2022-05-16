@@ -475,7 +475,7 @@ def test_deeparg():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
-        
+
 
 def test_srst2():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
@@ -517,8 +517,7 @@ def test_srst2():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
-        assert result.variant_frequency is None
-        assert result.genetic_variation_type is None
+
 
 def test_csstar():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
