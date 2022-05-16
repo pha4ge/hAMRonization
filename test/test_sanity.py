@@ -235,7 +235,7 @@ def test_resfinder():
         assert result.reference_database_name == 'resfinder'
         assert result.reference_database_version == '2019-Jul-28'
         assert result.reference_accession == 'EU370913'
-        assert result.analysis_software_name == 'resfinder.py'  # drop the .py?
+        assert result.analysis_software_name == 'resfinder'
         assert result.analysis_software_version == '0.0.1'
         assert result.genetic_variation_type == 'Gene presence detected'
 
@@ -277,7 +277,7 @@ def test_resfinder4():
         assert result.reference_database_name == 'resfinder'
         assert result.reference_database_version == '2019-Jul-28'
         assert result.reference_accession == 'EU370913'
-        assert result.analysis_software_name == 'resfinder 4'  # drop the .py?
+        assert result.analysis_software_name == 'resfinder 4'
         assert result.analysis_software_version == '0.0.1'
         assert result.genetic_variation_type == 'Gene presence detected'
 
