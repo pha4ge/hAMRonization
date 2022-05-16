@@ -492,6 +492,7 @@ def test_srst2():
         assert result.reference_accession == '1995'
         assert result.analysis_software_name == 'srst2'
         assert result.analysis_software_version == '0.0.1'
+        assert result.genetic_variation_type == 'Gene presence detected'
 
         # optional fields - present in dummy dataset
         assert result.coverage_percentage == 100
@@ -534,6 +535,8 @@ def test_csstar():
         assert result.reference_accession == 'oqxA'
         assert result.analysis_software_name == 'csstar'
         assert result.analysis_software_version == '0.0.1'
+        assert result.genetic_variation_type == 'Gene presence detected'
+
 
         # optional fields - present in dummy dataset
         assert result.reference_gene_length == 1176
@@ -559,8 +562,7 @@ def test_csstar():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
-        assert result.variant_frequency is None
-        assert result.genetic_variation_type is None
+
 
 def test_tbprofiler():
     metadata = {}
@@ -575,12 +577,11 @@ def test_tbprofiler():
         assert result.reference_database_version == 'a800e0a'
         assert result.analysis_software_name == 'tb-profiler'
         assert result.analysis_software_version == '3.0.8'
-        assert result.genetic_variation_type == 'protein_variant'
+        assert result.genetic_variation_type == 'Mutation variation detected'
         assert result.reference_accession == 'CCP43410'
 
         # optional fields - present in dummy dataset
         assert result.drug_class == 'rifampicin'
-        assert result.variant_frequency == 1
         assert result.nucleotide_mutation == 'c.1349C>T'
         assert result.protein_mutation == 'p.Ser450Leu'
 
@@ -624,14 +625,13 @@ def test_mykrobe():
         assert result.reference_accession == 'NC_000962.3'
         assert result.analysis_software_name == 'mykrobe'
         assert result.analysis_software_version == 'v0.10.0'
-        assert result.genetic_variation_type == 'protein_variant'
+        assert result.genetic_variation_type == 'Mutation variation detected'
 
         # optional fields - present in dummy dataset
         assert result.drug_class == 'Rifampicin'  # TODO: this is not following the spec as this is not an ARO term, what to do?
         assert result.coverage_percentage == 100
         assert result.coverage_depth == 60
         assert result.protein_mutation == "p.Ser450Leu"
-        assert result.variant_frequency == 0.6  # TODO: confirm with tool authors that this is correct calculation
         # assert result.nucleotide_mutation == ""  # TODO: this is not working yet
 
         # missing data in report
