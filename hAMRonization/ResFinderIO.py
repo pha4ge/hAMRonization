@@ -10,7 +10,7 @@ required_metadata = ['analysis_software_version',
 class ResFinderIterator(hAMRonizedResultIterator):
 
     def __init__(self, source, metadata):
-        metadata['analysis_software_name'] = 'resfinder.py'
+        metadata['analysis_software_name'] = 'resfinder'
         metadata['reference_database_name'] = 'resfinder'
         metadata['genetic_variation_type'] = 'Gene presence detected'
         self.metadata = metadata
