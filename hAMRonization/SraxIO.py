@@ -5,7 +5,7 @@ from .Interfaces import hAMRonizedResultIterator
 
 required_metadata = ['analysis_software_version',
                      'reference_database_version',
-                     'reference_database_id',
+                     'reference_database_name',
                      'input_file_name']
 
 
@@ -13,7 +13,7 @@ class SraxIterator(hAMRonizedResultIterator):
 
     def __init__(self, source, metadata):
         metadata['analysis_software_name'] = 'srax'
-
+        metadata['genetic_variation_type'] = 'Gene presence detected'
         self.metadata = metadata
 
         self.field_mapping = {
