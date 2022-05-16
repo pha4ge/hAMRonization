@@ -13,7 +13,8 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
 
     def __init__(self, source, metadata):
         metadata['analysis_software_name'] = 'amrfinderplus'
-        metadata['reference_database_id'] = 'NCBI Reference Gene Database'
+        metadata['reference_database_name'] = 'NCBI Reference Gene Database'
+        metadata['genetic_variation_type'] = 'Gene presence detected'
         self.metadata = metadata
 
         # check source for whether AMFP has been run in protein or nt mode
