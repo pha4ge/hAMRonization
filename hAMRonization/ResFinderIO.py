@@ -11,7 +11,8 @@ class ResFinderIterator(hAMRonizedResultIterator):
 
     def __init__(self, source, metadata):
         metadata['analysis_software_name'] = 'resfinder.py'
-        metadata['reference_database_id'] = 'resfinder'
+        metadata['reference_database_name'] = 'resfinder'
+        metadata['genetic_variation_type'] = 'Gene presence detected'
         self.metadata = metadata
 
         self.field_mapping = {
