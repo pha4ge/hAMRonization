@@ -14,7 +14,8 @@ class RgiIterator(hAMRonizedResultIterator):
 
     def __init__(self, source, metadata):
         metadata['analysis_software_name'] = 'rgi'
-        metadata['reference_database_id'] = 'CARD'
+        metadata['reference_database_name'] = 'CARD'
+        metadata['genetic_variation_type'] = 'Gene presence detected'
         self.metadata = metadata
 
         with open(source) as fh:

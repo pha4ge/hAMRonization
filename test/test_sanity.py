@@ -322,6 +322,7 @@ def test_rgi():
         assert result.reference_accession == '3003922'
         assert result.analysis_software_name == 'rgi'
         assert result.analysis_software_version == '5.1.0'
+        assert result.genetic_variation_type == 'Gene presence detected'
 
         # optional fields - present in dummy dataset
         assert result.input_sequence_id == 'NZ_LR792628.1_1289'
@@ -347,8 +348,7 @@ def test_rgi():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
-        assert result.variant_frequency is None
-        assert result.genetic_variation_type is None
+
 
 def test_srax():
     metadata = {"analysis_software_version": "5.1.0", "reference_database_version": "2019-Jul-28",
