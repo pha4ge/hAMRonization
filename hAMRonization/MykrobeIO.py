@@ -40,6 +40,7 @@ class MykrobeIterator(hAMRonizedResultIterator):
 
     def __init__(self, source, metadata):
         metadata['analysis_software_name'] = 'Mykrobe'
+        metadata['genetic_variation_type'] = 'Mutation variation detected'
         self.metadata = metadata
 
         self.field_mapping = {
@@ -48,7 +49,7 @@ class MykrobeIterator(hAMRonizedResultIterator):
                 'gene_name': 'gene_name',
                 'drug': 'drug_class',
                 'type': 'genetic_variation_type',
-                'db_name': 'reference_database_id',
+                'db_name': 'reference_database_name',
                 'db_version': 'reference_database_version',
                 'software_name': 'analysis_software_name',
                 'mykrobe_version': 'analysis_software_version',
@@ -59,7 +60,6 @@ class MykrobeIterator(hAMRonizedResultIterator):
                 'protein_mutation_interpretation': 'protein_mutation_interpretation',
                 'coverage_percentage': 'coverage_percentage',
                 'median_coverage_depth': 'coverage_depth',
-                'frequency': 'variant_frequency'
         }
 
         super().__init__(source, self.field_mapping, self.metadata)
