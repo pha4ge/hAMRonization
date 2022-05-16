@@ -153,6 +153,7 @@ def test_ariba():
         assert result.reference_accession == 'oqxA.3003922.EU370913.1.46651_47827.5460'
         assert result.analysis_software_name == 'ariba'
         assert result.analysis_software_version == '0.0.1'
+        assert result.genetic_variation_type == 'Gene presence detected'
 
         # optional fields - present in dummy dataset
         assert result.sequence_identity == 99.57
@@ -178,8 +179,7 @@ def test_ariba():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
-        assert result.variant_frequency is None
-        assert result.genetic_variation_type is None
+        
 
 def test_kmerresistance():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
