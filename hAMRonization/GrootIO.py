@@ -5,7 +5,7 @@ from collections import OrderedDict
 from .Interfaces import hAMRonizedResultIterator
 
 required_metadata = ['analysis_software_version',
-                     'reference_database_id',
+                     'reference_database_name',
                      'reference_database_version',
                      'input_file_name']
 
@@ -14,6 +14,7 @@ class GrootIterator(hAMRonizedResultIterator):
 
     def __init__(self, source, metadata):
         metadata['analysis_software_name'] = 'groot'
+        metadata['genetic_variation_type'] = 'Gene presence detected'
         self.metadata = metadata
 
         self.field_mapping = OrderedDict([

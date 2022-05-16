@@ -407,6 +407,7 @@ def test_groot():
         assert result.reference_accession == 'OqxA.3003470.EU370913.4407527-4408202.4553'
         assert result.analysis_software_name == 'groot'
         assert result.analysis_software_version == '0.0.1'
+        assert result.genetic_variation_type == 'Gene presence detected'
 
         # optional fields - present in dummy dataset
         assert result.reference_gene_length == 1176
@@ -432,8 +433,6 @@ def test_groot():
         assert result.drug_class is None
         assert result.sequence_identity is None
         assert result.coverage_percentage is None
-        assert result.variant_frequency is None
-        assert result.genetic_variation_type is None
 
 def test_deeparg():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
