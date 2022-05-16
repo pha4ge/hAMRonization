@@ -13,7 +13,9 @@ class AmrPlusPlusIterator(hAMRonizedResultIterator):
 
     def __init__(self, source, metadata):
         metadata['analysis_software_name'] = 'amrplusplus'
-        metadata['reference_database_id'] = 'megares'
+        metadata['reference_database_name'] = 'megares'
+        metadata['genetic_variation_type'] = 'Gene presence detected'
+        
         self.metadata = metadata
         self.field_mapping = {
                 # Sample  Gene    Hits    Gene Fraction
