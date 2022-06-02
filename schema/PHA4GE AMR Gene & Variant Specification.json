@@ -181,7 +181,7 @@
             "ontology": "GENEPIO:0100402",
             "type": "string",
             "examples": [
-                "NC_000023.10:g.33038255C>A"
+                "c.1850_1851insGT"
             ]
         },
         "nucleotide_mutation_interpretation": {
@@ -189,7 +189,7 @@
             "ontology": "GENEPIO:0100403",
             "type": "string",
             "examples": [
-                "C --> A at the position aligning to 33038255 in the reference genome"
+                "Insertion of GT between nucleotide 1850 and 1851 in katG"
             ]
         },
         "predicted_phenotype": {
@@ -213,7 +213,7 @@
             "ontology": "GENEPIO:0100406",
             "type": "string",
             "examples": [
-                "LRG_199p1:p.Trp24Cys"
+                "p.Ser450Leu"
             ]
         },
         "amino_acid_mutation_interpretation": {
@@ -221,7 +221,7 @@
             "ontology": "GENEPIO:0100407",
             "type": "string",
             "examples": [
-                "amino acid Trp24 is changed to a Cys"
+                "amino acid Ser450 is changed to Leucine in rpoB"
             ]
         },
         "reference_gene_length": {
