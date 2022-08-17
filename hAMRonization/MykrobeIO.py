@@ -3,6 +3,7 @@
 import json
 import re
 from .Interfaces import hAMRonizedResultIterator
+from hAMRonization.constants import NUCLEOTIDE_VARIANT, AMINO_ACID_VARIANT
 
 required_metadata = []
 
@@ -40,7 +41,6 @@ class MykrobeIterator(hAMRonizedResultIterator):
 
     def __init__(self, source, metadata):
         metadata['analysis_software_name'] = 'Mykrobe'
-        metadata['genetic_variation_type'] = 'Mutation variation detected'
         self.metadata = metadata
 
         self.field_mapping = {
@@ -48,18 +48,18 @@ class MykrobeIterator(hAMRonizedResultIterator):
                 'gene_symbol': 'gene_symbol',
                 'gene_name': 'gene_name',
                 'drug': 'drug_class',
-                'type': 'genetic_variation_type',
                 'db_name': 'reference_database_name',
                 'db_version': 'reference_database_version',
                 'software_name': 'analysis_software_name',
                 'mykrobe_version': 'analysis_software_version',
                 'reference_accession': 'reference_accession',
                 'nucleotide_mutation': 'nucleotide_mutation',
-                'protein_mutation': 'protein_mutation',
+                'amino_acid_mutation': 'amino_acid_mutation',
                 'nucleotide_mutation_interpretation': 'nucleotide_mutation_interpretation',
-                'protein_mutation_interpretation': 'protein_mutation_interpretation',
+                'amino_acid_mutation_interpretation': 'amino_acid_mutation_interpretation',
                 'coverage_percentage': 'coverage_percentage',
                 'median_coverage_depth': 'coverage_depth',
+                'type': 'genetic_variation_type'
         }
 
         super().__init__(source, self.field_mapping, self.metadata)
@@ -97,10 +97,10 @@ class MykrobeIterator(hAMRonizedResultIterator):
 
                 if len(variant_match.group('codon_from')) == 1:
                     # this not a protein change
-                    variant_type = 'nucleotide_variant'  # TODO: should we have 'rrna_change' ??
+                    variant_type = NUCLEOTIDE_VARIANT
                     protein_mutation = None,
                 else:
-                    variant_type = 'protein_variant'
+                    variant_type = AMINO_ACID_VARIANT
                     protein_mutation = 'p.' + self.aa_symbols[variant_match.group('aa_from')] + variant_match.group('aa_pos') + self.aa_symbols[variant_match.group('aa_to')]
                 result = {
                     'filename': handle.name,
@@ -114,9 +114,9 @@ class MykrobeIterator(hAMRonizedResultIterator):
                     'db_version': mykrobe_atlas_version,
                     'reference_accession': reference_accession,
                     'nucleotide_mutation': variant_match.group('codon_change'),  # TODO: make this work using lookup table of gene positions
-                    'protein_mutation': protein_mutation,
+                    'amino_acid_mutation': protein_mutation,
                     'nucleotide_mutation_interpretation': None,
-                    'protein_mutation_interpretation': None,
+                    'amino_acid_mutation_interpretation': None,
                     'coverage_percentage': coverage_percentage,
                     'median_coverage_depth': median_coverage_depth,
                     'frequency': frequency

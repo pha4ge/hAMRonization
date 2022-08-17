@@ -4,6 +4,7 @@ import csv
 import re
 import warnings
 from .Interfaces import hAMRonizedResultIterator
+from hAMRonization.constants import NUCLEOTIDE_VARIANT, AMINO_ACID_VARIANT, GENE_PRESENCE
 
 required_metadata = ['analysis_software_version',
                      'reference_database_version',
@@ -100,18 +101,19 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
             # appended to the symbol name so we want to split this
             result['AA Mutation'] = None
             result['Nucleotide Mutation'] = None
-            result['genetic_variation_type'] = 'Gene presence detected'
+            result['genetic_variation_type'] = GENE_PRESENCE
 
             if result['Element subtype'] == 'POINT':
-                result['genetic_variation_type'] = 'Mutation variation detected'
                 gene_symbol, mutation = result["Gene symbol"].rsplit('_', 1)
                 result['Gene symbol'] = gene_symbol
                 _, ref, pos, alt, _ = re.split(r"(\D+)(\d+)(\D+)", mutation)
                 # this means it is a protein mutation
                 if result['Method'] in ['POINTX', 'POINTP']:
                     result['AA Mutation'] = f"p.{pos}{ref}>{alt}"
+                    result['genetic_variation_type'] = AMINO_ACID_VARIANT
                 elif result['Method'] == 'POINTN':
                     # e.g., 23S_G2032G ampC_C-11C -> c.2032G>G
                     result['Nucleotide Mutation'] = f"c.{pos}{ref}>{alt}"
+                    result['genetic_variation_type'] = NUCLEOTIDE_VARIANT
 
             yield self.hAMRonize(result, self.metadata)

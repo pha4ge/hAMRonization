@@ -27,7 +27,7 @@ class RgiIterator(hAMRonizedResultIterator):
                     'ARO Term': 'gene_symbol',
                     'ARO Accession': 'reference_accession',
                     'Reference Model Type': None,
-                    'Reference DB': 'reference_database_id',
+                    'Reference DB': 'reference_database_name',
                     'Alleles with Mapped Reads': None,
                     'Reference Allele(s) Identity '
                     'to CARD Reference Protein (%)': 'sequence_identity',

@@ -53,10 +53,10 @@ def test_abricate():
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
 
-def test_amrfinder():
+def test_amrfinderplus():
     metadata = {"analysis_software_version": "3.6.10", "reference_database_version": "2019-Jul-28",
                 'input_file_name': 'Dummy'}
-    parsed_report = hAMRonization.parse("dummy/amrfinder/report.tsv", metadata, "amrfinderplus")
+    parsed_report = hAMRonization.parse("dummy/amrfinderplus/report.tsv", metadata, "amrfinderplus")
 
     for result in parsed_report:
         # assert mandatory fields
@@ -68,7 +68,7 @@ def test_amrfinder():
         assert result.reference_accession == 'WP_002914189.1'
         assert result.analysis_software_name == 'amrfinderplus'
         assert result.analysis_software_version == '3.6.10'
-        assert result.genetic_variation_type == 'Gene presence detected'
+        assert result.genetic_variation_type == 'gene_presence_detected'
 
         # optional fields - present in dummy dataset
         assert result.sequence_identity == 99.49
@@ -223,51 +223,10 @@ def test_kmerresistance():
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
 
+
 def test_resfinder():
-    metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28"}
-    parsed_report = hAMRonization.parse("dummy/resfinder/data_resfinder.json", metadata, "resfinder")
-
-    for result in parsed_report:
-        # assert mandatory fields
-        assert result.input_file_name == 'Dummy'
-        assert result.gene_symbol == 'oqxA'
-        assert result.gene_name == 'oqxA_1_EU370913'
-        assert result.reference_database_name == 'resfinder'
-        assert result.reference_database_version == '2019-Jul-28'
-        assert result.reference_accession == 'EU370913'
-        assert result.analysis_software_name == 'resfinder'
-        assert result.analysis_software_version == '0.0.1'
-        assert result.genetic_variation_type == 'Gene presence detected'
-
-        # optional fields - present in dummy dataset
-        assert result.input_sequence_id == 'NZ_LR792628.1 Klebsiella pneumoniae isolate SB5881 chromosome SB5881_omosome'
-        assert result.input_gene_start == 1333608
-        assert result.input_gene_stop == 1334783
-        assert result.strand_orientation == '+'
-        assert result.drug_class == 'Quinolone resistance'
-        assert result.sequence_identity == 99.57
-        assert result.reference_gene_length == 1176
-        assert result.coverage_depth is None
-        assert result.coverage_percentage == 100
-
-        # missing data in report
-        assert result.input_gene_length is None
-        assert result.antimicrobial_agent is None
-        assert result.reference_protein_length is None
-        assert result.coverage_ratio is None
-        assert result.input_protein_length is None
-        assert result.resistance_mechanism is None
-        assert result.input_protein_start is None
-        assert result.input_protein_stop is None
-        assert result.reference_protein_start is None
-        assert result.reference_protein_stop is None
-        assert result.reference_gene_start is None
-        assert result.reference_gene_stop is None
-
-
-def test_resfinder4():
-    metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28", "input_file_name": "Dummy"}
-    parsed_report = hAMRonization.parse("dummy/resfinder4/ResFinder_results_tab.txt", metadata, "resfinder4")
+    metadata = {"analysis_software_version": "4.0.0", "reference_database_version": "2019-Jul-28", "input_file_name": "Dummy"}
+    parsed_report = hAMRonization.parse("dummy/resfinder/ResFinder_results_tab.txt", metadata, "resfinder")
 
     for result in parsed_report:
         # assert mandatory fields
@@ -277,8 +236,8 @@ def test_resfinder4():
         assert result.reference_database_name == 'resfinder'
         assert result.reference_database_version == '2019-Jul-28'
         assert result.reference_accession == 'EU370913'
-        assert result.analysis_software_name == 'resfinder 4'
-        assert result.analysis_software_version == '0.0.1'
+        assert result.analysis_software_name == 'resfinder'
+        assert result.analysis_software_version == '4.0.0'
         assert result.genetic_variation_type == 'Gene presence detected'
 
         # optional fields - present in dummy dataset
@@ -577,23 +536,23 @@ def test_tbprofiler():
         assert result.reference_database_version == 'a800e0a'
         assert result.analysis_software_name == 'tb-profiler'
         assert result.analysis_software_version == '3.0.8'
-        assert result.genetic_variation_type == 'Mutation variation detected'
+        assert result.genetic_variation_type == 'protein_variant_detected'
         assert result.reference_accession == 'CCP43410'
 
         # optional fields - present in dummy dataset
         assert result.drug_class == 'rifampicin'
         assert result.nucleotide_mutation == 'c.1349C>T'
-        assert result.protein_mutation == 'p.Ser450Leu'
+        assert result.amino_acid_mutation == 'p.Ser450Leu'
 
         # todo
-        assert result.protein_mutation_interpretation is None
-        assert result.protein_mutation_interpretation is None
+        assert result.amino_acid_mutation_interpretation is None
+        assert result.amino_acid_mutation_interpretation is None
 
         # missing data in report
-        assert result.sequence_identity is None 
-        assert result.reference_gene_length is None 
-        assert result.input_gene_length is None 
-        assert result.input_sequence_id is None 
+        assert result.sequence_identity is None
+        assert result.reference_gene_length is None
+        assert result.input_gene_length is None
+        assert result.input_sequence_id is None
         assert result.coverage_percentage is None
         assert result.coverage_depth is None
         assert result.input_gene_start is None
@@ -614,7 +573,7 @@ def test_tbprofiler():
 def test_mykrobe():
     metadata = {}
     parsed_report = hAMRonization.parse("dummy/mykrobe/mykrobe.json", metadata, "mykrobe")
-    
+
     for result in parsed_report:
         # assert mandatory fields
         assert result.input_file_name == 'mykrobe.json'
@@ -625,20 +584,20 @@ def test_mykrobe():
         assert result.reference_accession == 'NC_000962.3'
         assert result.analysis_software_name == 'mykrobe'
         assert result.analysis_software_version == 'v0.10.0'
-        assert result.genetic_variation_type == 'Mutation variation detected'
+        assert result.genetic_variation_type == 'protein_variant_detected'
 
         # optional fields - present in dummy dataset
         assert result.drug_class == 'Rifampicin'  # TODO: this is not following the spec as this is not an ARO term, what to do?
         assert result.coverage_percentage == 100
         assert result.coverage_depth == 60
-        assert result.protein_mutation == "p.Ser450Leu"
+        assert result.amino_acid_mutation == "p.Ser450Leu"
         # assert result.nucleotide_mutation == ""  # TODO: this is not working yet
 
         # missing data in report
-        assert result.sequence_identity is None 
-        assert result.reference_gene_length is None 
-        assert result.input_gene_length is None 
-        assert result.input_sequence_id is None 
+        assert result.sequence_identity is None
+        assert result.reference_gene_length is None
+        assert result.input_gene_length is None
+        assert result.input_sequence_id is None
         assert result.input_gene_start is None
         assert result.input_gene_stop is None
         assert result.strand_orientation is None
