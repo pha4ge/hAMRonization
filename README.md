@@ -175,7 +175,7 @@ Parsers needing tested (both automated and just sanity checking output), see [te
 `
 1. [abricate](hAMRonization/AbricateIO.py)
 2. [ariba](hAMRonization/AribaIO.py)
-3. [NCBI AMRFinderPlus](hAMRonization/AmrFinderPlusIO.py)
+3. [NCBI AMRFinderPlus](hAMRonization/AmrFinderPlusIO.py): last updated for v3.10.40
 4. [RGI](hAMRonization/RgiIO.py) (includes RGI-BWT)
 5. [resfinder](hAMRonization/ResFinderIO.py)
 6. [resfinder4](hAMRonization/ResFinder4IO.py)
