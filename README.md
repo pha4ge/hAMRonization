@@ -176,12 +176,12 @@ If you want to write multiple reports to one file, this `.write` method can acce
 
 Parsers needing tested (both automated and just sanity checking output), see [test.sh](parsers/test.sh) for example invocations.
 `
-1. [abricate](hAMRonization/AbricateIO.py)
-2. [ariba](hAMRonization/AribaIO.py)
+1. [abricate](hAMRonization/AbricateIO.py): last updated for v1.0.0
+2. [ariba](hAMRonization/AribaIO.py): last updated for v2.14.6
 3. [NCBI AMRFinderPlus](hAMRonization/AmrFinderPlusIO.py): last updated for v3.10.40
-4. [RGI](hAMRonization/RgiIO.py) (includes RGI-BWT)
-5. [resfinder](hAMRonization/ResFinderIO.py): last updated for v4.1 
-6. [pointfinder](hAMRonization/PointFinderIO.py): last updated for v4.1
+4. [RGI](hAMRonization/RgiIO.py) (includes RGI-BWT) last updated for v5.2.0
+5. [resfinder](hAMRonization/ResFinderIO.py): last updated for v4.1.0
+6. [pointfinder](hAMRonization/PointFinderIO.py): last updated for v4.1.0
 7. [sraX](hAMRonization/SraxIO.py)
 8. [deepARG](hAMRonization/DeepArgIO.py)
 9. [kmerresistance](hAMRonization/KmerResistanceIO.py) 

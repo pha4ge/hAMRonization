@@ -12,7 +12,7 @@ def not_raises(exception, msg):
 
 def test_abricate():
     metadata = {"analysis_software_version": "0.9.8", "reference_database_version": "2019-Jul-28"}
-    parsed_report = hAMRonization.parse("dummy/abricate/report.tsv", metadata, "abricate")
+    parsed_report = hAMRonization.parse("data/dummy/abricate/report.tsv", metadata, "abricate")
 
     for result in parsed_report:
 
@@ -56,7 +56,7 @@ def test_abricate():
 def test_amrfinderplus():
     metadata = {"analysis_software_version": "3.6.10", "reference_database_version": "2019-Jul-28",
                 'input_file_name': 'Dummy'}
-    parsed_report = hAMRonization.parse("dummy/amrfinderplus/report.tsv", metadata, "amrfinderplus")
+    parsed_report = hAMRonization.parse("data/dummy/amrfinderplus/report.tsv", metadata, "amrfinderplus")
 
     for result in parsed_report:
         # assert mandatory fields
@@ -98,7 +98,7 @@ def test_amrfinderplus():
 def test_amrplusplus():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
                 'input_file_name': 'Dummy'}
-    parsed_report = hAMRonization.parse("dummy/amrplusplus/gene.tsv", metadata, "amrplusplus")
+    parsed_report = hAMRonization.parse("data/dummy/amrplusplus/gene.tsv", metadata, "amrplusplus")
 
     for result in parsed_report:
         # assert mandatory fields
@@ -141,7 +141,7 @@ def test_amrplusplus():
 def test_ariba():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
                 'input_file_name': 'Dummy', 'reference_database_name': 'ncbi'}
-    parsed_report = hAMRonization.parse("dummy/ariba/report.tsv", metadata, "ariba")
+    parsed_report = hAMRonization.parse("data/dummy/ariba/report.tsv", metadata, "ariba")
 
     for result in parsed_report:
         # assert mandatory fields
@@ -181,10 +181,36 @@ def test_ariba():
         assert result.reference_gene_stop is None
 
 
+def test_ariba_var():
+    metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
+                'input_file_name': 'Dummy', 'reference_database_name': 'ncbi'}
+    parsed_report = hAMRonization.parse("data/dummy/ariba/report_var.tsv", metadata, "ariba")
+
+    for result in parsed_report:
+        # assert mandatory fields
+        assert result.input_file_name == 'Dummy'
+        assert result.gene_symbol == 'rpoB'
+        assert result.gene_name == 'rpoB.3003288.BA000007.3.4990267_4994296.5493'
+        assert result.reference_database_name == 'ncbi'
+        assert result.reference_database_version == '2019-Jul-28'
+        assert result.reference_accession == 'rpoB.3003288.BA000007.3.4990267_4994296.5493'
+        assert result.analysis_software_name == 'ariba'
+        assert result.analysis_software_version == '0.0.1'
+
+        # optional fields - present in dummy dataset
+        assert result.sequence_identity == 93.44
+        assert result.input_sequence_id == 'rpoB.l15.c4.ctg.2'
+        assert result.reference_gene_length == 4029
+        assert result.coverage_depth == 33.7
+        assert result.amino_acid_mutation == "p.R529C"
+        assert result.nucleotide_mutation == "n.877CGT>TGC"
+        assert result.genetic_variation_type == 'protein_variant_detected'
+
+
 def test_kmerresistance():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
                 'input_file_name': 'Dummy'}
-    parsed_report = hAMRonization.parse("dummy/kmerresistance/results.res", metadata, "kmerresistance")
+    parsed_report = hAMRonization.parse("data/dummy/kmerresistance/results.res", metadata, "kmerresistance")
 
     for result in parsed_report:
         # assert mandatory fields
@@ -226,7 +252,7 @@ def test_kmerresistance():
 
 def test_resfinder():
     metadata = {"analysis_software_version": "4.1.0", "reference_database_version": "2021-02-01", "input_file_name": "Dummy"}
-    parsed_report = hAMRonization.parse("dummy/pointfinder/PointFinder_results.txt", metadata, "pointfinder")
+    parsed_report = hAMRonization.parse("data/dummy/pointfinder/PointFinder_results.txt", metadata, "pointfinder")
 
     for result in parsed_report:
         # assert mandatory fields
@@ -247,13 +273,13 @@ def test_resfinder():
 
 def test_pointfinder():
     metadata = {"analysis_software_version": "4.1.0", "reference_database_version": "2019-Jul-28", "input_file_name": "Dummy"}
-    parsed_report = hAMRonization.parse("dummy/resfinder/ResFinder_results_tab.txt", metadata, "resfinder")
+    parsed_report = hAMRonization.parse("data/dummy/resfinder/ResFinder_results_tab.txt", metadata, "resfinder")
 
 
 def test_rgi_variants():
     metadata = {"analysis_software_version": "5.2.0", "reference_database_version": "3.2.4",
                 "input_file_name": "Dummy"}
-    parsed_report = hAMRonization.parse("dummy/rgi/rgi_var.txt", metadata, "rgi")
+    parsed_report = hAMRonization.parse("data/dummy/rgi/rgi_var.txt", metadata, "rgi")
 
     for result in parsed_report:
         # assert mandatory fields
@@ -275,7 +301,7 @@ def test_rgi_variants():
 def test_rgi():
     metadata = {"analysis_software_version": "5.1.0", "reference_database_version": "2019-Jul-28",
                 "input_file_name": "Dummy"}
-    parsed_report = hAMRonization.parse("dummy/rgi/rgi.txt", metadata, "rgi")
+    parsed_report = hAMRonization.parse("data/dummy/rgi/rgi.txt", metadata, "rgi")
 
     for result in parsed_report:
         # assert mandatory fields
@@ -317,7 +343,7 @@ def test_rgi():
 def test_srax():
     metadata = {"analysis_software_version": "5.1.0", "reference_database_version": "2019-Jul-28",
                 "input_file_name": "Dummy", 'reference_database_name': "resfinder"}
-    parsed_report = hAMRonization.parse("dummy/srax/sraX_detected_ARGs.tsv", metadata, "srax")
+    parsed_report = hAMRonization.parse("data/dummy/srax/sraX_detected_ARGs.tsv", metadata, "srax")
 
     for result in parsed_report:
         # assert mandatory fields
@@ -359,7 +385,7 @@ def test_srax():
 def test_groot():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
                 "input_file_name": "Dummy", 'reference_database_name': "argannot"}
-    parsed_report = hAMRonization.parse("dummy/groot/groot_report.tsv", metadata, "groot")
+    parsed_report = hAMRonization.parse("data/dummy/groot/groot_report.tsv", metadata, "groot")
 
     for result in parsed_report:
         # assert mandatory fields
@@ -401,7 +427,7 @@ def test_groot():
 def test_deeparg():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
                 'input_file_name': 'Dummy'}
-    parsed_report = hAMRonization.parse("dummy/deepARG/output.mapping.ARG.", metadata, "deeparg")
+    parsed_report = hAMRonization.parse("data/dummy/deepARG/output.mapping.ARG.", metadata, "deeparg")
 
     for result in parsed_report:
         # assert mandatory fields
@@ -444,7 +470,7 @@ def test_deeparg():
 def test_srst2():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
                 "input_file_name": "Dummy"}
-    parsed_report = hAMRonization.parse("dummy/srst2/report.tsv", metadata, "srst2")
+    parsed_report = hAMRonization.parse("data/dummy/srst2/report.tsv", metadata, "srst2")
 
     for result in parsed_report:
         # assert mandatory fields
@@ -487,7 +513,7 @@ def test_srst2():
 def test_csstar():
     metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
                 "input_file_name": "Dummy", "reference_database_name": 'ResFinder'}
-    parsed_report = hAMRonization.parse("dummy/sstar/report.tsv", metadata, "csstar")
+    parsed_report = hAMRonization.parse("data/dummy/sstar/report.tsv", metadata, "csstar")
 
     for result in parsed_report:
         # assert mandatory fields
@@ -530,7 +556,7 @@ def test_csstar():
 
 def test_tbprofiler():
     metadata = {}
-    parsed_report = hAMRonization.parse("dummy/tbprofiler/tbprofiler.json", metadata, "tbprofiler")
+    parsed_report = hAMRonization.parse("data/dummy/tbprofiler/tbprofiler.json", metadata, "tbprofiler")
 
     for result in parsed_report:
         # assert mandatory fields
@@ -577,7 +603,7 @@ def test_tbprofiler():
 
 def test_mykrobe():
     metadata = {}
-    parsed_report = hAMRonization.parse("dummy/mykrobe/mykrobe.json", metadata, "mykrobe")
+    parsed_report = hAMRonization.parse("data/dummy/mykrobe/mykrobe.json", metadata, "mykrobe")
 
     for result in parsed_report:
         # assert mandatory fields
