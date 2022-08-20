@@ -63,4 +63,5 @@ hamronize summarize --output summary.json --summary_type json hamronized_*.json 
 hamronize summarize --output summary.html --summary_type interactive hamronized_*.json hamronized_*.tsv
 
 # tidy up
-rm hamronized_*.json hamronized_*.tsv summary.tsv summary.json summary.html
+#rm hamronized_*.json hamronized_*.tsv summary.tsv summary.json summary.html
+rm summary.tsv summary.json summary.html

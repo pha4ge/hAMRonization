@@ -25,7 +25,7 @@ def test_abricate():
         assert result.reference_accession == 'NG_048024.1'
         assert result.analysis_software_name == 'abricate'
         assert result.analysis_software_version == '0.9.8'
-        assert result.genetic_variation_type == 'Gene presence detected'
+        assert result.genetic_variation_type == 'gene_presence_detected'
 
 
         # optional fields - present in dummy dataset
@@ -110,7 +110,7 @@ def test_amrplusplus():
         assert result.reference_accession == 'MEG_4334'
         assert result.analysis_software_name == 'amrplusplus'
         assert result.analysis_software_version == '0.0.1'
-        assert result.genetic_variation_type == 'Gene presence detected'
+        assert result.genetic_variation_type == 'gene_presence_detected'
 
 
         # optional fields - present in dummy dataset
@@ -153,7 +153,7 @@ def test_ariba():
         assert result.reference_accession == 'oqxA.3003922.EU370913.1.46651_47827.5460'
         assert result.analysis_software_name == 'ariba'
         assert result.analysis_software_version == '0.0.1'
-        assert result.genetic_variation_type == 'Gene presence detected'
+        assert result.genetic_variation_type == 'gene_presence_detected'
 
         # optional fields - present in dummy dataset
         assert result.sequence_identity == 99.57
@@ -196,7 +196,7 @@ def test_kmerresistance():
         assert result.reference_accession == 'oqxA_1_EU370913'
         assert result.analysis_software_name == 'kmerresistance'
         assert result.analysis_software_version == '0.0.1'
-        assert result.genetic_variation_type == 'Gene presence detected'
+        assert result.genetic_variation_type == 'gene_presence_detected'
 
         # optional fields - present in dummy dataset
         assert result.sequence_identity == 99.57
@@ -250,6 +250,28 @@ def test_pointfinder():
     parsed_report = hAMRonization.parse("dummy/resfinder/ResFinder_results_tab.txt", metadata, "resfinder")
 
 
+def test_rgi_variants():
+    metadata = {"analysis_software_version": "5.2.0", "reference_database_version": "3.2.4",
+                "input_file_name": "Dummy"}
+    parsed_report = hAMRonization.parse("dummy/rgi/rgi_var.txt", metadata, "rgi")
+
+    for result in parsed_report:
+        # assert mandatory fields
+        assert result.input_file_name == 'Dummy'
+        assert result.gene_symbol == 'Escherichia coli gyrB conferring resistance to aminocoumarin'
+        assert result.gene_name == 'aminocoumarin resistant gyrB'
+        assert result.reference_database_name == 'CARD'
+        assert result.reference_database_version == '3.2.4'
+        assert result.reference_accession == '3003303'
+        assert result.analysis_software_name == 'rgi'
+        assert result.analysis_software_version == '5.2.0'
+        assert result.genetic_variation_type == 'protein_variant_detected'
+
+        # optional fields - present in dummy dataset
+        assert result.drug_class == 'aminocoumarin antibiotic'
+        assert result.sequence_identity == 99.88
+        assert result.resistance_mechanism == 'antibiotic target alteration'
+
 def test_rgi():
     metadata = {"analysis_software_version": "5.1.0", "reference_database_version": "2019-Jul-28",
                 "input_file_name": "Dummy"}
@@ -265,7 +287,7 @@ def test_rgi():
         assert result.reference_accession == '3003922'
         assert result.analysis_software_name == 'rgi'
         assert result.analysis_software_version == '5.1.0'
-        assert result.genetic_variation_type == 'Gene presence detected'
+        assert result.genetic_variation_type == 'gene_presence_detected'
 
         # optional fields - present in dummy dataset
         assert result.input_sequence_id == 'NZ_LR792628.1_1289'
@@ -292,7 +314,6 @@ def test_rgi():
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
 
-
 def test_srax():
     metadata = {"analysis_software_version": "5.1.0", "reference_database_version": "2019-Jul-28",
                 "input_file_name": "Dummy", 'reference_database_name': "resfinder"}
@@ -308,7 +329,7 @@ def test_srax():
         assert result.reference_accession == 'NG_048024.1'
         assert result.analysis_software_name == 'srax'
         assert result.analysis_software_version == '5.1.0'
-        assert result.genetic_variation_type == 'Gene presence detected'
+        assert result.genetic_variation_type == 'gene_presence_detected'
 
         # optional fields - present in dummy dataset
         assert result.drug_class == 'Fluoroquinolone'
@@ -350,7 +371,7 @@ def test_groot():
         assert result.reference_accession == 'OqxA.3003470.EU370913.4407527-4408202.4553'
         assert result.analysis_software_name == 'groot'
         assert result.analysis_software_version == '0.0.1'
-        assert result.genetic_variation_type == 'Gene presence detected'
+        assert result.genetic_variation_type == 'gene_presence_detected'
 
         # optional fields - present in dummy dataset
         assert result.reference_gene_length == 1176
@@ -392,7 +413,7 @@ def test_deeparg():
         assert result.reference_accession == 'YP_001693237.1'
         assert result.analysis_software_name == 'deeparg'
         assert result.analysis_software_version == '0.0.1'
-        assert result.genetic_variation_type == 'Gene presence detected'
+        assert result.genetic_variation_type == 'gene_presence_detected'
 
         # optional fields - present in dummy dataset
         assert result.drug_class == 'multidrug'
@@ -435,7 +456,7 @@ def test_srst2():
         assert result.reference_accession == '1995'
         assert result.analysis_software_name == 'srst2'
         assert result.analysis_software_version == '0.0.1'
-        assert result.genetic_variation_type == 'Gene presence detected'
+        assert result.genetic_variation_type == 'gene_presence_detected'
 
         # optional fields - present in dummy dataset
         assert result.coverage_percentage == 100
@@ -478,7 +499,7 @@ def test_csstar():
         assert result.reference_accession == 'oqxA'
         assert result.analysis_software_name == 'csstar'
         assert result.analysis_software_version == '0.0.1'
-        assert result.genetic_variation_type == 'Gene presence detected'
+        assert result.genetic_variation_type == 'gene_presence_detected'
 
 
         # optional fields - present in dummy dataset

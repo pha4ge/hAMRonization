@@ -3,7 +3,7 @@
 import csv
 from collections import OrderedDict
 from .Interfaces import hAMRonizedResultIterator
-
+from hAMRonization.constants import GENE_PRESENCE
 
 required_metadata = ['analysis_software_version',
                      'reference_database_version',
@@ -15,7 +15,7 @@ class CSStarIterator(hAMRonizedResultIterator):
 
     def __init__(self, source, metadata):
         metadata['analysis_software_name'] = 'csstar'
-        metadata['genetic_variation_type'] = 'Gene presence detected'
+        metadata['genetic_variation_type'] = GENE_PRESENCE
         self.metadata = metadata
         self.field_mapping = OrderedDict([
             (0, "gene_symbol"),

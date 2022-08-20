@@ -109,7 +109,7 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
                 _, ref, pos, alt, _ = re.split(r"(\D+)(\d+)(\D+)", mutation)
                 # this means it is a protein mutation
                 if result['Method'] in ['POINTX', 'POINTP']:
-                    result['AA Mutation'] = f"p.{pos}{ref}>{alt}"
+                    result['AA Mutation'] = f"p.{ref}{pos}{alt}"
                     result['genetic_variation_type'] = AMINO_ACID_VARIANT
                 elif result['Method'] == 'POINTN':
                     # e.g., 23S_G2032G ampC_C-11C -> c.2032G>G
