@@ -225,45 +225,29 @@ def test_kmerresistance():
 
 
 def test_resfinder():
-    metadata = {"analysis_software_version": "4.0.0", "reference_database_version": "2019-Jul-28", "input_file_name": "Dummy"}
-    parsed_report = hAMRonization.parse("dummy/resfinder/ResFinder_results_tab.txt", metadata, "resfinder")
+    metadata = {"analysis_software_version": "4.1.0", "reference_database_version": "2021-02-01", "input_file_name": "Dummy"}
+    parsed_report = hAMRonization.parse("dummy/pointfinder/PointFinder_results.txt", metadata, "pointfinder")
 
     for result in parsed_report:
         # assert mandatory fields
         assert result.input_file_name == 'Dummy'
-        assert result.gene_symbol == 'oqxA'
-        assert result.gene_name == 'oqxA'
-        assert result.reference_database_name == 'resfinder'
-        assert result.reference_database_version == '2019-Jul-28'
-        assert result.reference_accession == 'EU370913'
-        assert result.analysis_software_name == 'resfinder'
-        assert result.analysis_software_version == '4.0.0'
-        assert result.genetic_variation_type == 'Gene presence detected'
+        assert result.gene_symbol == 'gyrA'
+        assert result.gene_name == 'gyrA'
+        assert result.reference_database_name == 'pointfinder'
+        assert result.reference_database_version == '2021-02-01'
+        assert result.reference_accession == 'gyrA p.G81D'
+        assert result.analysis_software_name == 'pointfinder'
+        assert result.analysis_software_version == '4.1.0'
+        assert result.genetic_variation_type == 'protein_variant_detected'
 
-        # optional fields - present in dummy dataset
-        assert result.input_sequence_id == 'NZ_LR792628.1 Klebsiella pneumoniae isolate SB5881 chromosome SB5881_omosome'
-        assert result.input_gene_start == 1333608
-        assert result.input_gene_stop == 1334783
-        assert result.strand_orientation == '+'
-        assert result.drug_class == 'Quinolone resistance'
-        assert result.sequence_identity == 99.58
-        assert result.reference_gene_length == 1176
-        assert result.coverage_depth is None
-        assert result.coverage_percentage == 100
+        assert result.drug_class == 'Ciprofloxacin,Nalidixic acid,Ciprofloxacin'
+        assert result.nucleotide_mutation == 'GGT -> GAT'
+        assert result.amino_acid_mutation == 'p.G81D'
 
-        # missing data in report
-        assert result.input_gene_length is None
-        assert result.antimicrobial_agent is None
-        assert result.reference_protein_length is None
-        assert result.coverage_ratio is None
-        assert result.input_protein_length is None
-        assert result.resistance_mechanism is None
-        assert result.input_protein_start is None
-        assert result.input_protein_stop is None
-        assert result.reference_protein_start is None
-        assert result.reference_protein_stop is None
-        assert result.reference_gene_start is None
-        assert result.reference_gene_stop is None
+
+def test_pointfinder():
+    metadata = {"analysis_software_version": "4.1.0", "reference_database_version": "2019-Jul-28", "input_file_name": "Dummy"}
+    parsed_report = hAMRonization.parse("dummy/resfinder/ResFinder_results_tab.txt", metadata, "resfinder")
 
 
 def test_rgi():

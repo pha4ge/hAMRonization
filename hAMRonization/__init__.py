@@ -18,6 +18,7 @@ from hAMRonization import AmrPlusPlusIO
 from hAMRonization import ResFamsIO
 from hAMRonization import TBProfilerIO
 from hAMRonization import MykrobeIO
+from hAMRonization import PointFinderIO
 
 _FormatToIterator = {
     "abricate": AbricateIO.AbricateIterator,
@@ -36,6 +37,7 @@ _FormatToIterator = {
     "resfams": ResFamsIO.ResFamsIterator,
     "tbprofiler": TBProfilerIO.TBProfilerIterator,
     "mykrobe": MykrobeIO.MykrobeIterator,
+    "pointfinder": PointFinderIO.PointFinderIterator
     }
 
 _ReportFileToUse = {
@@ -54,7 +56,8 @@ _ReportFileToUse = {
     "amrplusplus": "gene.tsv",
     "resfams": "resfams.tblout",
     "tbprofiler": "OUTPUT.results.json",
-    "mykrobe": "OUTPUT.json"
+    "mykrobe": "OUTPUT.json",
+    "pointfinder": "PointFinder_results.txt"
     }
 
 
@@ -74,7 +77,8 @@ _RequiredToolMetadata = {
     "resfams": ResFamsIO.required_metadata,
     "groot": GrootIO.required_metadata,
     "tbprofiler": TBProfilerIO.required_metadata,
-    "mykrobe": MykrobeIO.required_metadata
+    "mykrobe": MykrobeIO.required_metadata,
+    "pointfinder": PointFinderIO.required_metadata
 }
 
 

@@ -3,6 +3,7 @@
 import json
 import csv
 from .Interfaces import hAMRonizedResultIterator
+from hAMRonization.constants import GENE_PRESENCE
 
 required_metadata = ['analysis_software_version',
                      'reference_database_version',
@@ -10,17 +11,23 @@ required_metadata = ['analysis_software_version',
 
 
 class ResFinderIterator(hAMRonizedResultIterator):
+    """
+    Updated for ResFinder v4.1 using the `ResFinder_results_tab.txt` output
+    file
+    """
 
     def __init__(self, source, metadata):
         metadata['reference_database_name'] = 'resfinder'
         metadata['analysis_software_name'] = 'resfinder'
-        metadata['genetic_variation_type'] = 'Gene presence detected'
+        # even though resfinderv4 runs pointfinder
+        # parsing mutational resistance requires parsing a different file
+        #to get mutations (pointfinder)
+        metadata['genetic_variation_type'] = GENE_PRESENCE
         self.metadata = metadata
 
         self.field_mapping = {
         'Resistance gene': 'gene_symbol',
         'Identity': 'sequence_identity',
-        'HSP_length': None,
         'Alignment Length/Gene Length': None,
         'Position in reference': None,
         'Contig': 'input_sequence_id',
@@ -28,7 +35,6 @@ class ResFinderIterator(hAMRonizedResultIterator):
         'Accession no.': 'reference_accession',
         'Phenotype': 'drug_class',
         'Coverage': 'coverage_percentage',
-        'hit_id': None,
         # decomposed from Position in contig e.g "10432..11277"
         '_start': 'input_gene_start',
         '_stop': 'input_gene_stop',
