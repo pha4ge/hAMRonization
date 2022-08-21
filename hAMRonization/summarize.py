@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import hAMRonization
 import csv
 import pandas as pd
 import os
@@ -8,36 +7,46 @@ import sys
 import json
 from string import Template
 
+
 def format_interactive_json(combined_records):
     """
     Reorganised json to row/table format for ease of display
     """
     # dummy field to handle multiple configs
-    combined_records['config'] = combined_records['analysis_software_name'].astype(str) +\
-        combined_records['analysis_software_version'].astype(str) +\
-        combined_records['reference_database_name'].astype(str) +\
-        combined_records['reference_database_version'].astype(str)
+    combined_records["config"] = (
+        combined_records["analysis_software_name"].astype(str)
+        + combined_records["analysis_software_version"].astype(str)
+        + combined_records["reference_database_name"].astype(str)
+        + combined_records["reference_database_version"].astype(str)
+    )
 
-    configs = combined_records[['config',
-                  'analysis_software_name',
-                  'analysis_software_version',
-                  'reference_database_name',
-                  'reference_database_version']].drop_duplicates()
+    configs = combined_records[
+        [
+            "config",
+            "analysis_software_name",
+            "analysis_software_version",
+            "reference_database_name",
+            "reference_database_version",
+        ]
+    ].drop_duplicates()
 
+    tool_groups = configs.groupby("analysis_software_name")
+    configs["display_name"] = configs[
+        "analysis_software_name"
+    ] + tool_groups.cumcount().apply(lambda x: f": config {x}")
 
-    tool_groups = configs.groupby('analysis_software_name')
-    configs['display_name'] = configs['analysis_software_name'] + \
-                                    tool_groups.cumcount().apply(lambda x:f": config {x}")
+    config_display_names = configs.set_index("config")["display_name"].to_dict()
+    combined_records["config_display_name"] = combined_records["config"].apply(
+        lambda x: config_display_names[x]
+    )
 
-    config_display_names = configs.set_index('config')['display_name'].to_dict()
-    combined_records['config_display_name'] = combined_records['config'].apply(lambda x: config_display_names[x])
-
-    combined_records = combined_records.drop('config', axis=1)
-
+    combined_records = combined_records.drop("config", axis=1)
 
     data_for_summary = {}
 
-    grouped_data = combined_records.groupby(['input_file_name', 'config_display_name']).apply(lambda x: x.to_json(orient='records'))
+    grouped_data = combined_records.groupby(
+        ["input_file_name", "config_display_name"]
+    ).apply(lambda x: x.to_json(orient="records"))
     for (input_file, config), hits in grouped_data.iteritems():
         json_hits = json.loads(hits)
         if input_file not in data_for_summary:
@@ -45,10 +54,9 @@ def format_interactive_json(combined_records):
         else:
             data_for_summary[input_file].append({config: json_hits})
 
-
     tidied_json = []
-    for genome in combined_records['input_file_name'].sort_values().unique():
-        genome_data = {'input_file_name': genome}
+    for genome in combined_records["input_file_name"].sort_values().unique():
+        genome_data = {"input_file_name": genome}
         for config_results in data_for_summary[genome]:
             config = config_results.keys()
             if len(config) != 1:
@@ -71,9 +79,7 @@ def generate_interactive_report(combined_report_data):
 
     tidied_json = tidied_json.replace("'", "\\'")
 
-
-
-    html_template ="""<!DOCTYPE html>
+    html_template = """<!DOCTYPE html>
     <html>
       <head>
         <title>hAMRonized Results</title>
@@ -656,10 +662,7 @@ def generate_interactive_report(combined_report_data):
 
      </body>
     </html>
-
-
-
-"""
+"""# noqa
 
     html_template = Template(html_template)
 
@@ -674,21 +677,22 @@ def check_report_type(file_path):
     Identifies whether a report is json or tsv
     """
     with open(file_path) as fh:
-        if fh.read(1) in ['{', '[']:
+        if fh.read(1) in ["{", "["]:
             return "json"
         else:
             fh.seek(0)
-            reader = csv.reader(fh, delimiter='\t')
+            reader = csv.reader(fh, delimiter="\t")
             try:
                 if len(next(reader)) == len(next(reader)) > 1:
                     return "tsv"
             except StopIteration:
                 pass
 
+
 def summarize_reports(report_paths, summary_type, output_path=None):
     # fix default output
     if output_path:
-        out_fh = open(output_path, 'w')
+        out_fh = open(output_path, "w")
     else:
         out_fh = sys.stdout
 
@@ -702,51 +706,58 @@ def summarize_reports(report_paths, summary_type, output_path=None):
             report_type = check_report_type(report)
             with open(report) as fh:
                 # use json library if report is json
-                if report_type == 'json' or report_type == 'interactive':
+                if report_type == "json" or report_type == "interactive":
                     parsed_report = pd.read_json(fh)
 
                 # similarly if the report is a tsv use csv reader
-                elif report_type == 'tsv':
-                    parsed_report = pd.read_csv(fh, sep='\t')
+                elif report_type == "tsv":
+                    parsed_report = pd.read_csv(fh, sep="\t")
 
         combined_report_data.append(parsed_report)
         report_count += 1
 
     # remove any duplicate entries in the parsed_report
     # set can't hash dictionaries unfortunately
-    combined_reports = pd.concat(combined_report_data,
-                                 ignore_index=True)
+    combined_reports = pd.concat(combined_report_data, ignore_index=True)
     total_records = len(combined_reports)
     combined_reports = combined_reports.drop_duplicates()
 
     unique_records = len(combined_reports)
     removed_duplicate_count = total_records - unique_records
     if removed_duplicate_count > 0:
-        print(f"Warning: {removed_duplicate_count} duplicate records removed",
-              file=sys.stderr)
+        print(
+            f"Warning: {removed_duplicate_count} duplicate records removed",
+            file=sys.stderr,
+        )
 
     # sort records by input_file_name, tool_config i.e. toolname, version,
     # db_name, db_versions, and then within that by gene_symbol
-    combined_reports = combined_reports.sort_values(['input_file_name',
-                                                     'analysis_software_name',
-                                                     'analysis_software_version',
-                                                     'reference_database_name',
-                                                     'reference_database_version',
-                                                     'gene_symbol'])
+    combined_reports = combined_reports.sort_values(
+        [
+            "input_file_name",
+            "analysis_software_name",
+            "analysis_software_version",
+            "reference_database_name",
+            "reference_database_version",
+            "gene_symbol",
+        ]
+    )
 
     # write the report
-    if summary_type == 'tsv':
-        combined_reports.to_csv(out_fh, sep='\t', index=False)
+    if summary_type == "tsv":
+        combined_reports.to_csv(out_fh, sep="\t", index=False)
 
-    elif summary_type == 'json':
-        combined_reports.to_json(out_fh, orient='records')
+    elif summary_type == "json":
+        combined_reports.to_json(out_fh, orient="records")
 
-    elif summary_type == 'interactive':
+    elif summary_type == "interactive":
         interactive_report = generate_interactive_report(combined_reports)
         out_fh.write(interactive_report)
 
     if output_path:
-        print(f"Written {report_count} reports with a combined "
-              f"{unique_records} unique results to {output_path}",
-              file=sys.stderr)
+        print(
+            f"Written {report_count} reports with a combined "
+            f"{unique_records} unique results to {output_path}",
+            file=sys.stderr,
+        )
         out_fh.close()

@@ -37,8 +37,8 @@ _FormatToIterator = {
     "resfams": ResFamsIO.ResFamsIterator,
     "tbprofiler": TBProfilerIO.TBProfilerIterator,
     "mykrobe": MykrobeIO.MykrobeIterator,
-    "pointfinder": PointFinderIO.PointFinderIterator
-    }
+    "pointfinder": PointFinderIO.PointFinderIterator,
+}
 
 _ReportFileToUse = {
     "abricate": "OUTPUT.tsv",
@@ -57,8 +57,8 @@ _ReportFileToUse = {
     "resfams": "resfams.tblout",
     "tbprofiler": "OUTPUT.results.json",
     "mykrobe": "OUTPUT.json",
-    "pointfinder": "PointFinder_results.txt"
-    }
+    "pointfinder": "PointFinder_results.txt",
+}
 
 
 _RequiredToolMetadata = {
@@ -78,7 +78,7 @@ _RequiredToolMetadata = {
     "groot": GrootIO.required_metadata,
     "tbprofiler": TBProfilerIO.required_metadata,
     "mykrobe": MykrobeIO.required_metadata,
-    "pointfinder": PointFinderIO.required_metadata
+    "pointfinder": PointFinderIO.required_metadata,
 }
 
 
@@ -110,20 +110,19 @@ def parse(handle, metadata, tool):
     try:
         tool_required_metadata = _RequiredToolMetadata[tool]
     except KeyError:
-        raise ValueError(f"Unknown tool: {tool}\nMust be in "
-                         f"{_RequiredToolMetadata.keys()}")
+        raise ValueError(
+            f"Unknown tool: {tool}\nMust be in " f"{_RequiredToolMetadata.keys()}"
+        )
     missing_data = []
     for required in tool_required_metadata:
         if required not in metadata:
             missing_data.append(required)
     if missing_data:
-        raise ValueError(f"{tool} requires {missing_data} supplied "
-                         "in metadata dictionary")
+        raise ValueError(
+            f"{tool} requires {missing_data} supplied " "in metadata dictionary"
+        )
 
     iterator_generator = _FormatToIterator.get(tool)
     if iterator_generator:
         return iterator_generator(handle, metadata)
-    raise ValueError(f"Unknown tool: {tool}\nMust be in "
-                     f"{_FormatToIterator.keys()}")
-
-
+    raise ValueError(f"Unknown tool: {tool}\nMust be in " f"{_FormatToIterator.keys()}")

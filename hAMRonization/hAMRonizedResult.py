@@ -5,11 +5,12 @@ import dataclasses
 
 
 @dataclasses.dataclass
-class hAMRonizedResult():
+class hAMRonizedResult:
     """
     Single AMR result converted to the hAMRonization specification
     Checks types and requires the mandatory fields be supplied
     """
+
     # mandatory fields
     input_file_name: str
     gene_symbol: str
@@ -20,7 +21,7 @@ class hAMRonizedResult():
     analysis_software_name: str
     analysis_software_version: str
     genetic_variation_type: str
-    
+
     # optional fields
     antimicrobial_agent: str = None
     coverage_percentage: float = None
@@ -50,7 +51,6 @@ class hAMRonizedResult():
     strand_orientation: str = None
     sequence_identity: float = None
 
-
     def __post_init__(self):
         """
         Use type hints to check if field value is correct value and if not
@@ -65,22 +65,23 @@ class hAMRonizedResult():
                 try:
                     setattr(self, field.name, field.type(value))
                 except ValueError:
-                    raise ValueError(f"Expected {field.name} "
-                                     f"to be {field.type}, "
-                                     f"got {repr(value)}")
+                    raise ValueError(
+                        f"Expected {field.name} "
+                        f"to be {field.type}, "
+                        f"got {repr(value)}"
+                    )
 
         # normalise input filename to just basename without extension
         # this is to ensure compatibility with all tools using the lowest
         # common denominator staramr which does this
-        input_file_name = getattr(self, 'input_file_name')
+        input_file_name = getattr(self, "input_file_name")
         input_file_name = os.path.basename(input_file_name)
 
         if input_file_name.endswith(".gz"):
-            input_file_name = input_file_name.replace(".gz", '')
+            input_file_name = input_file_name.replace(".gz", "")
 
         for fasta_suffix in [".fna", ".fasta", ".faa", ".fa"]:
             if input_file_name.endswith(fasta_suffix):
-                input_file_name = input_file_name.replace(fasta_suffix, '')
+                input_file_name = input_file_name.replace(fasta_suffix, "")
 
-        setattr(self, 'input_file_name', input_file_name)
-
+        setattr(self, "input_file_name", input_file_name)
