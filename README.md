@@ -16,7 +16,7 @@ This supports a variety of summary options including an [interactive summary](ht
 
 This tool requires python>=3.7 and [pandas](https://pandas.pydata.org/)
 and the latest release can be installed directly from pip, conda, docker, this repository, or from the galaxy toolshed:
-
+```
 pip install hAMRonization
 ```
 [![PyPI version](https://badge.fury.io/py/hAMRonization.svg)](https://badge.fury.io/py/hAMRonization)
