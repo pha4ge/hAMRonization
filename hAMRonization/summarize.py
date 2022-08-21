@@ -15,13 +15,13 @@ def format_interactive_json(combined_records):
     # dummy field to handle multiple configs
     combined_records['config'] = combined_records['analysis_software_name'].astype(str) +\
         combined_records['analysis_software_version'].astype(str) +\
-        combined_records['reference_database_id'].astype(str) +\
+        combined_records['reference_database_name'].astype(str) +\
         combined_records['reference_database_version'].astype(str)
 
     configs = combined_records[['config',
                   'analysis_software_name',
                   'analysis_software_version',
-                  'reference_database_id',
+                  'reference_database_name',
                   'reference_database_version']].drop_duplicates()
 
 
@@ -730,7 +730,7 @@ def summarize_reports(report_paths, summary_type, output_path=None):
     combined_reports = combined_reports.sort_values(['input_file_name',
                                                      'analysis_software_name',
                                                      'analysis_software_version',
-                                                     'reference_database_id',
+                                                     'reference_database_name',
                                                      'reference_database_version',
                                                      'gene_symbol'])
 

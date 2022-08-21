@@ -1,9 +1,10 @@
 #!/usr/bin/env python
 
-import csv
+import csv, re
 import warnings
 import math
 from .Interfaces import hAMRonizedResultIterator
+from hAMRonization.constants import NUCLEOTIDE_VARIANT, AMINO_ACID_VARIANT, GENE_PRESENCE
 
 required_metadata = ['analysis_software_version',
                      'reference_database_version',
@@ -14,7 +15,8 @@ class RgiIterator(hAMRonizedResultIterator):
 
     def __init__(self, source, metadata):
         metadata['analysis_software_name'] = 'rgi'
-        metadata['reference_database_id'] = 'CARD'
+        metadata['reference_database_name'] = 'CARD'
+        metadata['genetic_variation_type'] = 'Gene presence detected'
         self.metadata = metadata
 
         with open(source) as fh:
@@ -25,8 +27,8 @@ class RgiIterator(hAMRonizedResultIterator):
                 self.field_mapping = {
                     'ARO Term': 'gene_symbol',
                     'ARO Accession': 'reference_accession',
-                    'Reference Model Type': None,
-                    'Reference DB': 'reference_database_id',
+                    'Reference Model Type': 'genetic_variation_type',
+                    'Reference DB': 'reference_database_name',
                     'Alleles with Mapped Reads': None,
                     'Reference Allele(s) Identity '
                     'to CARD Reference Protein (%)': 'sequence_identity',
@@ -67,8 +69,10 @@ class RgiIterator(hAMRonizedResultIterator):
                     'Best_Hit_ARO': 'gene_symbol',
                     'Best_Identities': 'sequence_identity',
                     'ARO': 'reference_accession',
-                    'Model_type': None,
+                    'Model_type': 'genetic_variation_type',
                     'SNPs_in_Best_Hit_ARO': None,
+                    '_nucleotide_mutation': 'nucleotide_mutation',
+                    '_amino_acid_mutation': 'amino_acid_mutation',
                     'Other_SNPs': None,
                     'Drug Class': 'drug_class',
                     'Resistance Mechanism': 'resistance_mechanism',
@@ -91,13 +95,39 @@ class RgiIterator(hAMRonizedResultIterator):
         """
         # skip any manually specified fields for later
         reader = csv.DictReader(handle, delimiter='\t')
-        skipped_mutational = 0
         for result in reader:
-            if 'Model_type' in result:
-                if result['Model_type'] != 'protein homolog model':
-                    skipped_mutational += 1
-                    continue
+            # rgi-bwt mode doesn't support variant mutations
+            if 'Model_type' not in result:
+                result['_nucleotide_mutation'] = None
+                result['_amino_acid_mutation'] = None
+                result['Reference Model Type'] = GENE_PRESENCE
+            # normal RGI model
+            else:
+                result['_nucleotide_mutation'] = None
+                result['_amino_acid_mutation'] = None
 
+                if result['SNPs_in_Best_Hit_ARO'] == 'n/a':
+                    result['SNPs_in_Best_Hit_ARO'] = None
+
+                hgvs_mutations = []
+                if result['Model_type'] == 'protein variant model' or \
+                        result['Model_type'] == 'protein overexpression model':
+                    result['Model_type'] = AMINO_ACID_VARIANT
+
+                    if result['SNPs_in_Best_Hit_ARO']:
+                        for mutation in result['SNPs_in_Best_Hit_ARO'].split(','):
+                            hgvs_mutations.append(f"p.{mutation}")
+                        result['_amino_acid_mutation'] = ",".join(hgvs_mutations)
+
+                elif result['Model_type'] == 'rrna variant model':
+                    result['Model_type'] = NUCLEOTIDE_VARIANT
+                    if result['SNPs_in_Best_Hit_ARO']:
+                        for mutation in result['SNPs_in_Best_Hit_ARO'].split(','):
+                            _, ref, pos, alt, _ = re.split(r"(\D+)(\d+)(\D+)", mutation)
+                            hgvs_mutations.append(f"n.{pos}{ref}>{alt}")
+                        result['_nucleotide_mutation'] = ",".join(hgvs_mutations)
+                else:
+                    result['Model_type'] = GENE_PRESENCE
 
             # round down average length of coverage so its comparable to other
             # target lengths
@@ -105,7 +135,3 @@ class RgiIterator(hAMRonizedResultIterator):
                 result['Average Length Coverage (bp)'] = \
                     math.floor(float(result['Average Length Coverage (bp)']))
             yield self.hAMRonize(result, self.metadata)
-
-        if skipped_mutational > 0:
-            warnings.warn(f"Skipping {skipped_mutational} mutational AMR "
-                          f"records from {self.metadata['input_file_name']}")

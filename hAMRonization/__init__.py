@@ -7,7 +7,6 @@ from hAMRonization import AmrFinderPlusIO
 from hAMRonization import AribaIO
 from hAMRonization import RgiIO
 from hAMRonization import ResFinderIO
-from hAMRonization import ResFinder4IO
 from hAMRonization import SraxIO
 from hAMRonization import DeepArgIO
 from hAMRonization import KmerResistanceIO
@@ -19,6 +18,7 @@ from hAMRonization import AmrPlusPlusIO
 from hAMRonization import ResFamsIO
 from hAMRonization import TBProfilerIO
 from hAMRonization import MykrobeIO
+from hAMRonization import PointFinderIO
 
 _FormatToIterator = {
     "abricate": AbricateIO.AbricateIterator,
@@ -26,7 +26,6 @@ _FormatToIterator = {
     "ariba": AribaIO.AribaIterator,
     "rgi": RgiIO.RgiIterator,
     "resfinder": ResFinderIO.ResFinderIterator,
-    "resfinder4": ResFinder4IO.ResFinder4Iterator,
     "srax": SraxIO.SraxIterator,
     "deeparg": DeepArgIO.DeepArgIterator,
     "kmerresistance": KmerResistanceIO.KmerResistanceIterator,
@@ -38,6 +37,7 @@ _FormatToIterator = {
     "resfams": ResFamsIO.ResFamsIterator,
     "tbprofiler": TBProfilerIO.TBProfilerIterator,
     "mykrobe": MykrobeIO.MykrobeIterator,
+    "pointfinder": PointFinderIO.PointFinderIterator
     }
 
 _ReportFileToUse = {
@@ -45,8 +45,7 @@ _ReportFileToUse = {
     "amrfinderplus": "OUTPUT.tsv",
     "ariba": "OUTDIR/OUTPUT.tsv",
     "rgi": "OUTPUT.txt or OUTPUT_bwtoutput.gene_mapping_data.txt",
-    "resfinder": "data_resfinder.json",
-    "resfinder4": "ResFinder_results_tab.txt",
+    "resfinder": "ResFinder_results_tab.txt",
     "srax": "sraX_detected_ARGs.tsv",
     "deeparg": "OUTDIR/OUTPUT.mapping.ARG",
     "kmerresistance": "OUTPUT.res",
@@ -57,7 +56,8 @@ _ReportFileToUse = {
     "amrplusplus": "gene.tsv",
     "resfams": "resfams.tblout",
     "tbprofiler": "OUTPUT.results.json",
-    "mykrobe": "OUTPUT.json"
+    "mykrobe": "OUTPUT.json",
+    "pointfinder": "PointFinder_results.txt"
     }
 
 
@@ -67,7 +67,6 @@ _RequiredToolMetadata = {
     "ariba": AribaIO.required_metadata,
     "rgi": RgiIO.required_metadata,
     "resfinder": ResFinderIO.required_metadata,
-    "resfinder4": ResFinder4IO.required_metadata,
     "srax": SraxIO.required_metadata,
     "deeparg": DeepArgIO.required_metadata,
     "kmerresistance": KmerResistanceIO.required_metadata,
@@ -78,7 +77,8 @@ _RequiredToolMetadata = {
     "resfams": ResFamsIO.required_metadata,
     "groot": GrootIO.required_metadata,
     "tbprofiler": TBProfilerIO.required_metadata,
-    "mykrobe": MykrobeIO.required_metadata
+    "mykrobe": MykrobeIO.required_metadata,
+    "pointfinder": PointFinderIO.required_metadata
 }
 
 
@@ -125,3 +125,5 @@ def parse(handle, metadata, tool):
         return iterator_generator(handle, metadata)
     raise ValueError(f"Unknown tool: {tool}\nMust be in "
                      f"{_FormatToIterator.keys()}")
+
+

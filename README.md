@@ -5,18 +5,18 @@
 This repo contains the hAMRonization module and CLI parser tools combine the outputs of 
 disparate antimicrobial resistance gene detection tools into a single unified format.
 
-This is an implementation of the [hAMRonization AMR detection specification scheme](docs/hAMRonization_specification_details.csv).
+This is an implementation of the [hAMRonization AMR detection specification scheme](docs/hAMRonization_specification_details.csv) which supports gene presence/absence resistance and mutational resistance (if supported by the underlying tool).
 
 This supports a variety of summary options including an [interactive summary](https://finlaymagui.re/assets/interactive_report_demo.html).
 
 ![hAMRonization overview](https://github.com/pha4ge/hAMRonization/blob/master/docs/overview_figure.png?raw=true)
+
 
 ## Installation
 
 This tool requires python>=3.7 and [pandas](https://pandas.pydata.org/)
 and the latest release can be installed directly from pip, conda, docker, this repository, or from the galaxy toolshed:
 
-```
 pip install hAMRonization
 ```
 [![PyPI version](https://badge.fury.io/py/hAMRonization.svg)](https://badge.fury.io/py/hAMRonization)
@@ -47,6 +47,10 @@ Alternatively, hAMRonization can also be installed and used in [galaxy](https://
 
 ## Usage
 
+**NOTE**: Only the output format used in the "last updated" version of the AMR prediction tool has been tested for accuracy. Older tool versions or updates which lead to a change in output format may not work. 
+In theory, this should only be a problem with major version changes but not all tools follow semantic versioning.
+If you encounter any issues with newer tool versions then please create an issue in this repository.
+
 ```
 >hamronize -h
 usage: hamronize <tool> <options>
@@ -58,13 +62,12 @@ optional arguments:
   -v, --version         show program's version number and exit
 
 Tools with hAMRonizable reports:
-  {abricate,amrfinderplus,ariba,rgi,resfinder,resfinder4,srax,deeparg,kmerresistance,srst2,staramr,csstar,amrplusplus,resfams,groot}
+  {abricate,amrfinderplus,ariba,rgi,resfinder,srax,deeparg,kmerresistance,srst2,staramr,csstar,amrplusplus,resfams,groot}
     abricate            hAMRonize abricate's output report i.e., OUTPUT.tsv
     amrfinderplus       hAMRonize amrfinderplus's output report i.e., OUTPUT.tsv
     ariba               hAMRonize ariba's output report i.e., OUTDIR/OUTPUT.tsv
     rgi                 hAMRonize rgi's output report i.e., OUTPUT.txt or OUTPUT_bwtoutput.gene_mapping_data.txt
-    resfinder           hAMRonize resfinder's output report i.e., data_resfinder.json
-    resfinder4          hAMRonize resfinder4's tabular output report i.e., ResFinder_results_tab.txt
+    resfinder          hAMRonize resfinder's tabular output report (includes pointfinder as of v4) i.e., ResFinder_results_tab.txt
     srax                hAMRonize srax's output report i.e., sraX_detected_ARGs.tsv
     deeparg             hAMRonize deeparg's output report i.e., OUTDIR/OUTPUT.mapping.ARG
     kmerresistance      hAMRonize kmerresistance's output report i.e., OUTPUT.KmerRes
@@ -173,43 +176,31 @@ If you want to write multiple reports to one file, this `.write` method can acce
 
 Parsers needing tested (both automated and just sanity checking output), see [test.sh](parsers/test.sh) for example invocations.
 `
-1. [abricate](hAMRonization/AbricateIO.py)
-2. [ariba](hAMRonization/AribaIO.py)
-3. [NCBI AMRFinderPlus](hAMRonization/AmrFinderPlusIO.py)
-4. [RGI](hAMRonization/RgiIO.py) (includes RGI-BWT)
-5. [resfinder](hAMRonization/ResFinderIO.py)
-6. [resfinder4](hAMRonization/ResFinder4IO.py)
-7. [sraX](hAMRonization/SraxIO.py)
-8. [deepARG](hAMRonization/DeepArgIO.py)
-9. [kmerresistance](hAMRonization/KmerResistanceIO.py) 
-10. [srst2](hAMRonization/Srst2IO.py)
-11. [staramr](hAMRonization/StarAmrIO.py)
-12. [c-sstar](hAMRonization/CSStarIO.py)
-13. [amrplusplus](hAMRonization/AmrPlusPlusIO.py)
-14. [resfams](hAMRonization/ResFamsIO.py)
-15. [groot](hAMRonization/GrootIO.py)
-
-Parsers excluded as needing variant specification to implement:
-1. [mykrobe](test/data/raw_outputs/mykrobe/report.json)
-2. [pointfinder](test/data/raw_outputs/pointfinder/report.tsv)
+1. [abricate](hAMRonization/AbricateIO.py): last updated for v1.0.0
+2. [ariba](hAMRonization/AribaIO.py): last updated for v2.14.6
+3. [NCBI AMRFinderPlus](hAMRonization/AmrFinderPlusIO.py): last updated for v3.10.40
+4. [RGI](hAMRonization/RgiIO.py) (includes RGI-BWT) last updated for v5.2.0
+5. [resfinder](hAMRonization/ResFinderIO.py): last updated for v4.1.0
+6. [pointfinder](hAMRonization/PointFinderIO.py): last updated for v4.1.0
+7. [sraX](hAMRonization/SraxIO.py): last updated for v1.5
+8. [deepARG](hAMRonization/DeepArgIO.py): last updated for v1.0.2
+9. [kmerresistance](hAMRonization/KmerResistanceIO.py): late updated for v2.2.0
+10. [srst2](hAMRonization/Srst2IO.py): last updated for v0.2.0
+11. [staramr](hAMRonization/StarAmrIO.py): last updated for v0.8.0
+12. [c-sstar](hAMRonization/CSStarIO.py): last updated for v2.1.0
+13. [amrplusplus](hAMRonization/AmrPlusPlusIO.py): last updated for c6b097a
+14. [resfams](hAMRonization/ResFamsIO.py): last updated for hmmer v3.3.2
+15. [groot](hAMRonization/GrootIO.py): last updated for v1.1.2
+16. [mykrobe](test/data/raw_outputs/mykrobe/report.json): last updated for v0.8.1
+17. [tbprofilder](test/data/raw_outputs/tbprofiler/tbprofiler.json): last updated for v3.0.8
 
 ### Issues
-
-#### Coding
-
-- sanity checks need done
-
-- automated tests need added
-
-- output to file options (with appending and check headers) should be added
 
 #### Specification
 
 - mandatory fields: `gene_symbol` and `gene_name` are confusing and not usually both present (only consistently used in AFP). Means tools either need 1:2 mapping i.e. single output field maps to both `gene_symbol` and `gene_name` OR have fragile text splitting of single field that won't be robust to databases changes.  Current solution is 1:2 mapping e.g. staramr
 
 - inconsistent nomenclature of terms being used in specification fields: target, query, subject, reference. Need to stick to one name for sequence with which the database is being searched, and one the hit that results from that search.
-
-- variant specification needed to fully exploit ariba (or make mykrobe and pointfinder worth implementing): *discard these tools for now*
 
 - `sequence_identity`: is sequence type specific %id amino acids != %id nucleotide but does this matter?
 
