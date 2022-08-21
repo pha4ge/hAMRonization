@@ -67,7 +67,6 @@ class AribaIterator(hAMRonizedResultIterator):
             result['_nucleotide_mutation'] = None
             result['_amino_acid_mutation'] = None
 
-            print(result['known_var'], result['has_known_var'])
             if str(result['known_var']) == '1' and str(result['has_known_var']) == '1':
                 if result['var_seq_type'] == 'n':
                     _, ref, pos, alt, _ = re.split(r"(\D+)(\d+)(\D+)", result['known_var_change'])
