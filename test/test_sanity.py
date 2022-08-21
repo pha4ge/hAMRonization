@@ -689,3 +689,18 @@ def test_staramr_pointfinder():
         assert result.coverage_percentage == 2367/2367 * 100
         assert result.nucleotide_mutation == 'n.83TCC>TAC'
         assert result.amino_acid_mutation == 'p.S83Y'
+
+def test_resfams():
+    metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28",
+                "input_file_name": "Dummy"}
+    parsed_report = hAMRonization.parse("data/dummy/resfams/resfams.tblout", metadata, "resfams")
+    for result in parsed_report:
+        assert result.gene_name == "Acetyltransf_4"
+        assert result.gene_symbol == "Acetyltransf"
+        assert result.reference_accession == "RF0013"
+        assert result.input_file_name == 'Dummy'
+        assert result.analysis_software_name == 'resfams'
+        assert result.analysis_software_version == '0.0.1'
+        assert result.genetic_variation_type == 'gene_presence_detected'
+        assert result.reference_database_name == 'resfams_hmms'
+

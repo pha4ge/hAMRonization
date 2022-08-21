@@ -1,0 +1,13 @@
+#                                                                                --- full sequence ---- --- best 1 domain ---- --- domain number estimation ----
+# target name                         accession  query name           accession    E-value  score  bias   E-value  score  bias   exp reg clu  ov env dom rep inc description of target
+#                 ------------------- ---------- -------------------- ---------- --------- ------ ----- --------- ------ -----   --- --- --- --- --- --- --- --- ---------------------
+NODE_5_length_362100_cov_39.8246_204  -          Acetyltransf_4       RF0013       1.3e-22   79.0   0.0   1.4e-22   78.8   0.0   1.0   1   0   0   1   1   1   1 # 210302 # 210820 # 1 # ID=5_204;partial=00;start_type=ATG;rbs_motif=GGAG/GAGG;rbs_spacer=5-10bp;gc_cont=0.584
+# Program:         hmmsearch
+# Version:         3.2.1 (June 2018)
+# Pipeline mode:   SEARCH
+# Query file:      data/dbs/resfams-full.hmm
+# Target file:     results/Kp85/resfams/protein_seqs.faa
+# Option settings: hmmsearch --tblout results/Kp85/resfams/resfams.tblout --cpu 1 data/dbs/resfams-full.hmm results/Kp85/resfams/protein_seqs.faa 
+# Current dir:     /home/culpej/hAMRonization
+# Date:            Fri Jul  3 06:19:09 2020
+# [ok]

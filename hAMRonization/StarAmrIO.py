@@ -79,5 +79,3 @@ class StarAmrIterator(hAMRonizedResultIterator):
             yield self.hAMRonize(result, self.metadata)
 
 
-{'Isolate ID': 'SRR1952908 ', 'Gene': 'gyrA (S83Y) ', 'Predicted Phenotype': 'ciprofloxacin I/R, nalidixic acid ', 'Type': 'codon ', 'Position': '83 ', 'Mutation': 'TCC -> TAC (S -> Y) ', '%Identity': '99.96 ', '%Overlap': '100.00 ', 'HSP Length/Total Length': '2637/2637', 'Contig': 'contig00008 ', 'Start': '22801 ', 'End': '20165', 'Accession': 'gyrA (S83Y) ', '_gene_name': 'gyrA (S83Y) '}
-
