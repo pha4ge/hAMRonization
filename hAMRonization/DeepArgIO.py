@@ -2,6 +2,7 @@
 
 import csv
 from .Interfaces import hAMRonizedResultIterator
+from hAMRonization.constants import GENE_PRESENCE
 
 required_metadata = ['analysis_software_version',
                      'reference_database_version',
@@ -12,7 +13,8 @@ class DeepArgIterator(hAMRonizedResultIterator):
 
     def __init__(self, source, metadata):
         metadata['analysis_software_name'] = 'deeparg'
-        metadata['reference_database_id'] = 'deeparg_db'
+        metadata['reference_database_name'] = 'deeparg_db'
+        metadata['genetic_variation_type'] = GENE_PRESENCE
         self.metadata = metadata
 
         self.field_mapping = {
@@ -29,7 +31,7 @@ class DeepArgIterator(hAMRonizedResultIterator):
             'alignment-bitscore': None,
             'alignment-evalue': None,
             'counts': None,
-            # gather from splititng besthit
+            # gather from splitting besthit
             '_reference_accession': 'reference_accession'}
 
         super().__init__(source, self.field_mapping, self.metadata)

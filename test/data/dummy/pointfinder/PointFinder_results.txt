@@ -1,0 +1,2 @@
+Mutation	Nucleotide change	Amino acid change	Resistance	PMID
+gyrA p.G81D	GGT -> GAT	G -> D	Ciprofloxacin,Nalidixic acid,Ciprofloxacin	8392306

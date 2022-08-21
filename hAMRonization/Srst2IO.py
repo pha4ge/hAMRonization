@@ -2,6 +2,7 @@
 
 import csv
 from .Interfaces import hAMRonizedResultIterator
+from hAMRonization.constants import GENE_PRESENCE
 
 required_metadata = ['analysis_software_version',
                      'reference_database_version',
@@ -12,11 +13,12 @@ class Srst2Iterator(hAMRonizedResultIterator):
 
     def __init__(self, source, metadata):
         metadata['analysis_software_name'] = 'srst2'
+        metadata['genetic_variation_type'] = GENE_PRESENCE
         self.metadata = metadata
 
         self.field_mapping = {
             'Sample': 'input_file_name',
-            'DB': 'reference_database_id',
+            'DB': 'reference_database_name',
             'gene': 'gene_symbol',
             'allele': 'gene_name',
             'coverage': 'coverage_percentage',

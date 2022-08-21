@@ -1,0 +1,311 @@
+{
+    "$schema": "http://json-schema.org/draft/2019-09/schema#",
+    "version": "2022-05-13T15:07:33.790091",
+    "type": "object",
+    "properties": {
+        "analysis_software_name": {
+            "description": "A name of a computer package, application, method or function used for the analysis of data.",
+            "ontology": "OBI:0002894",
+            "type": "string",
+            "examples": [
+                "amrfinder"
+            ]
+        },
+        "analysis_software_version": {
+            "description": "The version of software used to analyze data.",
+            "ontology": "OBI:0002896",
+            "type": "string",
+            "examples": [
+                "1.2.5"
+            ]
+        },
+        "gene_name": {
+            "description": "The name of a gene, (typically) assigned by a person and/or according to a naming scheme. It may contain white space characters and is typically more intuitive and readable than a gene symbol. It (typically) may be used to identify similar genes in different species and to derive a gene symbol.",
+            "ontology": "OBI:0002878",
+            "type": "string",
+            "examples": [
+                "type A-1 chloramphenicol O-acetyltransferase"
+            ]
+        },
+        "gene_symbol": {
+            "description": "The short name of a gene; a single word that does not contain white space characters. It is typically derived from the gene name.",
+            "ontology": "OBI:0002877",
+            "type": "string",
+            "examples": [
+                "catA1, blaOXA-101"
+            ]
+        },
+        "genetic_variation_type": {
+            "description": "The class of genetic variation detected.",
+            "ontology": "GENEPIO:0100401",
+            "type": "string",
+            "Enums": [
+                "Gene presence detected",
+                "Mutation variation detected",
+                "Both gene presence and mutation variation detected"
+            ],
+            "examples": [
+                "Gene detected"
+            ]
+        },
+        "input_file_name": {
+            "description": "The name of the file containing the sequence data to be analysed.",
+            "ontology": "OBI:0002874",
+            "type": "string",
+            "examples": [
+                "PDT000607292_1_genomic.fna"
+            ]
+        },
+        "reference_accession": {
+            "description": "An identifier that specifies an individual sequence record in a public sequence repository.",
+            "ontology": "OBI:0002885",
+            "type": "string",
+            "examples": [
+                "NF000491.1"
+            ]
+        },
+        "reference_database_name": {
+            "description": "An identifier of a biological or bioinformatics database.",
+            "ontology": "OBI:0002883",
+            "type": "string",
+            "examples": [
+                "NCBI, ResFinder"
+            ]
+        },
+        "reference_database_version": {
+            "description": "The version of the database containing the reference sequences used for analysis.",
+            "ontology": "OBI:0002884",
+            "type": "string",
+            "examples": [
+                "1.2.3"
+            ]
+        },
+        "antimicrobial_agent": {
+            "description": "A substance that kills or slows the growth of microorganisms, including bacteria, viruses, fungi and protozoans.",
+            "ontology": "CHEBI:33281",
+            "type": "string",
+            "examples": [
+                "CHLORAMPHENICOL"
+            ]
+        },
+        "coverage_percentage": {
+            "description": "The percentage of the reference sequence covered by the sequence of interest.",
+            "ontology": "OBI:0002880",
+            "type": "number",
+            "examples": [
+                90.0
+            ]
+        },
+        "coverage_depth": {
+            "description": "The average number of reads representing a given nucleotide in the reconstructed sequence.",
+            "ontology": "GENEPIO:0000092",
+            "type": "number",
+            "examples": [
+                56.0
+            ]
+        },
+        "coverage_ratio": {
+            "description": "The ratio of the reference sequence covered by the sequence of interest.",
+            "ontology": "OBI:0002881",
+            "type": "string",
+            "examples": [
+                "450/500"
+            ]
+        },
+        "drug_class": {
+            "description": "In an antimicrobial context, a drug class is a set of antibiotic molecules, including antibiotic/adjuvant combination medications, with similar chemical structures, molecular targets, and/or modes and mechanisms of action.",
+            "ontology": "ARO:3005165",
+            "type": "string",
+            "examples": [
+                "Phenicol"
+            ]
+        },
+        "input_gene_length": {
+            "description": "The length (number of positions) of a target gene sequence submitted by a user.",
+            "ontology": "OBI:0002891",
+            "type": "integer",
+            "examples": [
+                657
+            ]
+        },
+        "input_gene_start": {
+            "description": "The position of the first nucleotide in a gene sequence being analyzed (input gene sequence).",
+            "ontology": "OBI:0002977",
+            "type": "integer",
+            "examples": [
+                18
+            ]
+        },
+        "input_gene_stop": {
+            "description": "The position of the last nucleotide in a gene sequence being analyzed (input gene sequence).",
+            "ontology": "OBI:0002978",
+            "type": "integer",
+            "examples": [
+                921
+            ]
+        },
+        "input_protein_length": {
+            "description": "The length (number of positions) of a protein target sequence submitted by a user.",
+            "ontology": "OBI:0002892",
+            "type": "integer",
+            "examples": [
+                219
+            ]
+        },
+        "input_protein_start": {
+            "description": "The position of the first amino acid in a protein sequence being analyzed (input protein sequence).",
+            "ontology": "OBI:0002975",
+            "type": "integer",
+            "examples": [
+                6
+            ]
+        },
+        "input_protein_stop": {
+            "description": "The position of the last amino acid in a protein sequence being analyzed (input protein sequence).",
+            "ontology": "OBI:0002976",
+            "type": "integer",
+            "examples": [
+                307
+            ]
+        },
+        "input_sequence_id": {
+            "description": "An identifier of molecular sequence(s) or entries from a molecular sequence database.",
+            "ontology": "GENEPIO:0001800",
+            "type": "string",
+            "examples": [
+                "DAAGAT010000041.1"
+            ]
+        },
+        "nucleotide_mutation": {
+            "description": "The nucleotide sequence change(s) detected in the sequence being analyzed compared to a reference, represented by a specified notation system.",
+            "ontology": "GENEPIO:0100402",
+            "type": "string",
+            "examples": [
+                "c.1850_1851insGT"
+            ]
+        },
+        "nucleotide_mutation_interpretation": {
+            "description": "A description of identified nucleotide mutation(s) that facilitate clinical interpretation.",
+            "ontology": "GENEPIO:0100403",
+            "type": "string",
+            "examples": [
+                "Insertion of GT between nucleotide 1850 and 1851 in katG"
+            ]
+        },
+        "predicted_phenotype": {
+            "description": "A characteristic of an organism that is predicted rather than directly measured or observed.",
+            "ontology": "GENEPIO:0100404",
+            "type": "string",
+            "examples": [
+                "Expected to contribute to antimicrobial resistance"
+            ]
+        },
+        "predicted_phenotype_confidence_level": {
+            "description": "The level of confidence in a predicted phenotype.",
+            "ontology": "GENEPIO:0100405",
+            "type": "string",
+            "examples": [
+                "Low, Medium, High"
+            ]
+        },
+        "amino_acid_mutation": {
+            "description": "The amino acid sequence change(s) detected in the sequence being analyzed compared to a reference, represented by a specified notation system.",
+            "ontology": "GENEPIO:0100406",
+            "type": "string",
+            "examples": [
+                "p.Ser450Leu"
+            ]
+        },
+        "amino_acid_mutation_interpretation": {
+            "description": "A description of identified amino acid mutation(s) that facilitate clinical interpretation.",
+            "ontology": "GENEPIO:0100407",
+            "type": "string",
+            "examples": [
+                "amino acid Ser450 is changed to Leucine in rpoB"
+            ]
+        },
+        "reference_gene_length": {
+            "description": "The length (number of positions) of a gene reference sequence retrieved from a database.",
+            "ontology": "OBI:0002888",
+            "type": "integer",
+            "examples": [
+                657
+            ]
+        },
+        "reference_gene_start": {
+            "description": "The position of the first nucleotide in a reference gene sequence (sequence being used for comparison).",
+            "ontology": "OBI:0002981",
+            "type": "integer",
+            "examples": [
+                1
+            ]
+        },
+        "reference_gene_stop": {
+            "description": "The position of the last nucleotide in a reference sequence (sequence being used for comparison).",
+            "ontology": "OBI:0002982",
+            "type": "integer",
+            "examples": [
+                900
+            ]
+        },
+        "reference_protein_length": {
+            "description": "The length (number of positions) of a protein reference sequence retrieved from a database.",
+            "ontology": "OBI:0002889",
+            "type": "integer",
+            "examples": [
+                219
+            ]
+        },
+        "reference_protein_start": {
+            "description": "The position of the first amino acid in a reference protein sequence (sequence being used for comparison).",
+            "ontology": "OBI:0002979",
+            "type": "integer",
+            "examples": [
+                1
+            ]
+        },
+        "reference_protein_stop": {
+            "description": "The position of the last amino acid in a reference protein sequence (sequence being used for comparison).",
+            "ontology": "OBI:0002980",
+            "type": "integer",
+            "examples": [
+                300
+            ]
+        },
+        "resistance_mechanism": {
+            "description": "Antibiotic resistance mechanisms evolve naturally via natural selection through random mutation, but it could also be engineered by applying an evolutionary stress on a population.",
+            "ontology": "ARO:1000002",
+            "type": "string",
+            "examples": [
+                "target alteration"
+            ]
+        },
+        "strand_orientation": {
+            "description": "The orientation of a genomic element on the double-stranded molecule.",
+            "ontology": "OBI:0002876",
+            "type": "string",
+            "examples": [
+                "+"
+            ]
+        },
+        "sequence_identity": {
+            "description": "Sequence identity is the number (%) of matches (identical characters) in positions from an alignment of two molecular sequences.",
+            "ontology": "OBI:0002882",
+            "type": "number",
+            "examples": [
+                1.0
+            ]
+        }
+    },
+    "required": [
+        "reference_database_version",
+        "analysis_software_version",
+        "reference_accession",
+        "analysis_software_name",
+        "input_file_name",
+        "reference_database_name",
+        "gene_symbol",
+        "genetic_variation_type",
+        "gene_name"
+    ]
+}

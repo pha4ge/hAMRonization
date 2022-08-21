@@ -1,0 +1,22 @@
+Mutation	Nucleotide change	Amino acid change	Resistance	PMID
+16s_rrna r.1192c>t	c -> t	rna mutations	spectinomycin	24982323
+acrr p.p161r	ccg -> cgg	p -> r	fluoroquinolone	12936981
+acrr p.g164a	ggc -> gcc	g -> a	fluoroquinolone	12936981
+acrr p.f172s	ttc -> tcc	f -> s	fluoroquinolone	12936981
+acrr p.r173g	cga -> ggg	r -> g	fluoroquinolone	12936981
+acrr p.l195v	ctc -> gtc	l -> v	fluoroquinolone	12936981
+acrr p.f197i	ttt -> att	f -> i	fluoroquinolone	12936981
+acrr p.k201m	aag -> atg	k -> m	fluoroquinolone	12936981
+ompk36 p.n49s	aac -> agc	n -> s	cephalosporins	25245001
+ompk36 p.l59v	ctt -> gta	l -> v	cephalosporins	25245001
+ompK36 p.G189T	GGC -> ACC	G -> T	cephalosporins	25245001
+ompK36 p.F198Y	TTC -> TAC	F -> Y	cephalosporins	25245001
+ompK36 p.F207Y	TTC -> TAT	F -> Y	cephalosporins	25245001
+ompK36 p.A217S	GCT -> TCT	A -> S	carbapenem	25245001
+ompK36 p.T222L	ACC -> CTT	T -> L	cephalosporins	25245001
+ompK36 p.D223G	GAC -> GGC	D -> G	cephalosporins	25245001
+ompK36 p.E232R	GAA -> CGT	E -> R	cephalosporins	25245001
+ompK36 p.N304E	AAC -> GAA	N -> E	cephalosporins	25245001
+ompK37 p.I70M	ATT -> ATG	I -> M	carbapenem	22282462
+ompK37 p.I128M	ATT -> ATG	I -> M	carbapenem	22282462
+ompK37 p.N230G	AAC -> GGC	N -> G	carbapenem	22282462
