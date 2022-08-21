@@ -50,8 +50,10 @@ hamronize resfams --input_file_name resfams_report --reference_database_version 
 hamronize csstar --reference_database_version sstar_db_v1 --analysis_software_version csstar_v1 --reference_database_name sstar_db --input_file_name csstar_report  data/raw_outputs/sstar/report.tsv --format json --output hamronized_csstar.json
 hamronize csstar --reference_database_version sstar_db_v1 --analysis_software_version csstar_v1 --reference_database_name sstar_db --input_file_name csstar_report  data/raw_outputs/sstar/report.tsv --format tsv --output hamronized_csstar.tsv
 
-hamronize staramr --analysis_software_version staramr_v1 --reference_database_version staramr_db_v1 data/raw_outputs/staramr/resfinder.tsv --format json --output hamronized_staramr.json
-hamronize staramr --analysis_software_version staramr_v1 --reference_database_version staramr_db_v1 data/raw_outputs/staramr/resfinder.tsv --format tsv --output hamronized_staramr.tsv
+hamronize staramr --analysis_software_version staramr_v1 --reference_database_version staramr_db_v1 data/raw_outputs/staramr/resfinder.tsv --format json --output hamronized_staramr_res.json
+hamronize staramr --analysis_software_version staramr_v1 --reference_database_version staramr_db_v1 data/raw_outputs/staramr/resfinder.tsv --format tsv --output hamronized_staramr_res.tsv
+hamronize staramr --analysis_software_version staramr_v1 --reference_database_version staramr_db_v1 data/raw_outputs/staramr/pointfinder.tsv --format json --output hamronized_staramr_point.json
+hamronize staramr --analysis_software_version staramr_v1 --reference_database_version staramr_db_v1 data/raw_outputs/staramr/pointfinder.tsv --format tsv --output hamronized_staramr_point.tsv
 
 hamronize groot --analysis_software_version groot_v1 --reference_database_name card --reference_database_version card_v1 --input_file_name groot_report data/raw_outputs/groot/report.tsv --format json --output hamronized_groot.json
 hamronize groot --analysis_software_version groot_v1 --reference_database_name card --reference_database_version card_v1 --input_file_name groot_report data/raw_outputs/groot/report.tsv --format tsv --output hamronized_groot.tsv

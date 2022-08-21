@@ -182,17 +182,17 @@ Parsers needing tested (both automated and just sanity checking output), see [te
 4. [RGI](hAMRonization/RgiIO.py) (includes RGI-BWT) last updated for v5.2.0
 5. [resfinder](hAMRonization/ResFinderIO.py): last updated for v4.1.0
 6. [pointfinder](hAMRonization/PointFinderIO.py): last updated for v4.1.0
-7. [sraX](hAMRonization/SraxIO.py)
-8. [deepARG](hAMRonization/DeepArgIO.py)
-9. [kmerresistance](hAMRonization/KmerResistanceIO.py) 
-10. [srst2](hAMRonization/Srst2IO.py)
-11. [staramr](hAMRonization/StarAmrIO.py)
-12. [c-sstar](hAMRonization/CSStarIO.py)
-13. [amrplusplus](hAMRonization/AmrPlusPlusIO.py)
-14. [resfams](hAMRonization/ResFamsIO.py)
-15. [groot](hAMRonization/GrootIO.py)
-16. [mykrobe](test/data/raw_outputs/mykrobe/report.json)
-17. [tbprofilder](test/data/raw_outputs/tbprofiler/tbprofiler.json)
+7. [sraX](hAMRonization/SraxIO.py): last updated for v1.5
+8. [deepARG](hAMRonization/DeepArgIO.py): last updated for v1.0.2
+9. [kmerresistance](hAMRonization/KmerResistanceIO.py): late updated for v2.2.0
+10. [srst2](hAMRonization/Srst2IO.py): last updated for v0.2.0
+11. [staramr](hAMRonization/StarAmrIO.py): last updated for v0.8.0
+12. [c-sstar](hAMRonization/CSStarIO.py): last updated for v2.1.0
+13. [amrplusplus](hAMRonization/AmrPlusPlusIO.py): last updated for c6b097a
+14. [resfams](hAMRonization/ResFamsIO.py): last updated for hmmer v3.3.2
+15. [groot](hAMRonization/GrootIO.py): last updated for v1.1.2
+16. [mykrobe](test/data/raw_outputs/mykrobe/report.json): last updated for v0.8.1
+17. [tbprofilder](test/data/raw_outputs/tbprofiler/tbprofiler.json): last updated for v3.0.8
 
 ### Issues
 

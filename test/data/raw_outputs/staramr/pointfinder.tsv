@@ -1,0 +1,3 @@
+Isolate ID	Gene	Predicted Phenotype	Type	Position	Mutation	%Identity	%Overlap	HSP Length/Total Length	Contig	Start	End
+SRR1952908	gyrA (S83Y)	ciprofloxacin I/R, nalidixic acid	codon	83	TCC -> TAC (S -> Y)	99.96	100.00	2637/2637	contig00008	22801	20165
+SRR1952926	16S_rrsD (C1065T)	spectinomycin	nucleotide	1065	C -> T	99.94	100.00	1544/1544	contig00011	157768	160404

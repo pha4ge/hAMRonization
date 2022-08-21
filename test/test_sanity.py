@@ -643,3 +643,49 @@ def test_mykrobe():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
+
+
+def test_staramr_resfinder():
+    metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28"}
+    parsed_report = hAMRonization.parse("data/dummy/staramr/resfinder.tsv", metadata, "staramr")
+    for result in parsed_report:
+        # assert mandatory fields
+        assert result.input_file_name == 'GCF_902827215.1_SB5881_genomic'
+        assert result.gene_symbol == 'oqxA'
+        assert result.gene_name == 'oqxA'
+        assert result.reference_database_name == 'resfinder/pointfinder'
+        assert result.reference_database_version == '2019-Jul-28'
+        assert result.reference_accession == 'EU370913'
+        assert result.analysis_software_name == 'staramr'
+        assert result.analysis_software_version == '0.0.1'
+
+        # optional fields - present in dummy dataset
+        assert result.input_sequence_id == 'ref|NZ_LR792628.1|'
+        assert result.input_gene_start == 1334783
+        assert result.input_gene_stop == 1333608
+        assert result.drug_class == 'chloramphenicol'
+        assert result.sequence_identity == 99.58
+
+
+def test_staramr_pointfinder():
+    metadata = {"analysis_software_version": "0.0.1", "reference_database_version": "2019-Jul-28"}
+    parsed_report = hAMRonization.parse("data/dummy/staramr/pointfinder.tsv", metadata, "staramr")
+    for result in parsed_report:
+        # assert mandatory fields
+        assert result.input_file_name == 'SRR1952908'
+        assert result.gene_name == 'gyrA (S83Y)'
+        assert result.gene_symbol == 'gyrA (S83Y)'
+        assert result.reference_database_name == 'resfinder/pointfinder'
+        assert result.reference_database_version == '2019-Jul-28'
+        assert result.reference_accession == 'gyrA (S83Y)'
+        assert result.analysis_software_name == 'staramr'
+        assert result.analysis_software_version == '0.0.1'
+
+        # optional fields - present in dummy dataset
+        assert result.input_gene_start == 22801
+        assert result.input_gene_stop == 20165
+        assert result.drug_class == 'ciprofloxacin I/R, nalidixic acid'
+        assert result.sequence_identity == 99.96
+        assert result.coverage_percentage == 2367/2367 * 100
+        assert result.nucleotide_mutation == 'n.83TCC>TAC'
+        assert result.amino_acid_mutation == 'p.S83Y'
