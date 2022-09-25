@@ -61,22 +61,32 @@ optional arguments:
   -h, --help            show this help message and exit
   -v, --version         show program's version number and exit
 
+
 Tools with hAMRonizable reports:
-  {abricate,amrfinderplus,ariba,rgi,resfinder,srax,deeparg,kmerresistance,srst2,staramr,csstar,amrplusplus,resfams,groot}
+  {abricate,amrfinderplus,ariba,rgi,resfinder,srax,deeparg,kmerresistance,srst2,staramr,csstar,amrplusplus,resfams,groot,tbprofiler,mykrobe,pointfinder,summarize}
     abricate            hAMRonize abricate's output report i.e., OUTPUT.tsv
     amrfinderplus       hAMRonize amrfinderplus's output report i.e., OUTPUT.tsv
     ariba               hAMRonize ariba's output report i.e., OUTDIR/OUTPUT.tsv
-    rgi                 hAMRonize rgi's output report i.e., OUTPUT.txt or OUTPUT_bwtoutput.gene_mapping_data.txt
-    resfinder          hAMRonize resfinder's tabular output report (includes pointfinder as of v4) i.e., ResFinder_results_tab.txt
+    rgi                 hAMRonize rgi's output report i.e., OUTPUT.txt or
+                        OUTPUT_bwtoutput.gene_mapping_data.txt
+    resfinder           hAMRonize resfinder's output report i.e.,
+                        ResFinder_results_tab.txt
     srax                hAMRonize srax's output report i.e., sraX_detected_ARGs.tsv
-    deeparg             hAMRonize deeparg's output report i.e., OUTDIR/OUTPUT.mapping.ARG
-    kmerresistance      hAMRonize kmerresistance's output report i.e., OUTPUT.KmerRes
+    deeparg             hAMRonize deeparg's output report i.e.,
+                        OUTDIR/OUTPUT.mapping.ARG
+    kmerresistance      hAMRonize kmerresistance's output report i.e., OUTPUT.res
     srst2               hAMRonize srst2's output report i.e., OUTPUT_srst2_report.tsv
     staramr             hAMRonize staramr's output report i.e., resfinder.tsv
     csstar              hAMRonize csstar's output report i.e., OUTPUT.tsv
     amrplusplus         hAMRonize amrplusplus's output report i.e., gene.tsv
     resfams             hAMRonize resfams's output report i.e., resfams.tblout
-    groot               hAMRonize groot's output report i.e., OUTPUT.tsv (from `groot report`)
+    groot               hAMRonize groot's output report i.e., OUTPUT.tsv (from `groot
+                        report`)
+    tbprofiler          hAMRonize tbprofiler's output report i.e., OUTPUT.results.json
+    mykrobe             hAMRonize mykrobe's output report i.e., OUTPUT.json
+    pointfinder         hAMRonize pointfinder's output report i.e.,
+                        PointFinder_results.txt
+    summarize           Provide a list of paths to the reports you wish to summarize
 ```
 
 To look at a specific tool e.g. `abricate`:
@@ -102,14 +112,14 @@ optional arguments:
 
 Therefore, hAMRonizing abricates output:
 ```
-hamronize abricate ../test/data/raw_outputs/abricate/report.tsv --reference_database_version db_v_1 --analysis_software_version tool_v_1 --format json
+hamronize abricate ../test/data/raw_outputs/abricate/report.tsv --reference_database_version 3.2.5 --analysis_software_version 1.0.0 --format json
 ```
 
 To parse multiple reports from the same tool at once just give a list of reports as the argument,
 and they will be concatenated appropriately (i.e. only one header for tsv)
 
 ```
-hamronize rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --reference_database_version card_v1 test/data/raw_outputs/rgi/rgi.txt test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt
+hamronize rgi --input_file_name rgi_report --analysis_software_version 6.0.0 --reference_database_version 3.2.5 test/data/raw_outputs/rgi/rgi.txt test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt
 ```
 
 You can summarize hAMRonized reports regardless of format using the 'summarize'
@@ -172,10 +182,11 @@ If you want to write multiple reports to one file, this `.write` method can acce
 
 `parsed_report.write('all_hAMRonized_abricate_report.tsv', append_mode=True)`
 
-## Parsers
 
-Parsers needing tested (both automated and just sanity checking output), see [test.sh](parsers/test.sh) for example invocations.
-`
+### Implemented Parsers
+
+Currently implemented parsers and the last tool version for which they have been validated:
+
 1. [abricate](hAMRonization/AbricateIO.py): last updated for v1.0.0
 2. [ariba](hAMRonization/AribaIO.py): last updated for v2.14.6
 3. [NCBI AMRFinderPlus](hAMRonization/AmrFinderPlusIO.py): last updated for v3.10.40
@@ -194,19 +205,6 @@ Parsers needing tested (both automated and just sanity checking output), see [te
 16. [mykrobe](test/data/raw_outputs/mykrobe/report.json): last updated for v0.8.1
 17. [tbprofilder](test/data/raw_outputs/tbprofiler/tbprofiler.json): last updated for v3.0.8
 
-### Issues
-
-#### Specification
-
-- mandatory fields: `gene_symbol` and `gene_name` are confusing and not usually both present (only consistently used in AFP). Means tools either need 1:2 mapping i.e. single output field maps to both `gene_symbol` and `gene_name` OR have fragile text splitting of single field that won't be robust to databases changes.  Current solution is 1:2 mapping e.g. staramr
-
-- inconsistent nomenclature of terms being used in specification fields: target, query, subject, reference. Need to stick to one name for sequence with which the database is being searched, and one the hit that results from that search.
-
-- `sequence_identity`: is sequence type specific %id amino acids != %id nucleotide but does this matter?
-
-- `coverage_depth` seems to include both tool fields that are average depth of read and just plain overall read-count, 
-
-- `contig_id` isn't general enough when some tools this ID naturally corresponds to a `read_name` (deepARG), individual ORF (resfams), or protein sequence (AFP with protein input): *change to `query_id_name` or similar?*
 
 ## Implementation Details
 
@@ -249,7 +247,55 @@ The `parse` method of these subclasses then implements the tool-specific parsing
 This is typically a simple `csv.DictReader` but can be more complex such as the json parsing of `resfinder` output, 
 or the modification of output fields required to better fit some tools into the hAMRonization specification.
 
+
+## Contributing 
+
+We welcome contributions for users in any form (from github issues flagging problems/requests) to pull requests of bug fixes or adding new parsers.
+
+## Setting up a Development Environment
+
+First fork this repository and set up a development environment (replacing `YOURUSERNAME` with your github username:
+
+```
+git clone https://github.com/YOURUSERNAME/hAMRonization
+conda create -n hAMRonization 
+conda activate hAMRonization
+cd hAMRonization
+pip install pytest flake8
+pip install -e .
+
+```
+## Testing and Linting
+
+On every commit github actions automatically runs tests and linting to check
+the code. 
+You can manually run these in your development environment as well.
+
+To run a full set of integration tests:
+
+    pushd test
+    bash run_integration_test.sh
+    popd
+
+To run unit tests that verify parsing validity for each tool
+as well as generation of valid summaries you can use pytest:
+
+    pip install pytest
+    pushd test
+    pytest
+    popd
+
+Finally to run linting and check whether your code matches the project
+code style:
+
+    pushd hAMRonization
+    flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+    flake8 . --count --exit-zero --max-complexity=20 --max-line-length=127 --statistics
+    popd
+
 ## Adding a new parser
+
+If you wish to add a parser for a new tool here are the main steps required:
 
 1. Add an entry into `_RequiredToolMetadata` and `_FormatToIterator` in `hAMRonziation/__init__.py` which points to the appropriate `ToolNameIO.py` containing the tool's Iterator subclass
 
@@ -259,7 +305,7 @@ or the modification of output fields required to better fit some tools into the 
 
 4. To this class, add a `parse` method which reads an opened file stream into a dictionary per line/result (matching the keys of `self.field_mapping`) and yields the output of `self.hAMRonize` being applied to that dictionary.
 
-5. Finally, to add a CLI parser for the tool, create a python file in the `parsers` directory:
+5. To add a CLI parser for the tool, create a python file in the `parsers` directory:
 
     ```
     from hAMRonization import Interfaces
@@ -268,27 +314,10 @@ or the modification of output fields required to better fit some tools into the 
     ```
 
 Alternatively, the `hAMRonized_parser.py` can be used as a common script interface to all implemented parsers. 
-*Note* this needs the proper subparser handling to manage `--help` correctly.
 
+6. Finally, following the template in `test/test_parsing_validity.py`, please generate a unit test that ensures the parser is working as you intend it to!
 
-### Language-Agnostic Schema(s)
-
-We currently have four language-agnostic schemas to describe our data structure, these need updated to latest specification, and used in automatic validation of outputs.
-
-1. [JSON Schema](schema/antimicrobial_resistance_genomic_analysis_result.schema.json) ([about](https://json-schema.org/))
-2. [JSON-LD Schema](schema/antimicrobial_resistance_genomic_analysis_result.schema.jsonld) ([about](https://json-ld.org/))
-3. [Avro Schema](schema/antimicrobial_resistance_genomic_analysis_result.schema.avro) ([about](https://avro.apache.org/docs/current/#schemas))
-4. [SALAD Schema](schema/antimicrobial_resistance_genomic_analysis_result.schema.yml) ([about](https://www.commonwl.org/v1.0/SchemaSalad.html))
-
-## Test Data
-
-This needs tidied, currently there is a `test.sh` shellscript in `parsers` folder which invokes all the individual parsers on files in `test/data/raw_outputs/`.
-
-There is also an older set of test data in `test/data`, containing:
-
-1. An example output report
-2. A 'harmonized' `.json` conversion of the report, where field names have been mapped to their 'harmonized' counterparts
-3. A 'harmonized' `.tsv` output
+If you have any questions about any of this or need any help, please file an issue.
 
 ## FAQ
 
@@ -297,13 +326,19 @@ There is also an older set of test data in `test/data`, containing:
     A 'Result' is a single entry in a report. For example, a single line in an abricate report file is a single Antimicrobial
     Resistance 'Result'.
     
-## Setting up a Development Environment
+### Known Issues
 
-```
-git clone https://github.com/pha4ge/hAMRonization
-conda create -n hAMRonization 
-conda activate hAMRonization
-cd hAMRonization
-pip install -e .
-```
+Here are some known issues that we would welcome input on trying to solve!
+
+#### Limitations of specification
+
+- mandatory fields: `gene_symbol` and `gene_name` are confusing and not usually both present (only consistently used in AFP). Means tools either need 1:2 mapping i.e. single output field maps to both `gene_symbol` and `gene_name` OR have fragile text splitting of single field that won't be robust to databases changes.  Current solution is 1:2 mapping e.g. staramr
+
+- inconsistent nomenclature of terms being used in specification fields: target, query, subject, reference. Need to stick to one name for sequence with which the database is being searched, and one the hit that results from that search.
+
+- `sequence_identity`: is sequence type specific %id amino acids != %id nucleotide but does this matter?
+
+- `coverage_depth` seems to include both tool fields that are average depth of read and just plain overall read-count, 
+
+- `contig_id` isn't general enough when some tools this ID naturally corresponds to a `read_name` (deepARG), individual ORF (resfams), or protein sequence (AFP with protein input): *change to `query_id_name` or similar?*
 
