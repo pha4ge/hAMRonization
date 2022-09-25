@@ -137,6 +137,7 @@ class hAMRonizedResultIterator(ABC):
         # this is painful to do streaming for json validly (requires
         # tinkering with sublcassing the json encoder)
         elif output_format == "json":
+            empty = True
 
             if report_number == 0:
                 first_entry = True
@@ -163,13 +164,17 @@ class hAMRonizedResultIterator(ABC):
                 else:
                     out_fh.write(", ")
                     out_fh.write(json_entry)
+                empty = False
 
-            # i.e. if last report then close list in json
             if (total_report_count - 1) == report_number:
-                out_fh.write("]\n")
+                # i.e. if last report then close list in json
+                if not empty:
+                    out_fh.write("]\n")
+                else:
+                    out_fh.write("[]\n")
 
         else:
-            raise ValueError("Unknown output format. " "Valid options are: csv or json")
+            raise ValueError("Unknown output format. Valid options are: csv or json")
 
         if out_fh is not sys.stdout:
             out_fh.close()

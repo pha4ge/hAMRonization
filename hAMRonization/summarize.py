@@ -5,6 +5,8 @@ import pandas as pd
 import os
 import sys
 import json
+from .hAMRonizedResult import hAMRonizedResult
+import dataclasses
 from string import Template
 
 
@@ -662,7 +664,7 @@ def generate_interactive_report(combined_report_data):
 
      </body>
     </html>
-"""# noqa
+"""  # noqa
 
     html_template = Template(html_template)
 
@@ -686,7 +688,7 @@ def check_report_type(file_path):
                 if len(next(reader)) == len(next(reader)) > 1:
                     return "tsv"
             except StopIteration:
-                pass
+                return None
 
 
 def summarize_reports(report_paths, summary_type, output_path=None):
@@ -713,6 +715,14 @@ def summarize_reports(report_paths, summary_type, output_path=None):
                 elif report_type == "tsv":
                     parsed_report = pd.read_csv(fh, sep="\t")
 
+                elif report_type is None:
+                    print(f"Warning: {fh} report is empty", file=sys.stderr)
+                    parsed_report = pd.DataFrame()
+                else:
+                    raise FileNotFoundError(
+                        f"{report} type cannot be parsed, " "check validity of file"
+                    )
+
         combined_report_data.append(parsed_report)
         report_count += 1
 
@@ -729,6 +739,13 @@ def summarize_reports(report_paths, summary_type, output_path=None):
             f"Warning: {removed_duplicate_count} duplicate records removed",
             file=sys.stderr,
         )
+
+    # if empty create an empty summary file with fields
+    if len(combined_reports) == 0:
+        hamronized_fields = [
+            field.name for field in dataclasses.fields(hAMRonizedResult)
+        ]
+        combined_reports = pd.DataFrame(columns=hamronized_fields)
 
     # sort records by input_file_name, tool_config i.e. toolname, version,
     # db_name, db_versions, and then within that by gene_symbol
