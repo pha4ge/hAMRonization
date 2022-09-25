@@ -92,6 +92,18 @@ class RgiIterator(hAMRonizedResultIterator):
                     "Nudged": None,
                     "Note": None,
                 }
+                # if RGI is run on ORFs then Contig should be None
+                # and input_sequence_id should the ORF_ID i.e., reverse of
+                # rgi run on contig input
+                # this checks for that
+                try:
+                    first_result = next(fh)
+                    first_result = first_result.strip().split('\t')
+                    if first_result[1] == '':
+                        self.field_mapping['ORF_ID'] = 'input_sequence_id'
+                        self.field_mapping['Contig'] = None
+                except StopIteration:
+                    pass
 
         super().__init__(source, self.field_mapping, self.metadata)
 

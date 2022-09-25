@@ -358,6 +358,42 @@ def test_rgi_variants():
         assert result.sequence_identity == 99.88
         assert result.resistance_mechanism == "antibiotic target alteration"
 
+def test_rgi_orf_mode():
+    metadata = {
+        "analysis_software_version": "6.0.0",
+        "reference_database_version": "3.2.5",
+        "input_file_name": "Dummy ORF",
+    }
+    parsed_report = hAMRonization.parse("data/dummy/rgi/rgi_orf.txt", metadata, "rgi")
+
+    for result in parsed_report:
+        # assert mandatory fields
+        assert result.input_file_name == "Dummy ORF"
+        assert result.gene_symbol == "NDM-5"
+        assert (
+            result.gene_name
+            == "NDM beta-lactamase"
+        )
+        assert result.reference_database_name == "CARD"
+        assert result.reference_database_version == "3.2.5"
+        assert result.reference_accession == "3000467"
+        assert result.analysis_software_name == "rgi"
+        assert result.analysis_software_version == "6.0.0"
+        assert result.genetic_variation_type == "gene_presence_detected"
+
+        # optional fields - present in dummy dataset
+        assert result.input_sequence_id == "gb|AEN03071.1|+|NDM-5 [Escherichia coli]"
+        assert result.input_gene_start == ''
+        assert result.input_gene_stop == ''
+        assert result.strand_orientation == ''
+        assert (
+            result.drug_class
+            == "carbapenem; cephalosporin; cephamycin; penam"
+        )
+        assert result.sequence_identity == 100
+        assert result.coverage_percentage == 100
+        assert result.resistance_mechanism == "antibiotic inactivation"
+
 
 def test_rgi():
     metadata = {
