@@ -49,7 +49,7 @@ def format_interactive_json(combined_records):
     grouped_data = combined_records.groupby(
         ["input_file_name", "config_display_name"]
     ).apply(lambda x: x.to_json(orient="records"))
-    for (input_file, config), hits in grouped_data.iteritems():
+    for (input_file, config), hits in grouped_data.items():
         json_hits = json.loads(hits)
         if input_file not in data_for_summary:
             data_for_summary[input_file] = [{config: json_hits}]
