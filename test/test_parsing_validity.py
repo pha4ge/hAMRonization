@@ -870,3 +870,34 @@ def test_resfams():
         assert result.analysis_software_version == "0.0.1"
         assert result.genetic_variation_type == "gene_presence_detected"
         assert result.reference_database_name == "resfams_hmms"
+
+def test_fargene():
+    metadata = {
+            'analysis_software_version': '0.1',
+            'input_file_name': 'Dummy fargene',
+            'reference_database_version': '0.1'}
+
+    parsed_report = hAMRonization.parse(
+            'data/dummy/fargene/retrieved-genes-class_A-hmmsearched.out',
+            metadata, 'fargene')
+
+    for result in parsed_report:
+        assert result.gene_name == 'classA_70_centroids-aligned'
+        assert result.gene_symbol == 'classA'
+        assert result.drug_class == 'classA'
+        assert result.reference_accession == 'classA_70_centroids-aligned'
+
+        assert result.input_file_name == 'Dummy fargene'
+        assert result.analysis_software_name == 'fargene'
+        assert result.analysis_software_version == '0.1'
+        assert result.reference_database_version == '0.1'
+        assert result.genetic_variation_type == 'gene_presence_detected'
+        assert result.reference_database_name == 'fargene_hmms'
+        assert result.input_sequence_id == 'contigs_NODE_6_length_23263_cov_4.891675_seq1_4'
+        assert result.reference_protein_start == 57
+        assert result.reference_protein_stop == 162
+        assert result.reference_protein_length == 295
+
+        assert result.input_protein_start == 7
+        assert result.input_protein_stop == 118
+        assert result.input_protein_length == 140

@@ -19,6 +19,7 @@ from hAMRonization import ResFamsIO
 from hAMRonization import TBProfilerIO
 from hAMRonization import MykrobeIO
 from hAMRonization import PointFinderIO
+from hAMRonization import FARGeneIO
 
 _FormatToIterator = {
     "abricate": AbricateIO.AbricateIterator,
@@ -38,6 +39,7 @@ _FormatToIterator = {
     "tbprofiler": TBProfilerIO.TBProfilerIterator,
     "mykrobe": MykrobeIO.MykrobeIterator,
     "pointfinder": PointFinderIO.PointFinderIterator,
+    "fargene": FARGeneIO.FARGeneIOIterator,
 }
 
 _ReportFileToUse = {
@@ -58,27 +60,29 @@ _ReportFileToUse = {
     "tbprofiler": "OUTPUT.results.json",
     "mykrobe": "OUTPUT.json",
     "pointfinder": "PointFinder_results.txt",
+    "fargene": "retrieved-genes-*-hmmsearched.out"
 }
 
 
 _RequiredToolMetadata = {
     "abricate": AbricateIO.required_metadata,
     "amrfinderplus": AmrFinderPlusIO.required_metadata,
-    "ariba": AribaIO.required_metadata,
-    "rgi": RgiIO.required_metadata,
-    "resfinder": ResFinderIO.required_metadata,
-    "srax": SraxIO.required_metadata,
-    "deeparg": DeepArgIO.required_metadata,
-    "kmerresistance": KmerResistanceIO.required_metadata,
-    "srst2": Srst2IO.required_metadata,
-    "staramr": StarAmrIO.required_metadata,
-    "csstar": CSStarIO.required_metadata,
     "amrplusplus": AmrPlusPlusIO.required_metadata,
-    "resfams": ResFamsIO.required_metadata,
+    "ariba": AribaIO.required_metadata,
+    "csstar": CSStarIO.required_metadata,
+    "deeparg": DeepArgIO.required_metadata,
+    "fargene": FARGeneIO.required_metadata,
     "groot": GrootIO.required_metadata,
-    "tbprofiler": TBProfilerIO.required_metadata,
+    "kmerresistance": KmerResistanceIO.required_metadata,
+    "resfams": ResFamsIO.required_metadata,
+    "resfinder": ResFinderIO.required_metadata,
     "mykrobe": MykrobeIO.required_metadata,
     "pointfinder": PointFinderIO.required_metadata,
+    "rgi": RgiIO.required_metadata,
+    "srax": SraxIO.required_metadata,
+    "srst2": Srst2IO.required_metadata,
+    "staramr": StarAmrIO.required_metadata,
+    "tbprofiler": TBProfilerIO.required_metadata,
 }
 
 

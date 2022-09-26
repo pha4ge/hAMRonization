@@ -1,0 +1,14 @@
+#                                                                                                                 --- full sequence --- -------------- this domain -------------   hmm coord   ali coord   env coord
+# target name                                      accession   tlen query name                  accession   qlen   E-value  score  bias   #  of  c-Evalue  i-Evalue  score  bias  from    to  from    to  from    to  acc description of target
+#                              ------------------- ---------- -----        -------------------- ---------- ----- --------- ------ ----- --- --- --------- --------- ------ ----- ----- ----- ----- ----- ----- ----- ---- ---------------------
+contigs_NODE_6_length_23263_cov_4.891675_seq1_4    -            140 classA_70_centroids-aligned -            295   5.1e-08   24.1   0.0   1   1     1e-08     6e-08   23.9   0.0    57   162     7   118     2   133 0.84 -
+#
+# Program:         hmmsearch
+# Version:         3.3.2 (Nov 2020)
+# Pipeline mode:   SEARCH
+# Query file:      /home/jfrangen/miniconda3/envs/fargene/lib/python2.7/site-packages/fargene_analysis/models/class_A.hmm
+# Target file:     /home/jfrangen/output_dir/tmpdir/retrieved-translated.fasta
+# Option settings: hmmsearch --domtblout /home/jfrangen/output_dir/hmmsearchresults/retrieved-genes-class_A-hmmsearched.out -E 1000 --domE 1000 /home/jfrangen/miniconda3/envs/fargene/lib/python2.7/site-packages/fargene_analysis/models/class_A.hmm /home/jfrangen/output_dir/tmpdir/retrieved-translated.fasta 
+# Current dir:     /home/jfrangen
+# Date:            Wed Mar 30 11:25:15 2022
+# [ok]

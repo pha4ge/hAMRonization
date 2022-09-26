@@ -3,6 +3,7 @@ set -e
 
 
 hamronize tbprofiler data/raw_outputs/tbprofiler/tbprofiler.json --format json --output hamronized_tbprofiler.json
+hamronize tbprofiler data/raw_outputs/tbprofiler/tbprofiler.json --format tsv --output hamronized_tbprofiler.tsv
 
 hamronize abricate data/raw_outputs/abricate/report.tsv --reference_database_version db_v_1 --analysis_software_version tool_v_1 --format json --output hamronized_abricate.json
 hamronize abricate data/raw_outputs/abricate/report.tsv --reference_database_version db_v_1 --analysis_software_version tool_v_1 --format tsv --output hamronized_abricate.tsv
@@ -58,12 +59,14 @@ hamronize staramr --analysis_software_version staramr_v1 --reference_database_ve
 hamronize groot --analysis_software_version groot_v1 --reference_database_name card --reference_database_version card_v1 --input_file_name groot_report data/raw_outputs/groot/report.tsv --format json --output hamronized_groot.json
 hamronize groot --analysis_software_version groot_v1 --reference_database_name card --reference_database_version card_v1 --input_file_name groot_report data/raw_outputs/groot/report.tsv --format tsv --output hamronized_groot.tsv
 
+hamronize fargene --analysis_software_version fargene_v0.1 --input_file_name fargene_metagenome1 --reference_database_version fargene_hmms_v0.1 --format json data/raw_outputs/fargene/retrieved-genes-class_A-hmmsearched.out --output hamronized_fargene.json
+hamronize fargene --analysis_software_version fargene_v0.1 --input_file_name fargene_metagenome1 --reference_database_version fargene_hmms_v0.1 --format tsv data/raw_outputs/fargene/retrieved-genes-class_A-hmmsearched.out --output hamronized_fargene.tsv
 
+hamronize resfams --input_file_name resfams_report --reference_database_version resfams_db_v1 --analysis_software_version resfams_v1 data/raw_outputs/resfams/resfams.tblout --format json --output hamronized_resfams.json
 # run summaries
 hamronize summarize --output summary.tsv --summary_type tsv hamronized_*.json hamronized_*.tsv
 hamronize summarize --output summary.json --summary_type json hamronized_*.json hamronized_*.tsv
 hamronize summarize --output summary.html --summary_type interactive hamronized_*.json hamronized_*.tsv
 
 # tidy up
-#rm hamronized_*.json hamronized_*.tsv summary.tsv summary.json summary.html
-rm summary.tsv summary.json summary.html
+rm hamronized_*.json hamronized_*.tsv summary.tsv summary.json summary.html

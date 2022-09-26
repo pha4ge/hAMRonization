@@ -16,7 +16,7 @@ Dummy outputs available:
 - [x] [kmerresistance](dummy/kmerresistance)
 - [x] [mykrobe](dummy/mykrobe)
 - [x] [pointfinder](dummy/pointfinder)
-- [ ] [resfams](dummy/resfinder)
+- [x] [resfams](dummy/resfinder)
 - [x] [resfinder](dummy/resfinder)
 - [x] [rgi](dummy/rgi)
 - [x] [srax](dummy/srax)
