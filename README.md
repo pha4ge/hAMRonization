@@ -187,26 +187,6 @@ If you want to write multiple reports to one file, this `.write` method can acce
 
 Currently implemented parsers and the last tool version for which they have been validated:
 
-    "abricate": AbricateIO.required_metadata,
-    "amrfinderplus": AmrFinderPlusIO.required_metadata,
-    "amrplusplus": AmrPlusPlusIO.required_metadata,
-    "ariba": AribaIO.required_metadata,
-    "csstar": CSStarIO.required_metadata,
-    "deeparg": DeepArgIO.required_metadata,
-    "fargene": FARGeneIO.required_metadata,
-    "groot": GrootIO.required_metadata,
-    "kmerresistance": KmerResistanceIO.required_metadata,
-    "resfams": ResFamsIO.required_metadata,
-    "resfinder": ResFinderIO.required_metadata,
-    "mykrobe": MykrobeIO.required_metadata,
-    "pointfinder": PointFinderIO.required_metadata,
-    "rgi": RgiIO.required_metadata,
-    "srax": SraxIO.required_metadata,
-    "srst2": Srst2IO.required_metadata,
-    "staramr": StarAmrIO.required_metadata,
-    "tbprofiler": TBProfilerIO.required_metadata,
-
-
 1. [abricate](hAMRonization/AbricateIO.py): last updated for v1.0.0
 2. [amrfinderplus](hAMRonization/AmrFinderPlusIO.py): last updated for v3.10.40
 3. [amrplusplus](hAMRonization/AmrPlusPlusIO.py): last updated for c6b097a
