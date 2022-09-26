@@ -19,7 +19,7 @@ and the latest release can be installed directly from pip, conda, docker, this r
 ```
 pip install hAMRonization
 ```
-[![PyPI version](https://badge.fury.io/py/hAMRonization.svg)](https://badge.fury.io/py/hAMRonization)
+[![PyPI version](https://badge.fury.io/py/hamronization.svg)](https://badge.fury.io/py/hamronization)
 [![PyPI downloads](https://img.shields.io/pypi/dm/hAMRonization.svg)](https://img.shields.io/pypi/dm/hAMRonization)
 
 Or
