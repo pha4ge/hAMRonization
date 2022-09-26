@@ -698,7 +698,12 @@ def summarize_reports(report_paths, summary_type, output_path=None):
     else:
         out_fh = sys.stdout
 
-    combined_report_data = []
+    # initialise the combined report with an empty df with just headers
+    hamronized_fields = [
+            field.name for field in dataclasses.fields(hAMRonizedResult)
+        ]
+    combined_report_data = [pd.DataFrame(columns=hamronized_fields)]
+
     report_count = 0
 
     for report in report_paths:
@@ -740,12 +745,6 @@ def summarize_reports(report_paths, summary_type, output_path=None):
             file=sys.stderr,
         )
 
-    # if empty create an empty summary file with fields
-    if len(combined_reports) == 0:
-        hamronized_fields = [
-            field.name for field in dataclasses.fields(hAMRonizedResult)
-        ]
-        combined_reports = pd.DataFrame(columns=hamronized_fields)
 
     # sort records by input_file_name, tool_config i.e. toolname, version,
     # db_name, db_versions, and then within that by gene_symbol
