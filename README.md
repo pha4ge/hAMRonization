@@ -3,7 +3,7 @@
 # hAMRonization 
 
 This repo contains the hAMRonization module and CLI parser tools combine the outputs of 
-disparate antimicrobial resistance gene detection tools into a single unified format.
+18 (as of 2022-09-25) disparate antimicrobial resistance gene detection tools into a single unified format.
 
 This is an implementation of the [hAMRonization AMR detection specification scheme](docs/hAMRonization_specification_details.csv) which supports gene presence/absence resistance and mutational resistance (if supported by the underlying tool).
 
@@ -52,40 +52,40 @@ In theory, this should only be a problem with major version changes but not all 
 If you encounter any issues with newer tool versions then please create an issue in this repository.
 
 ```
->hamronize -h
 usage: hamronize <tool> <options>
 
-Convert AMR gene detection tool output to hAMRonization specification format
+Convert AMR gene detection tool output(s) to hAMRonization specification format
 
-optional arguments:
+options:
   -h, --help            show this help message and exit
   -v, --version         show program's version number and exit
 
-
 Tools with hAMRonizable reports:
-  {abricate,amrfinderplus,ariba,rgi,resfinder,srax,deeparg,kmerresistance,srst2,staramr,csstar,amrplusplus,resfams,groot,tbprofiler,mykrobe,pointfinder,summarize}
+  {abricate,amrfinderplus,amrplusplus,ariba,csstar,deeparg,fargene,groot,kmerresistance,resfams,resfinder,mykrobe,pointfinder,rgi,srax,srst2,staramr,tbprofiler,summarize}
     abricate            hAMRonize abricate's output report i.e., OUTPUT.tsv
     amrfinderplus       hAMRonize amrfinderplus's output report i.e., OUTPUT.tsv
+    amrplusplus         hAMRonize amrplusplus's output report i.e., gene.tsv
     ariba               hAMRonize ariba's output report i.e., OUTDIR/OUTPUT.tsv
-    rgi                 hAMRonize rgi's output report i.e., OUTPUT.txt or
-                        OUTPUT_bwtoutput.gene_mapping_data.txt
-    resfinder           hAMRonize resfinder's output report i.e.,
-                        ResFinder_results_tab.txt
-    srax                hAMRonize srax's output report i.e., sraX_detected_ARGs.tsv
+    csstar              hAMRonize csstar's output report i.e., OUTPUT.tsv
     deeparg             hAMRonize deeparg's output report i.e.,
                         OUTDIR/OUTPUT.mapping.ARG
-    kmerresistance      hAMRonize kmerresistance's output report i.e., OUTPUT.res
-    srst2               hAMRonize srst2's output report i.e., OUTPUT_srst2_report.tsv
-    staramr             hAMRonize staramr's output report i.e., resfinder.tsv
-    csstar              hAMRonize csstar's output report i.e., OUTPUT.tsv
-    amrplusplus         hAMRonize amrplusplus's output report i.e., gene.tsv
-    resfams             hAMRonize resfams's output report i.e., resfams.tblout
+    fargene             hAMRonize fargene's output report i.e., retrieved-
+                        genes-*-hmmsearched.out
     groot               hAMRonize groot's output report i.e., OUTPUT.tsv (from `groot
                         report`)
-    tbprofiler          hAMRonize tbprofiler's output report i.e., OUTPUT.results.json
+    kmerresistance      hAMRonize kmerresistance's output report i.e., OUTPUT.res
+    resfams             hAMRonize resfams's output report i.e., resfams.tblout
+    resfinder           hAMRonize resfinder's output report i.e.,
+                        ResFinder_results_tab.txt
     mykrobe             hAMRonize mykrobe's output report i.e., OUTPUT.json
     pointfinder         hAMRonize pointfinder's output report i.e.,
                         PointFinder_results.txt
+    rgi                 hAMRonize rgi's output report i.e., OUTPUT.txt or
+                        OUTPUT_bwtoutput.gene_mapping_data.txt
+    srax                hAMRonize srax's output report i.e., sraX_detected_ARGs.tsv
+    srst2               hAMRonize srst2's output report i.e., OUTPUT_srst2_report.tsv
+    staramr             hAMRonize staramr's output report i.e., resfinder.tsv
+    tbprofiler          hAMRonize tbprofiler's output report i.e., OUTPUT.results.json
     summarize           Provide a list of paths to the reports you wish to summarize
 ```
 
@@ -187,24 +187,44 @@ If you want to write multiple reports to one file, this `.write` method can acce
 
 Currently implemented parsers and the last tool version for which they have been validated:
 
-1. [abricate](hAMRonization/AbricateIO.py): last updated for v1.0.0
-2. [ariba](hAMRonization/AribaIO.py): last updated for v2.14.6
-3. [NCBI AMRFinderPlus](hAMRonization/AmrFinderPlusIO.py): last updated for v3.10.40
-4. [RGI](hAMRonization/RgiIO.py) (includes RGI-BWT) last updated for v5.2.0
-5. [resfinder](hAMRonization/ResFinderIO.py): last updated for v4.1.0
-6. [pointfinder](hAMRonization/PointFinderIO.py): last updated for v4.1.0
-7. [sraX](hAMRonization/SraxIO.py): last updated for v1.5
-8. [deepARG](hAMRonization/DeepArgIO.py): last updated for v1.0.2
-9. [kmerresistance](hAMRonization/KmerResistanceIO.py): late updated for v2.2.0
-10. [srst2](hAMRonization/Srst2IO.py): last updated for v0.2.0
-11. [staramr](hAMRonization/StarAmrIO.py): last updated for v0.8.0
-12. [c-sstar](hAMRonization/CSStarIO.py): last updated for v2.1.0
-13. [amrplusplus](hAMRonization/AmrPlusPlusIO.py): last updated for c6b097a
-14. [resfams](hAMRonization/ResFamsIO.py): last updated for hmmer v3.3.2
-15. [groot](hAMRonization/GrootIO.py): last updated for v1.1.2
-16. [mykrobe](test/data/raw_outputs/mykrobe/report.json): last updated for v0.8.1
-17. [tbprofilder](test/data/raw_outputs/tbprofiler/tbprofiler.json): last updated for v3.0.8
+    "abricate": AbricateIO.required_metadata,
+    "amrfinderplus": AmrFinderPlusIO.required_metadata,
+    "amrplusplus": AmrPlusPlusIO.required_metadata,
+    "ariba": AribaIO.required_metadata,
+    "csstar": CSStarIO.required_metadata,
+    "deeparg": DeepArgIO.required_metadata,
+    "fargene": FARGeneIO.required_metadata,
+    "groot": GrootIO.required_metadata,
+    "kmerresistance": KmerResistanceIO.required_metadata,
+    "resfams": ResFamsIO.required_metadata,
+    "resfinder": ResFinderIO.required_metadata,
+    "mykrobe": MykrobeIO.required_metadata,
+    "pointfinder": PointFinderIO.required_metadata,
+    "rgi": RgiIO.required_metadata,
+    "srax": SraxIO.required_metadata,
+    "srst2": Srst2IO.required_metadata,
+    "staramr": StarAmrIO.required_metadata,
+    "tbprofiler": TBProfilerIO.required_metadata,
 
+
+1. [abricate](hAMRonization/AbricateIO.py): last updated for v1.0.0
+2. [amrfinderplus](hAMRonization/AmrFinderPlusIO.py): last updated for v3.10.40
+3. [amrplusplus](hAMRonization/AmrPlusPlusIO.py): last updated for c6b097a
+4. [ariba](hAMRonization/AribaIO.py): last updated for v2.14.6
+5. [csstar](hAMRonization/CSStarIO.py): last updated for v2.1.0
+6. [deeparg](hAMRonization/DeepArgIO.py): last updated for v1.0.2
+7. [fargene](hAMRonization/FARGeneIO.py): last updated for v0.1
+8. [groot](hAMRonization/GrootIO.py): last updated for v1.1.2
+9. [kmerresistance](hAMRonization/KmerResistanceIO.py): late updated for v2.2.0
+10. [mykrobe](test/data/raw_outputs/mykrobe/report.json): last updated for v0.8.1
+11. [pointfinder](hAMRonization/PointFinderIO.py): last updated for v4.1.0
+12. [resfams](hAMRonization/ResFamsIO.py): last updated for hmmer v3.3.2
+13. [resfinder](hAMRonization/ResFinderIO.py): last updated for v4.1.0
+14. [rgi](hAMRonization/RgiIO.py) (includes RGI-BWT) last updated for v5.2.0
+15. [srax](hAMRonization/SraxIO.py): last updated for v1.5
+16. [srst2](hAMRonization/Srst2IO.py): last updated for v0.2.0
+17. [staramr](hAMRonization/StarAmrIO.py): last updated for v0.8.0
+18. [tbprofilder](test/data/raw_outputs/tbprofiler/tbprofiler.json): last updated for v3.0.8
 
 ## Implementation Details
 
