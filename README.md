@@ -1,4 +1,7 @@
 ![Python package](https://github.com/pha4ge/hAMRonization/workflows/test_package/badge.svg)
+[![Docs English](https://img.shields.io/badge/Documentation-English-blue)](https://github.com/pha4ge/hAMRonization/blob/master/docs/subgrant/PHA4GE_AMR_SubGrant_Documentation.pdf)
+[![Docs English](https://img.shields.io/badge/Documentation-español-blue)](https://github.com/pha4ge/hAMRonization/blob/master/docs/subgrant/PHA4GE_hAMRonization_espan%CC%83ol.pdf)
+
 
 # hAMRonization 
 
