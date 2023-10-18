@@ -745,7 +745,6 @@ def summarize_reports(report_paths, summary_type, output_path=None):
             file=sys.stderr,
         )
 
-
     # sort records by input_file_name, tool_config i.e. toolname, version,
     # db_name, db_versions, and then within that by gene_symbol
     combined_reports = combined_reports.sort_values(

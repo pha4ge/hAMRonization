@@ -134,4 +134,3 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
         if skipped_truncated > 0:
             warnings.warn(f"Skipping {skipped_truncated} records with INTERNAL_STOP "
                           f"from {self.metadata['input_file_name']}")
-
