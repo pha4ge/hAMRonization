@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import csv
+import warnings
 import re
 from .Interfaces import hAMRonizedResultIterator
 from hAMRonization.constants import (
@@ -93,12 +94,20 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
         """
         Read each and return it
         """
+        skipped_truncated = 0
         reader = csv.DictReader(handle, delimiter="\t")
         for result in reader:
             # replace NA value with None for consitency
             for field, value in result.items():
                 if value == "NA":
                     result[field] = None
+
+            # AFP reports partial hits so to avoid misleadingly listing these
+            # as present skip results with INTERNAL_STOP
+            # recommended by developers
+            if "INTERNAL_STOP" in result['Method']:
+                skipped_truncated += 1
+                continue
 
             # "POINT" indicates mutational resistance
             # amrfinderplus has no special fields but the mutation itself is
@@ -121,3 +130,8 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
                     result["genetic_variation_type"] = NUCLEOTIDE_VARIANT
 
             yield self.hAMRonize(result, self.metadata)
+
+        if skipped_truncated > 0:
+            warnings.warn(f"Skipping {skipped_truncated} records with INTERNAL_STOP "
+                          f"from {self.metadata['input_file_name']}")
+
