@@ -56,14 +56,29 @@ class ResFinderIterator(hAMRonizedResultIterator):
         reader = csv.DictReader(handle, delimiter="\t")
         for result in reader:
             result["_gene_name"] = result["Resistance gene"]
-            _start, _stop = result["Position in contig"].split("..")
-            if _start > _stop:
-                _strand = "-"
+            # Removes fields that have NA and NA..NA this is typical in the 4.5.0 resfinder when the --inputfastq is implimented
+            for field, value in result.items():
+                if value == "NA":
+                    result[field] = None
+                if value == "NA..NA":
+                    result[field] = None
+            # If result["Position in contig"] == None then make _start, _stop and _strand = None
+            if result["Position in contig"] != None:
+                _start, _stop = result["Position in contig"].split("..")
+                if _start > _stop :
+                    _strand = "-"
+                else:
+                    _strand = "+"
+                    
+                result["_start"] = _start
+                result["_stop"] = _stop
+                result["_strand"] = _strand
             else:
-                _strand = "+"
-            result["_start"] = _start
-            result["_stop"] = _stop
-            result["_strand"] = _strand
+                _strand = None
+                result["_start"] = None
+                result["_stop"] = None
+                result["_strand"] = None
+                
             _reference_gene_length = result["Alignment Length/Gene Length"].split("/")[
                 0
             ]
