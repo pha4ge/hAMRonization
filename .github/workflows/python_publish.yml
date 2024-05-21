@@ -3,6 +3,10 @@
 
 name: python_publish
 
+on:
+  release:
+    types: [created]
+
 jobs:
   pypi-publish:
     name: Publish release to PyPI
