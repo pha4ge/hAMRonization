@@ -13,8 +13,8 @@ hamronize ariba data/raw_outputs/ariba/report.tsv --reference_database_version d
 
 hamronize amrfinderplus --input_file_name amrfinderplus_nucleotide_report --analysis_software_version AFP_nt_v1 --reference_database_version db_v_1 data/raw_outputs/amrfinderplus/report_nucleotide.tsv --format json --output hamronized_amrfinderplus_nt.json
 hamronize amrfinderplus --input_file_name amrfinderplus_nucleotide_report --analysis_software_version AFP_nt_v1 --reference_database_version db_v_1 data/raw_outputs/amrfinderplus/report_nucleotide.tsv --format tsv --output hamronized_amrfinderplus_nt.tsv
-hamronize amrfinderplus --input_file_name amrfinderplus_portein_report --analysis_software_version AFP_aa_v1 --reference_database_version db_v_1 data/raw_outputs/amrfinderplus/report_protein.tsv --format json --output hamronized_amrfinderplus_aa.json
-hamronize amrfinderplus --input_file_name amrfinderplus_portein_report --analysis_software_version AFP_aa_v1 --reference_database_version db_v_1 data/raw_outputs/amrfinderplus/report_protein.tsv --format tsv --output hamronized_amrfinderplus_aa.tsv
+hamronize amrfinderplus --input_file_name amrfinderplus_protein_report --analysis_software_version AFP_aa_v1 --reference_database_version db_v_1 data/raw_outputs/amrfinderplus/report_protein.tsv --format json --output hamronized_amrfinderplus_aa.json
+hamronize amrfinderplus --input_file_name amrfinderplus_protein_report --analysis_software_version AFP_aa_v1 --reference_database_version db_v_1 data/raw_outputs/amrfinderplus/report_protein.tsv --format tsv --output hamronized_amrfinderplus_aa.tsv
 
 hamronize rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --reference_database_version card_v1 data/raw_outputs/rgi/rgi.txt --format json --output hamronized_rgi.json
 hamronize rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --reference_database_version card_v1 data/raw_outputs/rgi/rgi.txt --format tsv --output hamronized_rgi.tsv
@@ -26,6 +26,15 @@ hamronize rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --
 
 hamronize resfinder --input_file_name resfinder_report --analysis_software_version resfinder_v4 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/ResFinder_results_tab.txt --format json --output hamronized_resfinder.json
 hamronize resfinder --input_file_name resfinder_report --analysis_software_version resfinder_v4 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/ResFinder_results_tab.txt --format tsv --output hamronized_resfinder.tsv
+
+hamronize resfinder --input_file_name resfinder_report --analysis_software_version resfinder_v4.5 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/resfinder_inputfasta_tab.txt --format json --output hamronized_resfinder_inputfasta.json
+hamronize resfinder --input_file_name resfinder_report --analysis_software_version resfinder_v4.5 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/resfinder_inputfasta_tab.txt --format tsv --output hamronized_resfinder_inputfasta.tsv
+
+hamronize resfinder --input_file_name resfinder_report --analysis_software_version resfinder_v4.5 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/resfinder_inputfastq_tab.txt --format json --output hamronized_resfinder_inputfastq.json
+hamronize resfinder --input_file_name resfinder_report --analysis_software_version resfinder_v4.5 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/resfinder_inputfastq_tab.txt --format tsv --output hamronized_resfinder_inputfastq.tsv
+
+hamronize resfinder --input_file_name resfinder_report --analysis_software_version resfinder_v4.5 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/resfinder_inputfastq_inputfasta.txt --format json --output hamronized_resfinder_inputfastq_inputfastq.json
+hamronize resfinder --input_file_name resfinder_report --analysis_software_version resfinder_v4.5 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/resfinder_inputfastq_inputfasta.txt --format tsv --output hamronized_resfinder_inputfastq_inputfasta.tsv
 
 hamronize pointfinder --input_file_name pointfinder_report --analysis_software_version resfinder_v4 --reference_database_version pointfinder_db_v1 data/raw_outputs/pointfinder/PointFinder_results.txt --format json --output hamronized_pointfinder.json
 hamronize pointfinder --input_file_name pointfinder_report --analysis_software_version resfinder_v4 --reference_database_version pointfinder_db_v1 data/raw_outputs/pointfinder/PointFinder_results.txt --format tsv --output hamronized_pointfinder.tsv

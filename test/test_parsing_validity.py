@@ -292,7 +292,7 @@ def test_kmerresistance():
         assert result.reference_gene_stop is None
 
 
-def test_resfinder():
+def test_pointfinder():
     metadata = {
         "analysis_software_version": "4.1.0",
         "reference_database_version": "2021-02-01",
@@ -318,16 +318,31 @@ def test_resfinder():
         assert result.nucleotide_mutation == "GGT -> GAT"
         assert result.amino_acid_mutation == "p.G81D"
 
-
-def test_pointfinder():
+def test_resfinder_fastq():
     metadata = {
-        "analysis_software_version": "4.1.0",
-        "reference_database_version": "2019-Jul-28",
+        "analysis_software_version": "4.5.0",
+        "reference_database_version": "2021-02-01",
         "input_file_name": "Dummy",
     }
     parsed_report = hAMRonization.parse(
-        "data/dummy/resfinder/ResFinder_results_tab.txt", metadata, "resfinder"
+        "data/dummy/resfinder/resfinder_inputfastq_inputfasta.txt", metadata, "resfinder"
     )
+
+    for result in parsed_report:
+        # assert mandatory fields
+        assert result.input_file_name == "Dummy"
+        assert result.gene_symbol == "aph(6)-Id"
+        assert result.gene_name == "aph(6)-Id"
+        assert result.reference_database_name == "resfinder"
+        assert result.reference_database_version == "2021-02-01"
+        assert result.reference_accession == "M28829"
+        assert result.analysis_software_name == "resfinder"
+        assert result.analysis_software_version == "4.5.0"
+        assert result.genetic_variation_type == "gene_presence_detected"
+        assert result.coverage_percentage == 100
+        assert result.drug_class == "Streptomycin"
+        assert result.reference_gene_length == 837
+        assert result.sequence_identity == 100
 
 
 def test_rgi_variants():
