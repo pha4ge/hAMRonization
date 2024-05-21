@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-__version__ = "1.1.4"
+__version__ = "1.1.5"
 
 from hAMRonization import AbricateIO
 from hAMRonization import AmrFinderPlusIO
