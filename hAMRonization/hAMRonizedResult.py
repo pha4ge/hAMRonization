@@ -77,11 +77,7 @@ class hAMRonizedResult:
         input_file_name = getattr(self, "input_file_name")
         input_file_name = os.path.basename(input_file_name)
 
-        if input_file_name.endswith(".gz"):
-            input_file_name = input_file_name.replace(".gz", "")
-
-        for fasta_suffix in [".fna", ".fasta", ".faa", ".fa"]:
-            if input_file_name.endswith(fasta_suffix):
-                input_file_name = input_file_name.replace(fasta_suffix, "")
+        for suffix in [ ".gz", ".fna", ".fasta", ".fsa", ".faa", ".fa" ]:
+            input_file_name = input_file_name.removesuffix(suffix)
 
         setattr(self, "input_file_name", input_file_name)
