@@ -1,2 +1,0 @@
-Resistance gene	Identity	Alignment Length/Gene Length	Coverage	Position in reference	Contig	Position in contig	Phenotype	Accession no.
-aph(6)-Id	100.00	837/837	100.0	1..838	NA	NA..NA	Streptomycin	M28829
