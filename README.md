@@ -204,7 +204,7 @@ Currently implemented parsers and the last tool version for which they have been
 10. [mykrobe](test/data/raw_outputs/mykrobe/report.json): last updated for v0.8.1
 11. [pointfinder](hAMRonization/PointFinderIO.py): last updated for v4.1.0
 12. [resfams](hAMRonization/ResFamsIO.py): last updated for hmmer v3.3.2
-13. [resfinder](hAMRonization/ResFinderIO.py): last updated for v4.1.0
+13. [resfinder](hAMRonization/ResFinderIO.py): last updated for v4.6.0
 14. [rgi](hAMRonization/RgiIO.py) (includes RGI-BWT) last updated for v5.2.0
 15. [srax](hAMRonization/SraxIO.py): last updated for v1.5
 16. [srst2](hAMRonization/Srst2IO.py): last updated for v0.2.0
