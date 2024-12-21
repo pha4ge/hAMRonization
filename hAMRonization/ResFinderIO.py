@@ -9,12 +9,6 @@ from hAMRonization.constants import (GENE_PRESENCE, NUCLEOTIDE_VARIANT, AMINO_AC
 required_metadata = [
 ]
 
-# Implement Python omission (why have map but not fold?)
-def fold(fun, acc, lst):
-    """Left fold iterable `lst` onto `acc` by iterating `acc = fun(acc, x)`"""
-    for x in lst: acc = fun(acc, x)
-    return acc
-
 
 # This class is the parser instantiated by the hAMRonize framework to parse
 # ResFinder output. Its parse() method must return a hAMRonizedResultIterator
@@ -51,41 +45,27 @@ class ResFinderIterator(hAMRonizedResultIterator):
         # - phenotypes: antimicriobals keying back into the above objects
         data = json.load(handle)
 
-        # Helpers to fetch database name and version from the JSON data
+        # Helpers to fetch database names and versions from the JSON data
         _dbs = data['databases']
-        _unk_db = { 'database_name': "ref-error", 'database_version': "ref-error" }
-        _get_db_name = lambda ks: _dbs.get(ks[0], _unk_db).get('database_name',"no-name") if ks else "unspecified"
-        _get_db_ver = lambda ks: _dbs.get(ks[0], _unk_db).get('database_version',"no-version") if ks else "unspecified"
+        _unk_db = {'database_name': "ref-error", 'database_version': "ref-error"}
 
-        # Helpers to flip start and end positions and yield strand
-        _get_start_pos = lambda p0, p1: None if not (type(p0) is int and type(p1) is int) else p0 if p0 <= p1 else p1
-        _get_end_pos = lambda p0, p1: None if not (type(p0) is int and type(p1) is int) else p1 if p1 >= p1 else p0
-        _get_strand = lambda p0, p1: None if not (type(p0) is int and type(p1) is int) else '+' if p0 <= p1 else '-'
-        _get_length = lambda p0, p1: None if not (type(p0) is int and type(p1) is int) else abs(p1 - p0) + 1
-        _get_var_pos = lambda v: v.get('ref_start_pos', 0)
-        _empty_to_none = lambda s: s if len(s) else None # turns string '' into None
-        _round = lambda n, d: None if n is None else round(n, d)
+        def _get_db_name(keys):
+            return _dbs.get(keys[0], _unk_db).get('database_name', "no-name") if keys else "unspecified"
 
-        # Helper to condense notes and PMID references into a single line
-        def _condense_notes(notes, pmids):
-            lines = []
-            lines += filter(None, notes)
-            pmids = list(filter(None, pmids))
-            if pmids:
-                lines.append("PMIDs: " + ", ".join(set(pmids)))
-            return ". ".join(lines) if lines else None
+        def _get_db_ver(keys):
+            return _dbs.get(keys[0], _unk_db).get('database_version', "no-version") if keys else "unspecified"
 
         # Setter for the hAMRonizedResult fields related to genes
         def set_shared_fields(r):
             """Sets all fields in res that relate to region r. Applies to both gene and mutation results."""
 
             # mandatory
-            res.gene_symbol = r.get('name',"unspecified")
-            res.gene_name = r.get('name',"unspecified")
+            res.gene_symbol = r.get('name', "unspecified")
+            res.gene_name = r.get('name', "unspecified")
             res.reference_accession = r.get('ref_acc', r.get('ref_id', r.get('key', "unknown")))
 
             # optional
-            res.coverage_percentage = _round(r.get('coverage'), 1)
+            res.coverage_percentage = _safe_round(r.get('coverage'), 1)
             res.coverage_depth = None  # we may have this for mutations detected from reads
             res.coverage_ratio = r.get('coverage')/100.0
             res.input_sequence_id = r.get('query_id')
@@ -99,7 +79,7 @@ class ResFinderIterator(hAMRonizedResultIterator):
             res.reference_gene_start = r.get('ref_start_pos')
             res.reference_gene_stop = r.get('ref_end_pos')
             res.resistance_mechanism = None  # This is available in phenotypes.txt but not in the JSON
-            res.sequence_identity = _round(r.get('identity'), 2)
+            res.sequence_identity = _safe_round(r.get('identity'), 2)
 
             # Zap these by default, will only be set in seq_variations below
             res.amino_acid_mutation = None
@@ -121,7 +101,7 @@ class ResFinderIterator(hAMRonizedResultIterator):
 
             # Iterate v over the variations in vs that lie on region r in order of their position
             # (variation->regions strangely is a list, so we need to check if r.key is in it)
-            for v in sorted(filter(lambda v: r['key'] in v.get('seq_regions',[]), vs),
+            for v in sorted(filter(lambda v: r['key'] in v.get('seq_regions', []), vs),
                             key=lambda v: v.get('ref_start_pos', 0)):
 
                 # May need refinement to properly accommodate inserts and deletes,
@@ -172,7 +152,7 @@ class ResFinderIterator(hAMRonizedResultIterator):
             res.reference_database_version = _get_db_ver(p.get('ref_database'))
 
             # Iterate r over the regions (AMR genes) referenced by p, and yield each in turn
-            for r in map(lambda k: data['seq_regions'][k], p.get('seq_regions',[])):
+            for r in map(lambda k: data['seq_regions'][k], p.get('seq_regions', [])):
 
                 res.genetic_variation_type = GENE_PRESENCE
                 set_shared_fields(r)
@@ -183,8 +163,8 @@ class ResFinderIterator(hAMRonizedResultIterator):
             # Collect the list of seq_variations (if any) referenced from phenotype p,
             # and the set of regions that these mutations lie on, so that we iterate
             # these regions and "collapse" all mutations for that region onto one record
-            vs = list(map(lambda k: data['seq_variations'][k], p.get('seq_variations',[])))
-            rs = set(fold(lambda a, v: a + v.get('seq_regions',[]), [], vs))
+            vs = list(map(lambda k: data['seq_variations'][k], p.get('seq_variations', [])))
+            rs = set(fold(lambda a, v: a + v.get('seq_regions', []), [], vs))
 
             # Iterate r over each region referenced by some set of variations, and yield each
             for r in map(lambda k: data['seq_regions'][k], rs):
@@ -196,3 +176,45 @@ class ResFinderIterator(hAMRonizedResultIterator):
                 # Yield a new hAMRonizedResult ours using super's method as that may do the needful
                 yield self.hAMRonize(None, res.__dict__)
 
+
+# Miscellaneous little helper functions to keep the above uncluttered
+
+def _get_start_pos(p0, p1):
+    return None if not (type(p0) is int and type(p1) is int) else p0 if p0 <= p1 else p1
+
+
+def _get_end_pos(p0, p1):
+    return None if not (type(p0) is int and type(p1) is int) else p1 if p1 >= p1 else p0
+
+
+def _get_strand(p0, p1):
+    return None if not (type(p0) is int and type(p1) is int) else '+' if p0 <= p1 else '-'
+
+
+def _get_length(p0, p1):
+    return None if not (type(p0) is int and type(p1) is int) else abs(p1 - p0) + 1
+
+
+def _safe_round(n, d):
+    return None if n is None else round(n, d)
+
+
+def _empty_to_none(s):
+    return s if len(s) else None
+
+
+def _condense_notes(notes, pmids):
+    """Helper to condense notes and PMID references into a single line"""
+    lines = []
+    lines += filter(None, notes)
+    pmids = list(filter(None, pmids))
+    if pmids:
+        lines.append("PMIDs: " + ", ".join(set(pmids)))
+    return ". ".join(lines) if lines else None
+
+
+def fold(fun, acc, lst):  # Python's missing function (why have map but not fold?)
+    """Left fold iterable `lst` onto `acc` by iterating `acc = fun(acc, x)`"""
+    for x in lst:
+        acc = fun(acc, x)
+    return acc
