@@ -37,10 +37,9 @@ class hAMRonizedResultIterator(ABC):
         self.field_map = field_map
         self.metadata = metadata
 
-        if os.stat(source).st_size == 0:
-            print(f"Warning: {source} is empty", file=sys.stderr)
-
         try:
+            if os.stat(source).st_size == 0:
+                print(f"Warning: {source} is empty", file=sys.stderr)
             self.stream = open(source, "r")
         except FileNotFoundError:  # path doesn't exist
             print(f"File {source} not found", file=sys.stderr)
