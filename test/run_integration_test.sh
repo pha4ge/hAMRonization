@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
 
-
 hamronize tbprofiler data/raw_outputs/tbprofiler/tbprofiler.json --format json --output hamronized_tbprofiler.json
 hamronize tbprofiler data/raw_outputs/tbprofiler/tbprofiler.json --format tsv --output hamronized_tbprofiler.tsv
 
@@ -24,17 +23,9 @@ hamronize rgi --input_file_name rgi_bwt_report --analysis_software_version rgi_b
 # test multi-report usage
 hamronize rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --reference_database_version card_v1 data/raw_outputs/rgi/rgi.txt data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt --output hamronized_rgi_and_rgibwt.tsv
 
-hamronize resfinder --input_file_name resfinder_report --analysis_software_version resfinder_v4 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/ResFinder_results_tab.txt --format json --output hamronized_resfinder.json
-hamronize resfinder --input_file_name resfinder_report --analysis_software_version resfinder_v4 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/ResFinder_results_tab.txt --format tsv --output hamronized_resfinder.tsv
-
-hamronize resfinder --input_file_name resfinder_report --analysis_software_version resfinder_v4.5 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/resfinder_inputfasta_tab.txt --format json --output hamronized_resfinder_inputfasta.json
-hamronize resfinder --input_file_name resfinder_report --analysis_software_version resfinder_v4.5 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/resfinder_inputfasta_tab.txt --format tsv --output hamronized_resfinder_inputfasta.tsv
-
-hamronize resfinder --input_file_name resfinder_report --analysis_software_version resfinder_v4.5 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/resfinder_inputfastq_tab.txt --format json --output hamronized_resfinder_inputfastq.json
-hamronize resfinder --input_file_name resfinder_report --analysis_software_version resfinder_v4.5 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/resfinder_inputfastq_tab.txt --format tsv --output hamronized_resfinder_inputfastq.tsv
-
-hamronize resfinder --input_file_name resfinder_report --analysis_software_version resfinder_v4.5 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/resfinder_inputfastq_inputfasta.txt --format json --output hamronized_resfinder_inputfastq_inputfastq.json
-hamronize resfinder --input_file_name resfinder_report --analysis_software_version resfinder_v4.5 --reference_database_version resfinder_db_v1 data/raw_outputs/resfinder/resfinder_inputfastq_inputfasta.txt --format tsv --output hamronized_resfinder_inputfastq_inputfasta.tsv
+# ResFinder needs no metadata as it fetches everything (including input file, software and database version) from the JSON data
+hamronize resfinder data/raw_outputs/resfinder/data_resfinder.json --format json --output hamronized_resfinder.json
+hamronize resfinder data/raw_outputs/resfinder/data_resfinder.json --format tsv --output hamronized_resfinder.tsv
 
 hamronize pointfinder --input_file_name pointfinder_report --analysis_software_version resfinder_v4 --reference_database_version pointfinder_db_v1 data/raw_outputs/pointfinder/PointFinder_results.txt --format json --output hamronized_pointfinder.json
 hamronize pointfinder --input_file_name pointfinder_report --analysis_software_version resfinder_v4 --reference_database_version pointfinder_db_v1 data/raw_outputs/pointfinder/PointFinder_results.txt --format tsv --output hamronized_pointfinder.tsv

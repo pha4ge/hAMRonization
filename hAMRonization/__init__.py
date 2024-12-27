@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-__version__ = "1.1.7"
+__version__ = "1.1.8"
 
 from hAMRonization import AbricateIO
 from hAMRonization import AmrFinderPlusIO
@@ -47,7 +47,7 @@ _ReportFileToUse = {
     "amrfinderplus": "OUTPUT.tsv",
     "ariba": "OUTDIR/OUTPUT.tsv",
     "rgi": "OUTPUT.txt or OUTPUT_bwtoutput.gene_mapping_data.txt",
-    "resfinder": "ResFinder_results_tab.txt",
+    "resfinder": "data_resfinder.json",
     "srax": "sraX_detected_ARGs.tsv",
     "deeparg": "OUTDIR/OUTPUT.mapping.ARG",
     "kmerresistance": "OUTPUT.res",

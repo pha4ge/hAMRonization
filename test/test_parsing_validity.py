@@ -318,32 +318,121 @@ def test_pointfinder():
         assert result.nucleotide_mutation == "GGT -> GAT"
         assert result.amino_acid_mutation == "p.G81D"
 
-def test_resfinder_fastq():
+def test_resfinder():
     metadata = {
-        "analysis_software_version": "4.5.0",
-        "reference_database_version": "2021-02-01",
-        "input_file_name": "Dummy",
     }
     parsed_report = hAMRonization.parse(
-        "data/dummy/resfinder/resfinder_inputfastq_inputfasta.txt", metadata, "resfinder"
+        "data/dummy/resfinder/data_resfinder.json", metadata, "resfinder"
     )
 
-    for result in parsed_report:
-        # assert mandatory fields
-        assert result.input_file_name == "Dummy"
-        assert result.gene_symbol == "aph(6)-Id"
-        assert result.gene_name == "aph(6)-Id"
-        assert result.reference_database_name == "resfinder"
-        assert result.reference_database_version == "2021-02-01"
-        assert result.reference_accession == "M28829"
-        assert result.analysis_software_name == "resfinder"
-        assert result.analysis_software_version == "4.5.0"
-        assert result.genetic_variation_type == "gene_presence_detected"
-        assert result.coverage_percentage == 100
-        assert result.drug_class == "Streptomycin"
-        assert result.reference_gene_length == 837
-        assert result.sequence_identity == 100
+    # The report has 4 gene presence entries (for one gene) and 1 mutation set
+    seen_genes = 0
+    seen_variants = 0
 
+    for result in parsed_report:
+
+        # Test the global mandatory metadata
+        assert result.input_file_name == "hybrid"
+        assert result.analysis_software_name == "ResFinder"
+        assert result.analysis_software_version == "4.6.0"
+
+        # Check the 4 gene presence results
+        if result.genetic_variation_type == "gene_presence_detected":
+            seen_genes += 1
+
+            # it reports these 4 agents separately (even if all on one gene)
+            assert (result.antimicrobial_agent, result.drug_class) in [ 
+                ('ciprofloxacin', 'quinolone'),
+                ('nalidixic acid', 'quinolone'),
+                ('trimethoprim', 'folate pathway antagonist'),
+                ('chloramphenicol', 'amphenicol') ]
+
+            # assert mandatory fields (5)
+            assert result.gene_symbol == "OqxA"
+            assert result.gene_name == "OqxA"
+            assert result.reference_database_name == "ResFinder"
+            assert result.reference_database_version == "2.4.0"
+            assert result.reference_accession == "EU370913"
+
+            # optional fields (13)
+            assert result.predicted_phenotype == "ciprofloxacin, nalidixic acid, trimethoprim, chloramphenicol"
+            assert result.predicted_phenotype_confidence_level == "Must be in an operon with oqxB,phenotype differs based on genomic location of the operon PMID 25801572,also nitrofurantoin resistance PMID 26552976. Natural in K. pneumoniae. PMIDs: 18440636"
+            assert result.coverage_percentage == 100.0
+            assert result.coverage_ratio == 1.0
+            assert result.input_sequence_id == "contig1"
+            assert result.input_gene_length == 1176
+            assert result.input_gene_start == 101
+            assert result.input_gene_stop == 1276
+            assert result.strand_orientation == '+'
+            assert result.reference_gene_length == 1176
+            assert result.reference_gene_start == 1
+            assert result.reference_gene_stop == 1176
+            assert result.sequence_identity == 100.0
+
+            # not set (12)
+            assert result.coverage_depth is None
+            assert result.input_protein_length is None
+            assert result.input_protein_start is None
+            assert result.input_protein_stop is None
+            assert result.reference_protein_length is None
+            assert result.reference_protein_start is None
+            assert result.reference_protein_stop is None
+            assert result.resistance_mechanism is None
+            assert result.amino_acid_mutation is None
+            assert result.amino_acid_mutation_interpretation is None
+            assert result.nucleotide_mutation is None
+            assert result.nucleotide_mutation_interpretation is None
+
+        # Check the one variation result
+        elif result.genetic_variation_type == "protein_variant_detected":
+            seen_variants += 1
+
+            # assert mandatory fields (5)
+            assert result.gene_symbol == "pbp5"
+            assert result.gene_name == "pbp5"
+            assert result.reference_database_name == "PointFinder"
+            assert result.reference_database_version == "4.1.1"
+            assert result.reference_accession == "AAK43724.1"
+
+            # optional fields (14)
+            assert result.antimicrobial_agent == "ampicillin"
+            assert result.drug_class == "beta-lactam"
+            assert result.predicted_phenotype == "ampicillin"
+            assert result.predicted_phenotype_confidence_level == "The nineteen pbp5 mutations must be present simultaneously for resistance phenotype. PMIDs: 25182648"
+            assert result.coverage_percentage == 100.0
+            assert result.coverage_ratio == 1.0
+            assert result.input_sequence_id == "contig2"
+            assert result.input_gene_length == 2037
+            assert result.input_gene_start == 64029
+            assert result.input_gene_stop == 66065
+            assert result.strand_orientation == '+'
+            assert result.reference_gene_length == 2037
+            assert result.reference_gene_start == 1
+            assert result.reference_gene_stop == 2037
+            assert result.sequence_identity == 95.34
+
+            # mutation fields (2)
+            assert result.amino_acid_mutation == "p.V24A, p.S27G, p.R34Q, p.G66E, p.A68T, p.E85D, p.E100Q, p.K144Q, p.T172A, p.L177I, p.D204G, p.A216S, p.T324A, p.N496K, p.A499T, p.E525D, p.P667S"
+            assert result.nucleotide_mutation is None
+            assert result.nucleotide_mutation_interpretation == "Codon changes: gta>gca agt>ggt cgg>cag gga>gaa gca>aca gaa>gat gag>cag aaa>caa aca>gca tta>ata gac>ggc gca>tcc aca>gca aat>aaa gca>aca gag>gat ccc>tcg"
+
+            # not set (10)
+            assert result.coverage_depth is None
+            assert result.input_protein_length is None
+            assert result.input_protein_start is None
+            assert result.input_protein_stop is None
+            assert result.reference_protein_length is None
+            assert result.reference_protein_start is None
+            assert result.reference_protein_stop is None
+            assert result.resistance_mechanism is None
+            assert result.amino_acid_mutation_interpretation is None
+
+        else:
+            assert result.genetic_variation_type == False  # just to stop
+
+    # Check that we saw all
+    assert seen_genes == 4
+    assert seen_variants == 1
 
 def test_rgi_variants():
     metadata = {
