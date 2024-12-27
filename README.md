@@ -8,7 +8,7 @@
 # hAMRonization 
 
 This repo contains the hAMRonization module and CLI parser tools combine the outputs of 
-18 (as of 2022-09-25) disparate antimicrobial resistance gene detection tools into a single unified format.
+18 disparate antimicrobial resistance gene detection tools into a single unified format.
 
 This is an implementation of the [hAMRonization AMR detection specification scheme](docs/hAMRonization_specification_details.csv) which supports gene presence/absence resistance and mutational resistance (if supported by the underlying tool).
 
@@ -193,7 +193,7 @@ If you want to write multiple reports to one file, this `.write` method can acce
 Currently implemented parsers and the last tool version for which they have been validated:
 
 1. [abricate](hAMRonization/AbricateIO.py): last updated for v1.0.0
-2. [amrfinderplus](hAMRonization/AmrFinderPlusIO.py): last updated for v3.10.40
+2. [amrfinderplus](hAMRonization/AmrFinderPlusIO.py): last updated for v3.12.18
 3. [amrplusplus](hAMRonization/AmrPlusPlusIO.py): last updated for c6b097a
 4. [ariba](hAMRonization/AribaIO.py): last updated for v2.14.6
 5. [csstar](hAMRonization/CSStarIO.py): last updated for v2.1.0
