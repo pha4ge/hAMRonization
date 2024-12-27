@@ -76,10 +76,11 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
         }
 
         with open(source) as fh:
-            _ = next(fh)
+            header = next(fh).strip().split("\t")
             try:
                 first_result = next(fh)
-                if first_result.strip().split("\t")[0] == "NA":
+                prot_id = header.index("Protein identifier") 
+                if first_result.strip().split("\t")[prot_id] == "NA":
                     self.field_mapping = nucleotide_field_mapping
                 else:
                     self.field_mapping = protein_field_mapping
