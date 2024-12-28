@@ -64,8 +64,8 @@ def test_abricate():
 
 def test_amrfinderplus():
     metadata = {
-        "analysis_software_version": "3.6.10",
-        "reference_database_version": "2019-Jul-28",
+        "analysis_software_version": "4.0.3",
+        "reference_database_version": "2024-12-18.1",
         "input_file_name": "Dummy",
     }
     parsed_report = hAMRonization.parse(
@@ -81,10 +81,10 @@ def test_amrfinderplus():
             == "multidrug efflux RND transporter periplasmic adaptor subunit OqxA"
         )
         assert result.reference_database_name == "NCBI Reference Gene Database"
-        assert result.reference_database_version == "2019-Jul-28"
+        assert result.reference_database_version == "2024-12-18.1"
         assert result.reference_accession == "WP_002914189.1"
         assert result.analysis_software_name == "amrfinderplus"
-        assert result.analysis_software_version == "3.6.10"
+        assert result.analysis_software_version == "4.0.3"
         assert result.genetic_variation_type == "gene_presence_detected"
 
         # optional fields - present in dummy dataset
