@@ -51,7 +51,7 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
 
     # AMP outputs the same column set for nuc and prot detections,
     # with Start and Stop always in nt units; however target and
-    # reference length are reported in AA, so map differently.
+    # reference length are reported in AA for proteins.
     prot_field_map = nuc_field_map.copy()
     prot_field_map.update({
         "Target length": "input_protein_length",
@@ -77,7 +77,7 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
         reader = csv.DictReader(handle, delimiter="\t")
         for result in reader:
 
-            # replace NA value with None for consistency
+            # Replace NA value with None for consistency
             for field, value in result.items():
                 if value == "NA":
                     result[field] = None
@@ -99,7 +99,6 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
             result['amino_acid_mutation'] = None
             result['nucleotide_mutation'] = None
             result['genetic_variation_type'] = GENE_PRESENCE
-            field_map = self.nuc_field_map
 
             if result['Subtype'] == "POINT":
                 gene_symbol, mutation = result['Element symbol'].rsplit("_", 1)
@@ -107,7 +106,6 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
                 _, ref, pos, alt, _ = re.split(r"(\D+)(\d+)(\D+)", mutation)
                 # this means it is a protein mutation
                 if result['Method'] in ["POINTX", "POINTP"]:
-                    field_map = self.prot_field_map
                     result['amino_acid_mutation'] = f"p.{ref}{pos}{alt}"
                     result['genetic_variation_type'] = AMINO_ACID_VARIANT
                 elif result['Method'] == "POINTN":
@@ -115,7 +113,22 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
                     result['nucleotide_mutation'] = f"c.{pos}{ref}>{alt}"
                     result['genetic_variation_type'] = NUCLEOTIDE_VARIANT
 
-            # This uses the "override hack" that should probably be cleaned up
+            # Determine the field_map to use depending on the method used
+            # The following seems to cover all bases with a minimum of fuss
+            have_prot = result['Protein id'] is not None
+            method = result['Method']
+            if method.endswith('P') or method.endswith('X'):
+                field_map = self.prot_field_map
+            elif method.endswith('N'):
+                field_map = self.nuc_field_map
+            elif method in ['COMPLETE','HMM']:
+                field_map = self.prot_field_map if have_prot else self.nuc_field_map
+            else:
+                warnings.warn(f"Assuming unknown method {method} implies a protein detection"
+                              f" in {self.metadata['input_file_name']}")
+                field_map = self.prot_field_map
+
+            # This uses the "override hack" that should perhaps be cleaned up
             yield self.hAMRonize(result, self.metadata, field_map)
 
         if skipped_truncated > 0:
