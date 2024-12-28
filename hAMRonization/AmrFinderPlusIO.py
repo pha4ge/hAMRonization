@@ -18,78 +18,56 @@ required_metadata = [
 
 
 class AmrFinderPlusIterator(hAMRonizedResultIterator):
+
+    nuc_field_map = {
+        "Protein id": None,
+        "Contig id": "input_sequence_id",
+        "Start": "input_gene_start",
+        "Stop": "input_gene_stop",
+        "Strand": "strand_orientation",
+        "Element symbol": "gene_symbol",
+        "Element name": "gene_name",
+        "Scope": None,
+        "Type": None,
+        "Subtype": None,
+        "Class": "drug_class",
+        "Subclass": "antimicrobial_agent",
+        "Method": None,
+        "Target length": "input_gene_length",
+        "Reference sequence length": "reference_gene_length",
+        "% Coverage of reference": "coverage_percentage",
+        "% Identity to reference": "sequence_identity",
+        "Alignment length": None,
+        "Closest reference accession": "reference_accession",
+        "Closest reference name": None,
+        "HMM accession": None,
+        "HMM description": None,
+        "Hierarchy node": None,
+        # Fields we compute below (not in TSV)
+        "amino_acid_mutation": "amino_acid_mutation",
+        "nucleotide_mutation": "nucleotide_mutation",
+        "genetic_variation_type": "genetic_variation_type",
+    }
+
+    # AMP outputs the same column set for nuc and prot detections,
+    # with Start and Stop always in nt units; however target and
+    # reference length are reported in AA, so map differently.
+    prot_field_map = nuc_field_map.copy()
+    prot_field_map.update({
+        "Target length": "input_protein_length",
+        "Reference sequence length": "reference_protein_length"
+    })
+
     def __init__(self, source, metadata):
         metadata["analysis_software_name"] = "amrfinderplus"
         metadata["reference_database_name"] = "NCBI Reference Gene Database"
         self.metadata = metadata
 
-        # check source for whether AMFP has been run in protein or nt mode
-
-        nucleotide_field_mapping = {
-            "Protein identifier": None,
-            "Contig id": "input_sequence_id",
-            "Start": "input_gene_start",
-            "Stop": "input_gene_stop",
-            "Strand": "strand_orientation",
-            "Gene symbol": "gene_symbol",
-            "Sequence name": "gene_name",
-            "Scope": None,
-            "Element type": None,
-            "Element subtype": None,
-            "Class": "drug_class",
-            "Subclass": "antimicrobial_agent",
-            "Method": None,
-            "Target length": "input_protein_length",
-            "Reference sequence length": "reference_protein_length",
-            "% Coverage of reference sequence": "coverage_percentage",
-            "% Identity to reference sequence": "sequence_identity",
-            "Alignment length": None,
-            "Accession of closest sequence": "reference_accession",
-            "Name of closest sequence": None,
-            "HMM id": None,
-            "HMM description": None,
-            "AA Mutation": "amino_acid_mutation",
-            "Nucleotide Mutation": "nucleotide_mutation",
-            "genetic_variation_type": "genetic_variation_type",
-        }
-        protein_field_mapping = {
-            "Protein identifier": "input_sequence_id",
-            "Gene symbol": "gene_symbol",
-            "Sequence name": "gene_name",
-            "Scope": None,
-            "Element": None,
-            "Element subtype": None,
-            "Class": "drug_class",
-            "Subclass": "antimicrobial_agent",
-            "Method": None,
-            "Target length": "input_protein_length",
-            "Reference sequence length": "reference_protein_length",
-            "% Coverage of reference sequence": "coverage_percentage",
-            "% Identity to reference sequence": "sequence_identity",
-            "Alignment length": None,
-            "Accession of closest sequence": "reference_accession",
-            "Name of closest sequence": None,
-            "HMM id": None,
-            "HMM description": None,
-            "AA Mutation": "amino_acid_mutation",
-            "genetic_variation_type": "genetic_variation_type",
-        }
-
-        with open(source) as fh:
-            header = next(fh).strip().split("\t")
-            try:
-                first_result = next(fh)
-                prot_id = header.index("Protein identifier") 
-                if first_result.strip().split("\t")[prot_id] == "NA":
-                    self.field_mapping = nucleotide_field_mapping
-                else:
-                    self.field_mapping = protein_field_mapping
-            except StopIteration:
-                # doesn't really matter which mapping as this error indicates
-                # this is an empty results file
-                self.field_mapping = nucleotide_field_mapping
-
-        super().__init__(source, self.field_mapping, self.metadata)
+        # We pass None for the field_map as it differs depending on
+        # whether we return a nucleotide or protein variant detection.
+        # TODO: refactor field_map out of super's constructor, and make
+        # it a parameter on super's hARMonize().
+        super().__init__(source, None, self.metadata)
 
     def parse(self, handle):
         """
@@ -98,10 +76,15 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
         skipped_truncated = 0
         reader = csv.DictReader(handle, delimiter="\t")
         for result in reader:
-            # replace NA value with None for consitency
+
+            # replace NA value with None for consistency
             for field, value in result.items():
                 if value == "NA":
                     result[field] = None
+
+            # Skip reported virulence genes
+            if result['Type'] == "VIRULENCE":
+                continue
 
             # AFP reports partial hits so to avoid misleadingly listing these
             # as present skip results with INTERNAL_STOP
@@ -113,24 +96,27 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
             # "POINT" indicates mutational resistance
             # amrfinderplus has no special fields but the mutation itself is
             # appended to the symbol name so we want to split this
-            result["AA Mutation"] = None
-            result["Nucleotide Mutation"] = None
-            result["genetic_variation_type"] = GENE_PRESENCE
+            result['amino_acid_mutation'] = None
+            result['nucleotide_mutation'] = None
+            result['genetic_variation_type'] = GENE_PRESENCE
+            field_map = self.nuc_field_map
 
-            if result["Element subtype"] == "POINT":
-                gene_symbol, mutation = result["Gene symbol"].rsplit("_", 1)
-                result["Gene symbol"] = gene_symbol
+            if result['Subtype'] == "POINT":
+                gene_symbol, mutation = result['Element symbol'].rsplit("_", 1)
+                result['Element symbol'] = gene_symbol
                 _, ref, pos, alt, _ = re.split(r"(\D+)(\d+)(\D+)", mutation)
                 # this means it is a protein mutation
-                if result["Method"] in ["POINTX", "POINTP"]:
-                    result["AA Mutation"] = f"p.{ref}{pos}{alt}"
-                    result["genetic_variation_type"] = AMINO_ACID_VARIANT
-                elif result["Method"] == "POINTN":
+                if result['Method'] in ["POINTX", "POINTP"]:
+                    field_map = self.prot_field_map
+                    result['amino_acid_mutation'] = f"p.{ref}{pos}{alt}"
+                    result['genetic_variation_type'] = AMINO_ACID_VARIANT
+                elif result['Method'] == "POINTN":
                     # e.g., 23S_G2032G ampC_C-11C -> c.2032G>G
-                    result["Nucleotide Mutation"] = f"c.{pos}{ref}>{alt}"
-                    result["genetic_variation_type"] = NUCLEOTIDE_VARIANT
+                    result['nucleotide_mutation'] = f"c.{pos}{ref}>{alt}"
+                    result['genetic_variation_type'] = NUCLEOTIDE_VARIANT
 
-            yield self.hAMRonize(result, self.metadata)
+            # This uses the "override hack" that should probably be cleaned up
+            yield self.hAMRonize(result, self.metadata, field_map)
 
         if skipped_truncated > 0:
             warnings.warn(f"Skipping {skipped_truncated} records with INTERNAL_STOP "
