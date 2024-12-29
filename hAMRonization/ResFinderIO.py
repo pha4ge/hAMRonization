@@ -67,7 +67,7 @@ class ResFinderIterator(hAMRonizedResultIterator):
             # optional
             res.coverage_percentage = _safe_round(r.get('coverage'), 1)
             res.coverage_depth = None  # we may have this for mutations detected from reads
-            res.coverage_ratio = None if not r.get('coverage') else round(r.get('coverage')/100.0, 3)
+            res.coverage_ratio = None
             res.input_sequence_id = r.get('query_id')
             res.input_gene_length = _get_length(r.get('query_start_pos'), r.get('query_end_pos'))
             res.input_gene_start = _get_start_pos(r.get('query_start_pos'), r.get('query_end_pos'))
