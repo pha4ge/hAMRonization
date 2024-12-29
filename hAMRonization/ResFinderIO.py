@@ -118,9 +118,9 @@ class ResFinderIterator(hAMRonizedResultIterator):
                     _codon.append(v.get('codon_change'))
 
                 # Add the content of the list fields to the bags above
-                fold(lambda s, e: s.add(e), _phenos, v.get('phenotypes', []))
-                fold(lambda s, e: s.add(e), _notes, v.get('notes', []))
-                fold(lambda s, e: s.add(e), _pmids, v.get('pmids', []))
+                _phenos.update(v.get('phenotypes', []))
+                _notes.update(v.get('notes', []))
+                _pmids.update(v.get('pmids', []))
 
             # We have collected all variations on region r, now collapse into fields on res
             res.predicted_phenotype = _empty_to_none(", ".join(filter(None, _phenos)))
