@@ -63,6 +63,8 @@ class ResFinderIterator(hAMRonizedResultIterator):
             res.gene_symbol = r.get('name', "unspecified")
             res.gene_name = r.get('name', "unspecified")
             res.reference_accession = r.get('ref_acc', r.get('ref_id', r.get('key', "unknown")))
+            res.reference_database_name = _get_db_name(r.get('ref_database'))
+            res.reference_database_version = _get_db_ver(r.get('ref_database'))
 
             # optional
             res.coverage_percentage = _safe_round(r.get('coverage'), 1)
@@ -145,11 +147,9 @@ class ResFinderIterator(hAMRonizedResultIterator):
         #     - for each r report one AMINO_ACID_VARIANT record, collapsing the seq_variations
         for p in filter(lambda d: d.get('amr_resistant', False), data['phenotypes'].values()):
 
-            # Set the fields available on phenotype object
+            # Set the fields available on the phenotype object
             res.drug_class = ", ".join(p.get('amr_classes', []))
             res.antimicrobial_agent = p.get('amr_resistance', "unspecified")
-            res.reference_database_name = _get_db_name(p.get('ref_database'))
-            res.reference_database_version = _get_db_ver(p.get('ref_database'))
 
             # Iterate r over the regions (AMR genes) referenced by p, and yield each in turn
             for r in map(lambda k: data['seq_regions'][k], p.get('seq_regions', [])):
