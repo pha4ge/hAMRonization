@@ -100,8 +100,8 @@ def test_amrfinderplus():
         assert result.input_protein_length == 391
 
         # missing data in report
-        assert result.reference_gene_length == None
-        assert result.input_gene_length == None
+        assert result.reference_gene_length is None
+        assert result.input_gene_length is None
         assert result.coverage_depth is None
         assert result.coverage_ratio is None
         assert result.resistance_mechanism is None
@@ -428,7 +428,7 @@ def test_resfinder():
             assert result.amino_acid_mutation_interpretation is None
 
         else:
-            assert result.genetic_variation_type == False  # just to stop
+            assert result.genetic_variation_type is False  # just to stop
 
     # Check that we saw all
     assert seen_genes == 4
