@@ -121,7 +121,7 @@ class AmrFinderPlusIterator(hAMRonizedResultIterator):
                 field_map = self.prot_field_map
             elif method.endswith('N'):
                 field_map = self.nuc_field_map
-            elif method in ['COMPLETE','HMM']:
+            elif method in ['COMPLETE', 'HMM']:
                 field_map = self.prot_field_map if have_prot else self.nuc_field_map
             else:
                 warnings.warn(f"Assuming unknown method {method} implies a protein detection"
