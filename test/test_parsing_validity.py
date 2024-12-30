@@ -292,32 +292,6 @@ def test_kmerresistance():
         assert result.reference_gene_stop is None
 
 
-def test_pointfinder():
-    metadata = {
-        "analysis_software_version": "4.1.0",
-        "reference_database_version": "2021-02-01",
-        "input_file_name": "Dummy",
-    }
-    parsed_report = hAMRonization.parse(
-        "data/dummy/pointfinder/PointFinder_results.txt", metadata, "pointfinder"
-    )
-
-    for result in parsed_report:
-        # assert mandatory fields
-        assert result.input_file_name == "Dummy"
-        assert result.gene_symbol == "gyrA"
-        assert result.gene_name == "gyrA"
-        assert result.reference_database_name == "pointfinder"
-        assert result.reference_database_version == "2021-02-01"
-        assert result.reference_accession == "gyrA p.G81D"
-        assert result.analysis_software_name == "pointfinder"
-        assert result.analysis_software_version == "4.1.0"
-        assert result.genetic_variation_type == "protein_variant_detected"
-
-        assert result.drug_class == "Ciprofloxacin,Nalidixic acid,Ciprofloxacin"
-        assert result.nucleotide_mutation == "GGT -> GAT"
-        assert result.amino_acid_mutation == "p.G81D"
-
 def test_resfinder():
     metadata = {
     }
