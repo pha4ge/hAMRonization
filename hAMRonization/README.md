@@ -4,7 +4,7 @@ All reimplemented by @fmaguire in refactored code.
 
 Original parser and mapping authors:
 - AbricateIO.py: @dfornika 
-- AmrFinderPlusIO.py: @dfornika @fmaguire
+- AmrFinderPlusIO.py: @zwets @dfornika @fmaguire
 - AmrPlusPlusIO.py: @fmaguire
 - AribaIO.py: @fmaguire
 - CSStarIO.py: @fmaguire
@@ -12,7 +12,7 @@ Original parser and mapping authors:
 - GrootIO.py: @fmaguire
 - KmerResistanceIO.py: @fmaguire
 - ResFamsIO.py: @fmaguire
-- ResFinderIO.py: @raphenya @fmaguire
+- ResFinderIO.py: @zwets @raphenya @fmaguire
 - PointFinderIO.py: @fmaguire
 - RgiIO.py: @dfornika @raphenya @fmaguire
 - SraxIO.py: @fmaguire
