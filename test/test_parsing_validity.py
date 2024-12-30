@@ -354,11 +354,10 @@ def test_resfinder():
             assert result.reference_database_version == "2.4.0"
             assert result.reference_accession == "EU370913"
 
-            # optional fields (13)
+            # optional fields (12)
             assert result.predicted_phenotype == "ciprofloxacin, nalidixic acid, trimethoprim, chloramphenicol"
             assert result.predicted_phenotype_confidence_level == "Must be in an operon with oqxB,phenotype differs based on genomic location of the operon PMID 25801572,also nitrofurantoin resistance PMID 26552976. Natural in K. pneumoniae. PMIDs: 18440636"
             assert result.coverage_percentage == 100.0
-            assert result.coverage_ratio == 1.0
             assert result.input_sequence_id == "contig1"
             assert result.input_gene_length == 1176
             assert result.input_gene_start == 101
@@ -369,8 +368,9 @@ def test_resfinder():
             assert result.reference_gene_stop == 1176
             assert result.sequence_identity == 100.0
 
-            # not set (12)
+            # not set (13)
             assert result.coverage_depth is None
+            assert result.coverage_ratio is None
             assert result.input_protein_length is None
             assert result.input_protein_start is None
             assert result.input_protein_stop is None
@@ -400,7 +400,6 @@ def test_resfinder():
             assert result.predicted_phenotype == "ampicillin"
             assert result.predicted_phenotype_confidence_level == "The nineteen pbp5 mutations must be present simultaneously for resistance phenotype. PMIDs: 25182648"
             assert result.coverage_percentage == 100.0
-            assert result.coverage_ratio == 1.0
             assert result.input_sequence_id == "contig2"
             assert result.input_gene_length == 2037
             assert result.input_gene_start == 64029
@@ -411,13 +410,14 @@ def test_resfinder():
             assert result.reference_gene_stop == 2037
             assert result.sequence_identity == 95.34
 
-            # mutation fields (2)
+            # mutation fields (3)
             assert result.amino_acid_mutation == "p.V24A, p.S27G, p.R34Q, p.G66E, p.A68T, p.E85D, p.E100Q, p.K144Q, p.T172A, p.L177I, p.D204G, p.A216S, p.T324A, p.N496K, p.A499T, p.E525D, p.P667S"
             assert result.nucleotide_mutation is None
             assert result.nucleotide_mutation_interpretation == "Codon changes: gta>gca agt>ggt cgg>cag gga>gaa gca>aca gaa>gat gag>cag aaa>caa aca>gca tta>ata gac>ggc gca>tcc aca>gca aat>aaa gca>aca gag>gat ccc>tcg"
 
             # not set (10)
             assert result.coverage_depth is None
+            assert result.coverage_ratio is None
             assert result.input_protein_length is None
             assert result.input_protein_start is None
             assert result.input_protein_stop is None
