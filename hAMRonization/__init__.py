@@ -37,7 +37,6 @@ _FormatToIterator = {
     "resfams": ResFamsIO.ResFamsIterator,
     "tbprofiler": TBProfilerIO.TBProfilerIterator,
     "mykrobe": MykrobeIO.MykrobeIterator,
-    "pointfinder": ResFinderIO.ResFinderIterator,
     "fargene": FARGeneIO.FARGeneIOIterator,
 }
 
@@ -58,7 +57,6 @@ _ReportFileToUse = {
     "resfams": "resfams.tblout",
     "tbprofiler": "OUTPUT.results.json",
     "mykrobe": "OUTPUT.json",
-    "pointfinder": "data_pointfinder.json",
     "fargene": "retrieved-genes-*-hmmsearched.out"
 }
 
@@ -76,7 +74,6 @@ _RequiredToolMetadata = {
     "resfams": ResFamsIO.required_metadata,
     "resfinder": ResFinderIO.required_metadata,
     "mykrobe": MykrobeIO.required_metadata,
-    "pointfinder": ResFinderIO.required_metadata,
     "rgi": RgiIO.required_metadata,
     "srax": SraxIO.required_metadata,
     "srst2": Srst2IO.required_metadata,
