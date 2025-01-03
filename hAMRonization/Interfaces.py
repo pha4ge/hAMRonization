@@ -50,16 +50,24 @@ class hAMRonizedResultIterator(ABC):
         except Exception:
             self.stream.close()
 
-    def hAMRonize(self, report_data, metadata):
+    # TODO: the field_map_override is a half-hack to support the scenario
+    # (as for amrfinderplus) where different records need different mappings,
+    # so setting a field_map in the constructor makes no sense.
+    # It might be cleaner to remove it from the constructor altogether and
+    # make it a parameter of this method (which is the only place where it
+    # is referenced anyway), and subclasses can trivially pass it in.
+    def hAMRonize(self, report_data, metadata, field_map_override=None):
         """
         Convert a line of parsed AMR report in original format to the
         hAMRonization specification
-        - report_result parsed dict of single results from report
-        - metadata dict of additional metadata fields that need added
+        - report_data parsed dict of single result from report
+        - metadata dict of additional metadata fields
+        - field_map_override optional override of field_map passed in c'tor
         """
         hAMRonized_result_data = {**metadata}
 
-        for original_field, hAMRonized_field in self.field_map.items():
+        field_map = field_map_override or self.field_map
+        for original_field, hAMRonized_field in field_map.items():
             if hAMRonized_field:
                 hAMRonized_result_data[hAMRonized_field] = report_data[original_field]
 

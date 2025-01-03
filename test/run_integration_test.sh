@@ -10,10 +10,10 @@ hamronize abricate data/raw_outputs/abricate/report.tsv --reference_database_ver
 hamronize ariba data/raw_outputs/ariba/report.tsv --reference_database_version db_v_1 --reference_database_name dbname --input_file_name ariba_report --analysis_software_version ariba_v1 --format json --output hamronized_ariba.json
 hamronize ariba data/raw_outputs/ariba/report.tsv --reference_database_version db_v_1 --reference_database_name dbname --input_file_name ariba_report --analysis_software_version ariba_v1 --format tsv --output hamronized_ariba.tsv
 
-hamronize amrfinderplus --input_file_name amrfinderplus_nucleotide_report --analysis_software_version AFP_nt_v1 --reference_database_version db_v_1 data/raw_outputs/amrfinderplus/report_nucleotide.tsv --format json --output hamronized_amrfinderplus_nt.json
-hamronize amrfinderplus --input_file_name amrfinderplus_nucleotide_report --analysis_software_version AFP_nt_v1 --reference_database_version db_v_1 data/raw_outputs/amrfinderplus/report_nucleotide.tsv --format tsv --output hamronized_amrfinderplus_nt.tsv
-hamronize amrfinderplus --input_file_name amrfinderplus_protein_report --analysis_software_version AFP_aa_v1 --reference_database_version db_v_1 data/raw_outputs/amrfinderplus/report_protein.tsv --format json --output hamronized_amrfinderplus_aa.json
-hamronize amrfinderplus --input_file_name amrfinderplus_protein_report --analysis_software_version AFP_aa_v1 --reference_database_version db_v_1 data/raw_outputs/amrfinderplus/report_protein.tsv --format tsv --output hamronized_amrfinderplus_aa.tsv
+hamronize amrfinderplus --input_file_name afp_nt_report --analysis_software_version AFP4 --reference_database_version v4 data/raw_outputs/amrfinderplus/report_nucleotide.tsv --format json --output hamronized_amrfinderplus_nt.json
+hamronize amrfinderplus --input_file_name afp_nt_report --analysis_software_version AFP4 --reference_database_version v4 data/raw_outputs/amrfinderplus/report_nucleotide.tsv --format tsv --output hamronized_amrfinderplus_nt.tsv
+hamronize amrfinderplus --input_file_name afp_aa_report --analysis_software_version AFP4 --reference_database_version v4 data/raw_outputs/amrfinderplus/report_protein.tsv --format json --output hamronized_amrfinderplus_aa.json
+hamronize amrfinderplus --input_file_name afp_aa_report --analysis_software_version AFP4 --reference_database_version v4 data/raw_outputs/amrfinderplus/report_protein.tsv --format tsv --output hamronized_amrfinderplus_aa.tsv
 
 hamronize rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --reference_database_version card_v1 data/raw_outputs/rgi/rgi.txt --format json --output hamronized_rgi.json
 hamronize rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --reference_database_version card_v1 data/raw_outputs/rgi/rgi.txt --format tsv --output hamronized_rgi.tsv
@@ -26,9 +26,6 @@ hamronize rgi --input_file_name rgi_report --analysis_software_version rgi_v1 --
 # ResFinder needs no metadata as it fetches everything (including input file, software and database version) from the JSON data
 hamronize resfinder data/raw_outputs/resfinder/data_resfinder.json --format json --output hamronized_resfinder.json
 hamronize resfinder data/raw_outputs/resfinder/data_resfinder.json --format tsv --output hamronized_resfinder.tsv
-
-hamronize pointfinder --input_file_name pointfinder_report --analysis_software_version resfinder_v4 --reference_database_version pointfinder_db_v1 data/raw_outputs/pointfinder/PointFinder_results.txt --format json --output hamronized_pointfinder.json
-hamronize pointfinder --input_file_name pointfinder_report --analysis_software_version resfinder_v4 --reference_database_version pointfinder_db_v1 data/raw_outputs/pointfinder/PointFinder_results.txt --format tsv --output hamronized_pointfinder.tsv
 
 hamronize srax --reference_database_name srax_default --input_file_name srax_report --reference_database_version srax_db_v1 --analysis_software_version srax_v1 --format json data/raw_outputs/srax/sraX_detected_ARGs.tsv --output hamronized_srax.json
 hamronize srax --reference_database_name srax_default --input_file_name srax_report --reference_database_version srax_db_v1 --analysis_software_version srax_v1 --format tsv data/raw_outputs/srax/sraX_detected_ARGs.tsv --output hamronized_srax.tsv

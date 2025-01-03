@@ -8,7 +8,7 @@
 # hAMRonization 
 
 This repo contains the hAMRonization module and CLI parser tools combine the outputs of 
-18 disparate antimicrobial resistance gene detection tools into a single unified format.
+17 disparate antimicrobial resistance gene detection tools into a single unified format.
 
 This is an implementation of the [hAMRonization AMR detection specification scheme](docs/hAMRonization_specification_details.csv) which supports gene presence/absence resistance and mutational resistance (if supported by the underlying tool).
 
@@ -66,7 +66,7 @@ options:
   -v, --version         show program's version number and exit
 
 Tools with hAMRonizable reports:
-  {abricate,amrfinderplus,amrplusplus,ariba,csstar,deeparg,fargene,groot,kmerresistance,resfams,resfinder,mykrobe,pointfinder,rgi,srax,srst2,staramr,tbprofiler,summarize}
+  {abricate,amrfinderplus,amrplusplus,ariba,csstar,deeparg,fargene,groot,kmerresistance,resfams,resfinder,mykrobe,rgi,srax,srst2,staramr,tbprofiler,summarize}
     abricate            hAMRonize abricate's output report i.e., OUTPUT.tsv
     amrfinderplus       hAMRonize amrfinderplus's output report i.e., OUTPUT.tsv
     amrplusplus         hAMRonize amrplusplus's output report i.e., gene.tsv
@@ -80,11 +80,8 @@ Tools with hAMRonizable reports:
                         report`)
     kmerresistance      hAMRonize kmerresistance's output report i.e., OUTPUT.res
     resfams             hAMRonize resfams's output report i.e., resfams.tblout
-    resfinder           hAMRonize resfinder's output report i.e.,
-                        ResFinder_results_tab.txt
+    resfinder           hAMRonize resfinder's JSON output report (use -j to produce)
     mykrobe             hAMRonize mykrobe's output report i.e., OUTPUT.json
-    pointfinder         hAMRonize pointfinder's output report i.e.,
-                        PointFinder_results.txt
     rgi                 hAMRonize rgi's output report i.e., OUTPUT.txt or
                         OUTPUT_bwtoutput.gene_mapping_data.txt
     srax                hAMRonize srax's output report i.e., sraX_detected_ARGs.tsv
@@ -193,7 +190,7 @@ If you want to write multiple reports to one file, this `.write` method can acce
 Currently implemented parsers and the last tool version for which they have been validated:
 
 1. [abricate](hAMRonization/AbricateIO.py): last updated for v1.0.0
-2. [amrfinderplus](hAMRonization/AmrFinderPlusIO.py): last updated for v3.12.18
+2. [amrfinderplus](hAMRonization/AmrFinderPlusIO.py): last updated for v4.0.3
 3. [amrplusplus](hAMRonization/AmrPlusPlusIO.py): last updated for c6b097a
 4. [ariba](hAMRonization/AribaIO.py): last updated for v2.14.6
 5. [csstar](hAMRonization/CSStarIO.py): last updated for v2.1.0
@@ -202,7 +199,7 @@ Currently implemented parsers and the last tool version for which they have been
 8. [groot](hAMRonization/GrootIO.py): last updated for v1.1.2
 9. [kmerresistance](hAMRonization/KmerResistanceIO.py): late updated for v2.2.0
 10. [mykrobe](test/data/raw_outputs/mykrobe/report.json): last updated for v0.8.1
-11. [pointfinder](hAMRonization/PointFinderIO.py): last updated for v4.1.0
+11. ~pointfinder~ (removed, PointFinder is now integrated in ResFinder)
 12. [resfams](hAMRonization/ResFamsIO.py): last updated for hmmer v3.3.2
 13. [resfinder](hAMRonization/ResFinderIO.py): last updated for v4.6.0
 14. [rgi](hAMRonization/RgiIO.py) (includes RGI-BWT) last updated for v5.2.0
@@ -263,13 +260,12 @@ First fork this repository and set up a development environment (replacing `YOUR
 
 ```
 git clone https://github.com/YOURUSERNAME/hAMRonization
-conda create -n hAMRonization 
+conda create -n hAMRonization python pip pytest flake8
 conda activate hAMRonization
 cd hAMRonization
-pip install pytest flake8
 pip install -e .
-
 ```
+
 ## Testing and Linting
 
 On every commit github actions automatically runs tests and linting to check
