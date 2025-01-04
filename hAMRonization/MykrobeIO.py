@@ -76,7 +76,7 @@ class MykrobeIterator(hAMRonizedResultIterator):
 
         sample_names = list(data.keys())
         if len(sample_names) == 0:
-            return # take an empty JSON object as a success but with no results
+            return  # take an empty JSON object as a success but with no results
         assert len(sample_names) == 1, "can only parse output with a single "
         "sample currently, found {}".format(len(sample_names))
         sample_name = sample_names[0]

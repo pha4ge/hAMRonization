@@ -823,6 +823,15 @@ def test_tbprofiler():
         assert result.reference_gene_stop is None
 
 
+def test_mykrobe_empty():
+    metadata = {}
+    parsed_report = hAMRonization.parse(
+        "data/dummy/mykrobe/empty.json", metadata, "mykrobe"
+    )
+    for result in parsed_report:
+        assert False # there should be none
+
+
 def test_mykrobe():
     metadata = {}
     parsed_report = hAMRonization.parse(
