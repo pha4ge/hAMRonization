@@ -1,4 +1,3 @@
-import setuptools
 import re
 from distutils.core import setup
 
@@ -7,7 +6,7 @@ with open('README.md') as fh:
 
 with open('hAMRonization/__init__.py') as fh:
     info = fh.read()
-    version = re.search('^__version__\s*=\s*"(.*)"',
+    version = re.search('^__version__\\s*=\\s*"(.*)"',
                         info, re.M).group(1)
 
 setup(
