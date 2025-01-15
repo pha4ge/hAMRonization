@@ -315,11 +315,11 @@ def test_resfinder():
             seen_genes += 1
 
             # it reports these 4 agents separately (even if all on one gene)
-            assert (result.antimicrobial_agent, result.drug_class) in [ 
+            assert (result.antimicrobial_agent, result.drug_class) in [
                 ('ciprofloxacin', 'quinolone'),
                 ('nalidixic acid', 'quinolone'),
                 ('trimethoprim', 'folate pathway antagonist'),
-                ('chloramphenicol', 'amphenicol') ]
+                ('chloramphenicol', 'amphenicol')]
 
             # assert mandatory fields (5)
             assert result.gene_symbol == "OqxA"
@@ -330,7 +330,10 @@ def test_resfinder():
 
             # optional fields (12)
             assert result.predicted_phenotype == "ciprofloxacin, nalidixic acid, trimethoprim, chloramphenicol"
-            assert result.predicted_phenotype_confidence_level == "Must be in an operon with oqxB,phenotype differs based on genomic location of the operon PMID 25801572,also nitrofurantoin resistance PMID 26552976. Natural in K. pneumoniae. PMIDs: 18440636"
+            assert result.predicted_phenotype_confidence_level == (
+                "Must be in an operon with oqxB," +
+                "phenotype differs based on genomic location of the operon PMID 25801572," +
+                "also nitrofurantoin resistance PMID 26552976. Natural in K. pneumoniae. PMIDs: 18440636")
             assert result.coverage_percentage == 100.0
             assert result.input_sequence_id == "contig1"
             assert result.input_gene_length == 1176
@@ -372,7 +375,9 @@ def test_resfinder():
             assert result.antimicrobial_agent == "ampicillin"
             assert result.drug_class == "beta-lactam"
             assert result.predicted_phenotype == "ampicillin"
-            assert result.predicted_phenotype_confidence_level == "The nineteen pbp5 mutations must be present simultaneously for resistance phenotype. PMIDs: 25182648"
+            assert result.predicted_phenotype_confidence_level == (
+                "The nineteen pbp5 mutations must be present simultaneously " +
+                "for resistance phenotype. PMIDs: 25182648")
             assert result.coverage_percentage == 100.0
             assert result.input_sequence_id == "contig2"
             assert result.input_gene_length == 2037
@@ -385,9 +390,13 @@ def test_resfinder():
             assert result.sequence_identity == 95.34
 
             # mutation fields (3)
-            assert result.amino_acid_mutation == "p.V24A, p.S27G, p.R34Q, p.G66E, p.A68T, p.E85D, p.E100Q, p.K144Q, p.T172A, p.L177I, p.D204G, p.A216S, p.T324A, p.N496K, p.A499T, p.E525D, p.P667S"
+            assert result.amino_acid_mutation == (
+                "p.V24A, p.S27G, p.R34Q, p.G66E, p.A68T, p.E85D, p.E100Q, p.K144Q, p.T172A, " +
+                "p.L177I, p.D204G, p.A216S, p.T324A, p.N496K, p.A499T, p.E525D, p.P667S")
             assert result.nucleotide_mutation is None
-            assert result.nucleotide_mutation_interpretation == "Codon changes: gta>gca agt>ggt cgg>cag gga>gaa gca>aca gaa>gat gag>cag aaa>caa aca>gca tta>ata gac>ggc gca>tcc aca>gca aat>aaa gca>aca gag>gat ccc>tcg"
+            assert result.nucleotide_mutation_interpretation == (
+                "Codon changes: gta>gca agt>ggt cgg>cag gga>gaa gca>aca gaa>gat gag>cag aaa>caa " +
+                "aca>gca tta>ata gac>ggc gca>tcc aca>gca aat>aaa gca>aca gag>gat ccc>tcg")
 
             # not set (10)
             assert result.coverage_depth is None
@@ -407,6 +416,7 @@ def test_resfinder():
     # Check that we saw all
     assert seen_genes == 4
     assert seen_variants == 1
+
 
 def test_rgi_variants():
     metadata = {
@@ -435,6 +445,8 @@ def test_rgi_variants():
         assert result.drug_class == "aminocoumarin antibiotic"
         assert result.sequence_identity == 99.88
         assert result.resistance_mechanism == "antibiotic target alteration"
+        assert result.antimicrobial_agent == ''
+
 
 def test_rgi_orf_mode():
     metadata = {
@@ -447,30 +459,27 @@ def test_rgi_orf_mode():
     for result in parsed_report:
         # assert mandatory fields
         assert result.input_file_name == "Dummy ORF"
-        assert result.gene_symbol == "NDM-5"
-        assert (
-            result.gene_name
-            == "NDM beta-lactamase"
-        )
+        assert result.gene_symbol == "NDM-1"
+        assert result.gene_name == "NDM beta-lactamase"
         assert result.reference_database_name == "CARD"
         assert result.reference_database_version == "3.2.5"
-        assert result.reference_accession == "3000467"
+        assert result.reference_accession == "3000589"
         assert result.analysis_software_name == "rgi"
         assert result.analysis_software_version == "6.0.0"
         assert result.genetic_variation_type == "gene_presence_detected"
 
         # optional fields - present in dummy dataset
-        assert result.input_sequence_id == "gb|AEN03071.1|+|NDM-5 [Escherichia coli]"
-        assert result.input_gene_start == ''
-        assert result.input_gene_stop == ''
-        assert result.strand_orientation == ''
-        assert (
-            result.drug_class
-            == "carbapenem; cephalosporin; cephamycin; penam"
-        )
+        assert result.input_sequence_id == "ndm-1_1"
+        assert result.input_gene_start == 1
+        assert result.input_gene_stop == 813
+        assert result.strand_orientation == '+'
+        assert result.drug_class == "carbapenem; cephalosporin; penicillin beta-lactam"
         assert result.sequence_identity == 100
         assert result.coverage_percentage == 100
         assert result.resistance_mechanism == "antibiotic inactivation"
+        assert result.reference_gene_start == 0
+        assert result.reference_gene_stop == 810
+        assert result.antimicrobial_agent == "ertapenem; meropenem; imipenem"
 
 
 def test_rgi():
@@ -501,28 +510,27 @@ def test_rgi():
         assert result.input_gene_start == 1333608
         assert result.input_gene_stop == 1334783
         assert result.strand_orientation == "-"
-        assert (
-            result.drug_class
-            == "fluoroquinolone antibiotic; glycylcycline; tetracycline antibiotic; diaminopyrimidine antibiotic; nitrofuran antibiotic"
-        )
+        assert result.drug_class == (
+            "fluoroquinolone antibiotic; glycylcycline; tetracycline antibiotic; " +
+            "diaminopyrimidine antibiotic; nitrofuran antibiotic")
         assert result.sequence_identity == 99.49
         assert result.coverage_percentage == 100
         assert result.resistance_mechanism == "antibiotic efflux"
 
         # missing data in report
-        assert result.reference_gene_length is None
         assert result.coverage_depth is None
-        assert result.input_gene_length is None
-        assert result.antimicrobial_agent is None
-        assert result.reference_protein_length is None
         assert result.coverage_ratio is None
+        assert result.input_gene_length is None
         assert result.input_protein_length is None
         assert result.input_protein_start is None
         assert result.input_protein_stop is None
+        assert result.reference_gene_length is None
+        assert result.reference_gene_start == 0
+        assert result.reference_gene_stop == 1173
+        assert result.reference_protein_length is None
         assert result.reference_protein_start is None
         assert result.reference_protein_stop is None
-        assert result.reference_gene_start is None
-        assert result.reference_gene_stop is None
+        assert result.antimicrobial_agent == 'tigecycline; ciprofloxacin; nitrofurantoin; trimethoprim'
 
 
 def test_srax():
@@ -825,11 +833,9 @@ def test_tbprofiler():
 
 def test_mykrobe_empty():
     metadata = {}
-    parsed_report = hAMRonization.parse(
-        "data/dummy/mykrobe/empty.json", metadata, "mykrobe"
-    )
+    parsed_report = hAMRonization.parse("data/dummy/mykrobe/empty.json", metadata, "mykrobe")
     for result in parsed_report:
-        assert False # there should be none
+        assert False  # there should be none
 
 
 def test_mykrobe():
@@ -957,6 +963,7 @@ def test_resfams():
         assert result.analysis_software_version == "0.0.1"
         assert result.genetic_variation_type == "gene_presence_detected"
         assert result.reference_database_name == "resfams_hmms"
+
 
 def test_fargene():
     metadata = {
