@@ -71,11 +71,6 @@ def test_summarize_empty_reports():
         output_location="amrfinderplus_empty_summarize.json", output_format="json"
     )
 
-    rgi_metadata = {
-        "analysis_software_version": "5.1.0",
-        "reference_database_version": "2019-Jul-28",
-        "input_file_name": "Non-empty report",
-    }
     rgi_parsed_report = hAMRonization.parse(
         "data/raw_outputs/rgi/rgi.txt", metadata, "rgi"
     )

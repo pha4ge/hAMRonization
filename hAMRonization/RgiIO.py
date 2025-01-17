@@ -36,8 +36,7 @@ class RgiIterator(hAMRonizedResultIterator):
                     "Reference Model Type": "genetic_variation_type",
                     "Reference DB": "reference_database_name",
                     "Alleles with Mapped Reads": None,
-                    "Reference Allele(s) Identity "
-                    "to CARD Reference Protein (%)": "sequence_identity",
+                    "Reference Allele(s) Identity to CARD Reference Protein (%)": "sequence_identity",
                     "Resistomes & Variants: Observed in Genome(s)": None,
                     "Resistomes & Variants: Observed in Plasmid(s)": None,
                     "Resistomes & Variants: Observed Pathogen(s)": None,
@@ -50,11 +49,9 @@ class RgiIterator(hAMRonizedResultIterator):
                     "Number of Mapped Baits": None,
                     "Number of Mapped Baits with Reads": None,
                     "Average Number of reads per Bait": None,
-                    "Number of reads per Bait " "Coefficient of Variation (%)": None,
-                    "Number of reads mapping to baits "
-                    "and mapping to complete gene": None,
-                    "Number of reads mapping to baits and "
-                    "mapping to complete gene (%)": None,
+                    "Number of reads per Bait Coefficient of Variation (%)": None,
+                    "Number of reads mapping to baits and mapping to complete gene": None,
+                    "Number of reads mapping to baits and mapping to complete gene (%)": None,
                     "Mate Pair Linkage (# reads)": None,
                     "Reference Length": "reference_gene_length",
                     "AMR Gene Family": "gene_name",
@@ -91,6 +88,9 @@ class RgiIterator(hAMRonizedResultIterator):
                     "Model_ID": None,
                     "Nudged": None,
                     "Note": None,
+                    "Hit_Start": "reference_gene_start",
+                    "Hit_End": "reference_gene_stop",
+                    "Antibiotic": "antimicrobial_agent",
                 }
                 # if RGI is run on ORFs then Contig should be None
                 # and input_sequence_id should the ORF_ID i.e., reverse of
@@ -114,16 +114,14 @@ class RgiIterator(hAMRonizedResultIterator):
         # skip any manually specified fields for later
         reader = csv.DictReader(handle, delimiter="\t")
         for result in reader:
+            result["_nucleotide_mutation"] = None
+            result["_amino_acid_mutation"] = None
+
             # rgi-bwt mode doesn't support variant mutations
             if "Model_type" not in result:
-                result["_nucleotide_mutation"] = None
-                result["_amino_acid_mutation"] = None
                 result["Reference Model Type"] = GENE_PRESENCE
             # normal RGI model
             else:
-                result["_nucleotide_mutation"] = None
-                result["_amino_acid_mutation"] = None
-
                 if result["SNPs_in_Best_Hit_ARO"] == "n/a":
                     result["SNPs_in_Best_Hit_ARO"] = None
 

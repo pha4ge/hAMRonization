@@ -7,14 +7,16 @@ import re
 from datetime import datetime
 from ast import literal_eval
 
-FIELDNAMES = ['Interface Label','Required/Optional','Definition','Ontology','Value Type','Example','Guidance','Values']
+FIELDNAMES = ['Interface Label', 'Required/Optional', 'Definition', 'Ontology', 'Value Type', 'Example', 'Guidance', 'Values']
 SEPARATOR = ','
 QUOTE = '"'
+
 
 def string_list_to_list(string):
     to_list = literal_eval(string)
     to_list = [n.strip() for n in to_list]
     return to_list
+
 
 def interface_label_to_property_key(interface_label):
     property_key = re.sub(r'[^\w {}]', '_', interface_label).replace(' ', '_').replace('__', '_').lower()
@@ -35,7 +37,7 @@ def parse_properties_table(path_to_properties_table):
         "SRA_ID": "string",
         "Genbank_ID": "string",
         "GISAID_ID": "string",
-        "Enums":{
+        "Enums": {
                 "type": "string",
                 "enum": "",
             },
@@ -74,8 +76,8 @@ def parse_properties_table(path_to_properties_table):
         "Bioproject_ID": "^PRJ(N|E|D)([a-zA-Z]?)[0-9]+*",
         "Biosample_ID": "^SAM(D|N|E([AG]?))[0-9]+",
         "SRA_ID": "^(SRR|ERR|DRR)[0-9]+",
-        "Genbank_ID": "^([a-zA-Z]{2})\d*.\d{1}",
-        "GISAID_ID": "^EPI_ISL_\d*",
+        "Genbank_ID": "^([a-zA-Z]{2})\\d*.\\d{1}",
+        "GISAID_ID": "^EPI_ISL_\\d*",
         "Integer_or_Range": None,
         "Enums": None
     }
@@ -112,15 +114,14 @@ def parse_properties_table(path_to_properties_table):
                 for i in range(len(examples)):
                     if '-' not in examples[i]:
                         examples[i] = int(examples[i])
-            
+
             # Special case: enumns
             if row['Value Type'] == "Enums":
                 type = datatype_map[row['Value Type']]
                 properties[property_key]['type'] = "string"
                 properties[property_key]['Enums'] = string_list_to_list(row['Values'])
-            
-            properties[property_key]['examples'] = examples
 
+            properties[property_key]['examples'] = examples
 
     return properties
 
@@ -128,7 +129,7 @@ def parse_properties_table(path_to_properties_table):
 def get_required_fields(path_to_properties_table):
     required_fields = set()
     with open(path_to_properties_table) as f:
-        reader = csv.DictReader(f, delimiter=SEPARATOR,quotechar=QUOTE)
+        reader = csv.DictReader(f, delimiter=SEPARATOR, quotechar=QUOTE)
         for row in reader:
             property_key = interface_label_to_property_key(row['Interface Label'])
             if row['Required/Optional'] == 'Required':
@@ -138,7 +139,7 @@ def get_required_fields(path_to_properties_table):
 
 
 def main(args):
-    
+
     schema = {
         "$schema": "http://json-schema.org/draft/2019-09/schema#",
         "version": datetime.now().isoformat(),
@@ -146,11 +147,10 @@ def main(args):
         "properties": {},
         "required": [],
     }
-    
+
     schema["properties"] = parse_properties_table(args.input)
     schema["required"] = get_required_fields(args.input)
-    
-    #print(json.dumps(schema))
+
     with open(args.input.replace("csv", "json"), "w") as fh:
         fh.write(json.dumps(schema))
 
