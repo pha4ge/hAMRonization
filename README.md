@@ -19,7 +19,7 @@ This supports a variety of summary options including an [interactive summary](ht
 
 ## Installation
 
-This tool requires python>=3.7 and [pandas](https://pandas.pydata.org/)
+This tool requires python>=3.9 and [pandas](https://pandas.pydata.org/)
 and the latest release can be installed directly from pip, conda, docker, this repository, or from the galaxy toolshed:
 ```
 pip install hAMRonization
@@ -30,16 +30,17 @@ pip install hAMRonization
 Or
 
 ```
-conda create --name hamronization --channel conda-forge --channel bioconda --channel defaults hamronization
+conda create --name hamronization --channel conda-forge --channel bioconda hamronization
 ```
 ![version-on-conda](https://anaconda.org/bioconda/hamronization/badges/version.svg)
 ![conda-download](https://anaconda.org/bioconda/hamronization/badges/downloads.svg)
 ![last-update-on-conda](https://anaconda.org/bioconda/hamronization/badges/latest_release_date.svg)
 
 
-Or to install using docker:
+Or to install and run using docker, podman, singularity:
 ```
-docker pull finlaymaguire/hamronization:latest
+docker pull docker.io/finlaymaguire/hamronization:latest
+docker run --rm docker.io/finlaymaguire/hamronization:latest hamronize --help
 ```
 
 Or to install the latest development version:

@@ -1,8 +1,8 @@
 # base image
-FROM python:3.9
+FROM python:3.9-alpine
 
 # metadata
-LABEL base.image="pathon:3.9"
+LABEL base.image="python:3.9"
 LABEL software="hAMRonization"
 ARG SOFTWARE_VERSION=unspecified
 LABEL software_version=$SOFTWARE_VERSION
@@ -15,15 +15,17 @@ LABEL tags="Genomics"
 # maintainer
 MAINTAINER Finlay Maguire <finlaymaguire@gmail.com>
 
+# add bash so Nextflow can run the container
+RUN apk add --no-cache bash && rm -rf /var/cache/apk/*
+
 # set the working directory in the container
 WORKDIR /hAMRonization
 
-# copy the dependencies file to the working directory
-COPY . /hAMRonization
+# copy the sources into the container
+COPY . /hAMRonization/src
 
-# install dependencies
-RUN python -m pip install hAMRonization
+# install dependencies and clean all up
+RUN python -m pip --no-cache-dir install ./src && rm -rf ./src
 
-# command to run on container start
-ENTRYPOINT ["hamronize"] 
-CMD ["--help"]
+# command to run on container start without args
+CMD ["hamronize", "--help"]

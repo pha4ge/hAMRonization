@@ -26,7 +26,7 @@ class ResFinderIterator(hAMRonizedResultIterator):
     def __init__(self, source, metadata):
 
         # We don't use metadata or field mapping so can just defer to super,
-        # which will open source and invoke our parse method with the open stream.
+        # which opens source and invokes our parse() on the open stream.
         super().__init__(source, dict(), metadata)
 
     def parse(self, handle):
@@ -42,7 +42,7 @@ class ResFinderIterator(hAMRonizedResultIterator):
         # Input data read in ResFinder 4.2+ JSON format.  This has three main elements:
         # - seq_regions: loci/genes that were found, keying into 0 or more phenotypes
         # - seq_variations: mutations that key into a seq_region and 0 or more phenotypes
-        # - phenotypes: antimicriobals keying back into the above objects
+        # - phenotypes: antimicrobials keying back into the above objects
         data = json.load(handle)
 
         # Helpers to fetch database names and versions from the JSON data
@@ -75,7 +75,7 @@ class ResFinderIterator(hAMRonizedResultIterator):
             res.input_gene_start = _get_start_pos(r.get('query_start_pos'), r.get('query_end_pos'))
             res.input_gene_stop = _get_end_pos(r.get('query_start_pos'), r.get('query_end_pos'))
             res.strand_orientation = _get_strand(r.get('query_start_pos'), r.get('query_end_pos'))
-            res.predicted_phenotype = _empty_to_none(", ".join(r.get('phenotypes', [])))
+            res.predicted_phenotype = 'antimicrobial resistance'  # we report only resistant phenotypes
             res.predicted_phenotype_confidence_level = _condense_notes(r.get('notes'), r.get('pmids'))
             res.reference_gene_length = r.get('ref_seq_length')
             res.reference_gene_start = r.get('ref_start_pos')
@@ -91,20 +91,19 @@ class ResFinderIterator(hAMRonizedResultIterator):
 
         # Setter for the hAMRonizedResult fields related to mutations
         def set_variation_fields(r, vs):
-            """Sets the mutation-specific fields in res, aggregating from all variations in vs on region r."""
+            """Sets the mutation-specific fields in res, aggregating from all variations vs."""
 
             # Bags to collect variations, phenotypes and notes across the variations
             _aa_vars = list()
             _nt_vars = list()
-            _codon = list()
-            _phenos = set()
+            _codons = list()
             _notes = set()
             _pmids = set()
 
-            # Iterate v over the variations in vs that lie on region r in order of their position
-            # (variation->regions strangely is a list, so we need to check if r.key is in it)
-            for v in sorted(filter(lambda v: r['key'] in v.get('seq_regions', []), vs),
-                            key=lambda v: v.get('ref_start_pos', 0)):
+            res.genetic_variation_type = NUCLEOTIDE_VARIANT
+
+            # Iterate v over the variations in vs in order of their position
+            for v in sorted(vs, key=lambda v: v.get('ref_start_pos', 0)):
 
                 # May need refinement to properly accommodate inserts and deletes,
                 # though it seems recent Res/PointFinder output uses HGVS coordinates.
@@ -117,19 +116,17 @@ class ResFinderIterator(hAMRonizedResultIterator):
 
                 _cod_chg = v.get('codon_change')
                 if _cod_chg:
-                    _codon.append(v.get('codon_change'))
+                    _codons.append(_cod_chg)
 
                 # Add the content of the list fields to the bags above
-                _phenos.update(v.get('phenotypes', []))
                 _notes.update(v.get('notes', []))
                 _pmids.update(v.get('pmids', []))
 
             # We have collected all variations on region r, now collapse into fields on res
-            res.predicted_phenotype = _empty_to_none(", ".join(filter(None, _phenos)))
             res.predicted_phenotype_confidence_level = _condense_notes(_notes, _pmids)
             res.amino_acid_mutation = _empty_to_none(", ".join(filter(None, _aa_vars)))
             res.nucleotide_mutation = _empty_to_none(", ".join(filter(None, _nt_vars)))
-            res.nucleotide_mutation_interpretation = ("Codon changes: " + " ".join(_codon)) if _codon else None
+            res.nucleotide_mutation_interpretation = ("Codon changes: " + " ".join(_codons)) if _codons else None
 
         # --- Do the actual work --- #
 
@@ -138,42 +135,64 @@ class ResFinderIterator(hAMRonizedResultIterator):
         res.analysis_software_name = data['software_name']
         res.analysis_software_version = data['software_version']
 
-        # We flatten the ResFinder data graph as follows
-        # - iterate over all phenotypes p (generally: antimicrobials) that have amr_resistant=true
-        #   - iterate over the seq_regions r referenced by p (generally: resistance genes)
-        #     - for each r report a GENE_PRESENCE
-        #   - group the seq_variations referenced by p by the seq_region r they lie on
-        #   - iterate over the regions r
-        #     - for each r report one AMINO_ACID_VARIANT record, collapsing the seq_variations
-        for p in filter(lambda d: d.get('amr_resistant', False), data['phenotypes'].values()):
+        # To obtain the AMR genes, we flatten the ResFinder data graph as follows
+        # - iterate over each region r
+        #   - iterate over phenotypes p that reference region r and are amr_resistant
+        #     - collect their amr_classes and antimicrobials
+        #   - emit a GENE_PRESENCE record if any AMR was found
+        for r in data['seq_regions'].values():
+            amr_cls = set()
+            amr_res = set()
 
-            # Set the fields available on the phenotype object
-            res.drug_class = ", ".join(p.get('amr_classes', []))
-            res.antimicrobial_agent = p.get('amr_resistance', "unspecified")
+            # Iterate p over the phenotypes that reference r and have amr_resistant set true
+            # and collect their AMR classes and antimicrobials
+            for p in filter(lambda p: r['key'] in p.get('seq_regions', [])
+                            and p.get('amr_resistant', False), data['phenotypes'].values()):
+                amr_cls.update(p.get('amr_classes', []))
+                amr_res.add(p.get('amr_resistance', "unspecified"))
 
-            # Iterate r over the regions (AMR genes) referenced by p, and yield each in turn
-            for r in map(lambda k: data['seq_regions'][k], p.get('seq_regions', [])):
+            # If we collected any AMR we emit the region as a GENE_PRESENCE record
+            if amr_cls or amr_res:
 
+                # Set the fields collected from the phenotypes and from the region object
                 res.genetic_variation_type = GENE_PRESENCE
+                res.drug_class = ", ".join(sorted(amr_cls))
+                res.antimicrobial_agent = ", ".join(sorted(amr_res))
                 set_shared_fields(r)
 
-                # Yield a new hAMRonizedResult ours using super's method as that may do the needful
+                # Yield a new hAMRonizedResult using super's method as that may do the needful
                 yield self.hAMRonize(None, res.__dict__)
 
-            # Collect the list of seq_variations (if any) referenced from phenotype p,
-            # and the set of regions that these mutations lie on, so that we iterate
-            # these regions and "collapse" all mutations for that region onto one record
-            vs = list(map(lambda k: data['seq_variations'][k], p.get('seq_variations', [])))
-            rs = set(fold(lambda a, v: a + v.get('seq_regions', []), [], vs))
+        # For the variants things are slightly more involved, as phenotypes don't reference
+        # seq_regions directly, but through seq_variations.  We have some indirection here.
 
-            # Iterate r over each region referenced by some set of variations, and yield each
-            for r in map(lambda k: data['seq_regions'][k], rs):
+        for r in data['seq_regions'].values():
+            amr_cls = set()
+            amr_res = set()
+            vs_dict = dict()
 
+            # We want to collect all variations vs that reference region r AND are referenced
+            # by a phenotype p that is amr_resistant.  Along the way we collect from the p
+            # the AMR classes and antimicriobials (to save us another iteration)
+            for v in filter(lambda v: r['key'] in v.get('seq_regions', []), data['seq_variations'].values()):
+                for p in filter(lambda p: v['key'] in p.get('seq_variations', [])
+                                and (p.get('amr_classes') or p.get('amr_resistance'))
+                                and p.get('amr_resistant', False), data['phenotypes'].values()):
+                    amr_cls.update(p.get('amr_classes', []))
+                    amr_res.add(p.get('amr_resistance', "unspecified"))
+                    vs_dict[v['key']] = v # need to do this in inner loop but dups will squish
+
+            # If we collected variants with resistant phenotypes then emit a record
+            if vs_dict:
+
+                # Set fields we collected plus the region and variant ones as above
                 res.genetic_variation_type = NUCLEOTIDE_VARIANT  # default may be overridden
+                res.drug_class = ", ".join(sorted(amr_cls))
+                res.antimicrobial_agent = ", ".join(sorted(amr_res))
                 set_shared_fields(r)
-                set_variation_fields(r, vs)
+                set_variation_fields(r, vs_dict.values())
 
-                # Yield a new hAMRonizedResult ours using super's method as that may do the needful
+                # Yield a new hAMRonizedResult using super's method as that may do the needful
                 yield self.hAMRonize(None, res.__dict__)
 
 
@@ -209,7 +228,7 @@ def _condense_notes(notes, pmids):
     lines += filter(None, notes)
     pmids = list(filter(None, pmids))
     if pmids:
-        lines.append("PMIDs: " + ", ".join(set(pmids)))
+        lines.append("PMIDs: " + ", ".join(sorted(set(pmids))))
     return ". ".join(lines) if lines else None
 
 

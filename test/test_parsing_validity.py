@@ -315,11 +315,8 @@ def test_resfinder():
             seen_genes += 1
 
             # it reports these 4 agents separately (even if all on one gene)
-            assert (result.antimicrobial_agent, result.drug_class) in [
-                ('ciprofloxacin', 'quinolone'),
-                ('nalidixic acid', 'quinolone'),
-                ('trimethoprim', 'folate pathway antagonist'),
-                ('chloramphenicol', 'amphenicol')]
+            assert result.antimicrobial_agent == 'chloramphenicol, ciprofloxacin, nalidixic acid, trimethoprim'
+            assert result.drug_class == 'amphenicol, folate pathway antagonist, quinolone'
 
             # assert mandatory fields (5)
             assert result.gene_symbol == "OqxA"
@@ -329,7 +326,7 @@ def test_resfinder():
             assert result.reference_accession == "EU370913"
 
             # optional fields (12)
-            assert result.predicted_phenotype == "ciprofloxacin, nalidixic acid, trimethoprim, chloramphenicol"
+            assert result.predicted_phenotype == "antimicrobial resistance"
             assert result.predicted_phenotype_confidence_level == (
                 "Must be in an operon with oqxB," +
                 "phenotype differs based on genomic location of the operon PMID 25801572," +
@@ -374,7 +371,7 @@ def test_resfinder():
             # optional fields (14)
             assert result.antimicrobial_agent == "ampicillin"
             assert result.drug_class == "beta-lactam"
-            assert result.predicted_phenotype == "ampicillin"
+            assert result.predicted_phenotype == "antimicrobial resistance"
             assert result.predicted_phenotype_confidence_level == (
                 "The nineteen pbp5 mutations must be present simultaneously " +
                 "for resistance phenotype. PMIDs: 25182648")
@@ -414,7 +411,7 @@ def test_resfinder():
             assert result.genetic_variation_type is False  # just to stop
 
     # Check that we saw all
-    assert seen_genes == 4
+    assert seen_genes == 1
     assert seen_variants == 1
 
 
