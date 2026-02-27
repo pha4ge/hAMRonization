@@ -1,8 +1,8 @@
 # base image
-FROM python:3.9-alpine
+FROM python:3.14.3-alpine
 
 # metadata
-LABEL base.image="python:3.9"
+LABEL base.image="python:3.14.3-alpine"
 LABEL software="hAMRonization"
 ARG SOFTWARE_VERSION=unspecified
 LABEL software_version=$SOFTWARE_VERSION
