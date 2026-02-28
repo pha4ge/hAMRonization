@@ -123,7 +123,7 @@ class hAMRonizedResultIterator(ABC):
             # to get first result to build csvwriter
             try:
                 first_result = next(self)
-                fieldnames = [f.name for f in dataclasses.fields(type(first_result))] 
+                fieldnames = [f.name for f in dataclasses.fields(type(first_result))]
                 writer = csv.DictWriter(
                     out_fh,
                     delimiter="\t",

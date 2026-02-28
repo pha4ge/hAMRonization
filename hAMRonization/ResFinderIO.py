@@ -180,7 +180,7 @@ class ResFinderIterator(hAMRonizedResultIterator):
                                 and p.get('amr_resistant', False), data['phenotypes'].values()):
                     amr_cls.update(p.get('amr_classes', []))
                     amr_res.add(p.get('amr_resistance', "unspecified"))
-                    vs_dict[v['key']] = v # need to do this in inner loop but dups will squish
+                    vs_dict[v['key']] = v  # need to do this in inner loop but dups will squish
 
             # If we collected variants with resistant phenotypes then emit a record
             if vs_dict:
