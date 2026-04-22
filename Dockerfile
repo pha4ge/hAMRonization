@@ -2,7 +2,7 @@
 FROM docker.io/library/python:3.14.4-alpine3.23
 
 # metadata
-LABEL org.opencontainers.image.version=1.2.0
+LABEL org.opencontainers.image.version=1.2.1
 LABEL org.opencontainers.image.base.name="docker.io/library/python:3.14.4-alpine3.23"
 LABEL org.opencontainers.image.base.digest="sha256:105efb1f600e4e5d216985f6eeda0ed853ff9b38e65877039781f448ed677a0f"
 LABEL org.opencontainers.image.title="hAMRronization"
