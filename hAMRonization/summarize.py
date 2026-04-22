@@ -749,6 +749,11 @@ def summarize_reports(report_paths, summary_type, output_path=None):
             file=sys.stderr,
         )
 
+    # prevent columns of int type to be converted to float if they have NA values
+    # Fixes: https://github.com/zwets/hAMRonization/issues/1
+    # See: https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.convert_dtypes.html
+    combined_reports = combined_reports.convert_dtypes()
+
     # sort records by input_file_name, tool_config i.e. toolname, version,
     # db_name, db_versions, and then within that by gene_symbol
     combined_reports = combined_reports.sort_values(
