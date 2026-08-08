@@ -5,11 +5,15 @@ import os
 import csv
 import json
 import argparse
+import logging
+import traceback
 import dataclasses
 from abc import ABC, abstractmethod
 import hAMRonization
 import hAMRonization.summarize
 from .hAMRonizedResult import hAMRonizedResult
+
+logger = logging.getLogger(__name__)
 
 
 class hAMRonizedResultIterator(ABC):
@@ -39,16 +43,27 @@ class hAMRonizedResultIterator(ABC):
 
         try:
             if os.stat(source).st_size == 0:
-                print(f"Warning: {source} is empty", file=sys.stderr)
+                logger.warning("Input file %s is empty", source)
             self.stream = open(source, "r")
-        except FileNotFoundError:  # path doesn't exist
-            print(f"File {source} not found", file=sys.stderr)
-            exit(1)
+        except FileNotFoundError:
+            logger.error("File not found: %s", source)
+            sys.exit(1)
 
         try:
             self.hAMRonized_results = self.parse(self.stream)
+        except KeyError as e:
+            self.stream.close()
+            logger.error(
+                "Expected column %s not found in %s. "
+                "Please check you are using the correct AMR "
+                "prediction tool output file.",
+                e, source
+            )
+            logger.debug("Full traceback:\n%s", traceback.format_exc())
+            sys.exit(1)
         except Exception:
             self.stream.close()
+            raise
 
     # TODO: the field_map_override is a half-hack to support the scenario
     # (as for amrfinderplus) where different records need different mappings,
@@ -242,6 +257,13 @@ def generic_cli_interface():
         version=f"%(prog)s {hAMRonization.__version__}",
     )
 
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        default=False,
+        help="Enable debug mode with full tracebacks",
+    )
+
     # add tool specific parsers
     subparser = parser.add_subparsers(
         title="Tools with hAMRonizable reports", help="", dest="analysis_tool"
@@ -279,6 +301,13 @@ def generic_cli_interface():
     )
 
     args = parser.parse_args()
+
+    if args.debug:
+        logging.basicConfig(level=logging.DEBUG,
+                            format="%(levelname)s:%(name)s:%(message)s")
+    else:
+        logging.basicConfig(level=logging.WARNING,
+                            format="%(levelname)s: %(message)s")
 
     if args.analysis_tool and args.analysis_tool != "summarize":
         required_mandatory_metadata = hAMRonization._RequiredToolMetadata[

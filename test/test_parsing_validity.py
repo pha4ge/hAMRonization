@@ -992,3 +992,53 @@ def test_fargene():
         assert result.input_protein_start == 7
         assert result.input_protein_stop == 118
         assert result.input_protein_length == 140
+
+
+def test_rgi_bwt_multi_value_fields():
+    """Test that RGI-bwt output with multi-value reference_gene_length
+    and range-style sequence_identity is parsed correctly (issue #84)."""
+    metadata = {
+        "analysis_software_version": "6.0.1",
+        "reference_database_version": "3.2.8",
+        "input_file_name": "rgi_bwt_test",
+    }
+    parsed_report = hAMRonization.parse(
+        "data/dummy/rgi/rgi_bwt.txt", metadata, "rgi"
+    )
+
+    for result in parsed_report:
+        assert result.input_file_name == "rgi_bwt_test"
+        assert result.gene_symbol == (
+            "Bifidobacterium adolescentis rpoB mutants conferring "
+            "resistance to rifampicin"
+        )
+        assert result.reference_accession == "3004480"
+        assert result.analysis_software_name == "rgi"
+        assert result.reference_database_name == "CARD; Resistomes & Variants"
+
+        # issue #84: these fields contain multi-values in RGI-bwt output
+        # reference_gene_length '3561; 3561; 3564; 3570' -> first value 3561
+        assert result.reference_gene_length == 3561
+        assert isinstance(result.reference_gene_length, int)
+
+        # sequence_identity '92.82 - 100.0' -> first value 92.82
+        assert result.sequence_identity == 92.82
+        assert isinstance(result.sequence_identity, float)
+
+        assert result.coverage_percentage == 34.84
+        assert result.input_gene_length == 1249
+        assert result.drug_class == "rifamycin antibiotic"
+        assert result.resistance_mechanism == (
+            "antibiotic target alteration; antibiotic target replacement"
+        )
+
+
+def test_extract_first_numeric():
+    """Unit test for the multi-value numeric field parser."""
+    from hAMRonization.hAMRonizedResult import _extract_first_numeric
+
+    assert _extract_first_numeric("3561; 3564; 3570", int) == 3561
+    assert _extract_first_numeric("92.82 - 100.0", float) == 92.82
+    assert _extract_first_numeric("42", int) == 42
+    assert _extract_first_numeric("99.5", float) == 99.5
+    assert _extract_first_numeric("100; 200", int) == 100
