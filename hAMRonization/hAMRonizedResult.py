@@ -1,7 +1,34 @@
 #!/usr/bin/env python
 
 import os
+import logging
 import dataclasses
+
+logger = logging.getLogger(__name__)
+
+# Fields where upstream tools may report multiple semicolon-separated values
+# or dash-separated ranges instead of a single number (e.g., RGI-bwt).
+# For these fields we extract the first numeric value rather than failing.
+_MULTI_VALUE_NUMERIC_FIELDS = {
+    "reference_gene_length",
+    "sequence_identity",
+}
+
+
+def _extract_first_numeric(value, target_type):
+    """
+    Given a string that may contain semicolon-separated values
+    (e.g., '3561; 3564; 3570') or dash-separated ranges
+    (e.g., '92.82 - 100.0'), extract and return the first numeric
+    value cast to target_type.
+    """
+    raw = str(value).strip()
+    for sep in [";", " - ", "-"]:
+        if sep in raw:
+            first = raw.split(sep)[0].strip()
+            if first:
+                return target_type(first)
+    return target_type(raw)
 
 
 @dataclasses.dataclass
@@ -64,7 +91,25 @@ class hAMRonizedResult:
             if not isinstance(value, field.type) and value:
                 try:
                     setattr(self, field.name, field.type(value))
-                except ValueError:
+                except (ValueError, TypeError):
+                    if field.name in _MULTI_VALUE_NUMERIC_FIELDS:
+                        try:
+                            extracted = _extract_first_numeric(
+                                value, field.type
+                            )
+                            setattr(self, field.name, extracted)
+                            logger.debug(
+                                "Field '%s' contained multiple values "
+                                "(%r), extracted first: %s",
+                                field.name, value, extracted
+                            )
+                            continue
+                        except (ValueError, TypeError):
+                            pass
+                    logger.error(
+                        "Expected %s to be %s, got %r",
+                        field.name, field.type, value
+                    )
                     raise ValueError(
                         f"Expected {field.name} "
                         f"to be {field.type}, "
