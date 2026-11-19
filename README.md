@@ -39,8 +39,8 @@ conda create --name hamronization --channel conda-forge --channel bioconda hamro
 
 Or to install and run using docker, podman, singularity:
 ```
-docker pull docker.io/finlaymaguire/hamronization:latest
-docker run --rm docker.io/finlaymaguire/hamronization:latest hamronize --help
+docker pull ghcr.io/pha4ge/hamronization:latest
+docker run --rm ghcr.io/pha4ge/hamronization:latest hamronize --help
 ```
 
 Or to install the latest development version:
