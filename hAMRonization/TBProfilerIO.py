@@ -36,23 +36,36 @@ class TBProfilerIterator(hAMRonizedResultIterator):
         """
         # skip any manually specified fields for later
         json_obj = json.load(handle)
+
+        # v3/v4 report versions at the top level, v5+ under "pipeline"
+        # (in v3 "pipeline" is a list of software, so check the top level first)
+        pipeline = json_obj.get("pipeline")
+        pipeline = pipeline if isinstance(pipeline, dict) else {}
+        software_version = (
+            json_obj.get("tbprofiler_version") or pipeline.get("software_version")
+        )
+        db_version = json_obj.get("db_version") or pipeline.get("db_version") or {}
+
         for variant in json_obj["dr_variants"]:
+            # v5+ report gene_name (and gene_id) rather than gene
+            gene = variant.get("gene_name") or variant["gene"]
+            change = variant.get("change") or variant.get("protein_change") or ""
             result = {
                 "filename": handle.name,
-                "gene_symbol": variant["gene"],
-                "gene_name": variant["gene"],
+                "gene_symbol": gene,
+                "gene_name": gene,
                 "drug": ";".join([d["drug"] for d in variant["drugs"]]),
-                "db_name": json_obj["db_version"]["name"],
-                "db_version": json_obj["db_version"]["commit"],
+                "db_name": db_version.get("name"),
+                # the commit is missing if the db was not installed from git
+                "db_version": db_version.get("commit") or db_version.get("date"),
                 "type": AMINO_ACID_VARIANT
-                if variant["change"][0] == "p"
+                if change.startswith("p.")
                 else NUCLEOTIDE_VARIANT,
-                "tbprofiler_version": json_obj["tbprofiler_version"],
+                "tbprofiler_version": software_version,
                 "reference_accession": variant["feature_id"],
                 "nucleotide_mutation": variant["nucleotide_change"],
-                "amino_acid_mutation": variant["protein_change"],
+                "amino_acid_mutation": variant["protein_change"] or None,
                 "nucleotide_mutation_interpretation": None,  # These will need to be added in
                 "amino_acid_mutation_interpretation": None,  # These will need to be added in
             }
-            for drug in variant["drugs"]:
-                yield self.hAMRonize(result, self.metadata)
+            yield self.hAMRonize(result, self.metadata)

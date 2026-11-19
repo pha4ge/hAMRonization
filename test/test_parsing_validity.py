@@ -113,6 +113,35 @@ def test_amrfinderplus():
         assert result.reference_gene_stop is None
 
 
+def test_amrfinderplus_point_mutations():
+    # mutation nomenclature of AMRFinderPlus 4.2.4+, including POINT_DISRUPT
+    metadata = {
+        "analysis_software_version": "4.2.7",
+        "reference_database_version": "2026-01-21.1",
+        "input_file_name": "Dummy",
+    }
+    parsed_report = hAMRonization.parse(
+        "data/raw_outputs/amrfinderplus/report_point_v4.2.tsv", metadata, "amrfinderplus"
+    )
+    mutations = {
+        r.reference_accession: (r.gene_symbol, r.genetic_variation_type,
+                                r.amino_acid_mutation or r.nucleotide_mutation)
+        for r in parsed_report
+    }
+    aa, nt = "protein_variant_detected", "nucleotide_variant_detected"
+    assert mutations == {
+        "WP_000072067.1": ("gyrA", aa, "p.S83I"),
+        "WP_002910815.1": ("mgrB", aa, "p.Q30Ter"),
+        "WP_000127538.1": ("cirA", aa, "p.Y253CfsTer5"),
+        "WP_002918398.1": ("pmrB", aa, "p.ALNQLV129del"),
+        "WP_003114897.1": ("mexR", aa, "p.D34_F96del"),
+        "WP_002221950.1": ("folP", aa, "p.P64PSFLY"),
+        "NC_000913.3:4166659-4169562": ("23S", nt, "c.2058A>T"),
+        "NC_002946.2:1329591-1330225": ("mtrR", nt, "c.-131G>A"),
+        "NZ_CP041538.1:1149245-1149489": ("ampC", nt, "c.-14_-13insGT"),
+    }
+
+
 def test_amrplusplus():
     metadata = {
         "analysis_software_version": "0.0.1",
@@ -443,6 +472,25 @@ def test_rgi_variants():
         assert result.sequence_identity == 99.88
         assert result.resistance_mechanism == "antibiotic target alteration"
         assert result.antimicrobial_agent == ''
+
+
+def test_rgi_pre_6_0_3():
+    # RGI < 6.0.3 has no Hit_Start, Hit_End or Antibiotic columns
+    metadata = {
+        "analysis_software_version": "6.0.2",
+        "reference_database_version": "3.2.5",
+        "input_file_name": "Dummy",
+    }
+    results = list(hAMRonization.parse(
+        "data/raw_outputs/rgi/rgi_pre_6.0.3.txt", metadata, "rgi"
+    ))
+    assert len(results) == 10
+    ndm = results[1]
+    assert ndm.gene_symbol == "NDM-1"
+    assert ndm.reference_accession == "3000589"
+    assert ndm.reference_gene_start is None
+    assert ndm.reference_gene_stop is None
+    assert ndm.antimicrobial_agent is None
 
 
 def test_rgi_orf_mode():
@@ -826,6 +874,42 @@ def test_tbprofiler():
         assert result.reference_protein_stop is None
         assert result.reference_gene_start is None
         assert result.reference_gene_stop is None
+
+
+def test_tbprofiler_v7():
+    # layout of TB-Profiler v5+ (here v7.0.0): versions under "pipeline",
+    # variants have gene_name/gene_id instead of gene
+    parsed_report = hAMRonization.parse(
+        "data/dummy/tbprofiler/tbprofiler_v7.json", {}, "tbprofiler"
+    )
+    results = list(parsed_report)
+
+    # one record per variant, not one per drug
+    assert len(results) == 3
+    rpob, gyra, fabg1 = results
+
+    for result in results:
+        assert result.input_file_name == "tbprofiler_v7.json"
+        assert result.analysis_software_name == "tb-profiler"
+        assert result.analysis_software_version == "7.0.0"
+        assert result.reference_database_name == "tbdb"
+        assert result.reference_database_version == "e25540b"
+
+    assert rpob.gene_symbol == "rpoB"
+    assert rpob.gene_name == "rpoB"
+    assert rpob.reference_accession == "CCP43410"
+    assert rpob.drug_class == "rifampicin"
+    assert rpob.genetic_variation_type == "protein_variant_detected"
+    assert rpob.nucleotide_mutation == "c.1349C>T"
+    assert rpob.amino_acid_mutation == "p.Ser450Leu"
+
+    assert gyra.drug_class == "levofloxacin;moxifloxacin"
+
+    # promoter variant: nucleotide only
+    assert fabg1.gene_symbol == "fabG1"
+    assert fabg1.genetic_variation_type == "nucleotide_variant_detected"
+    assert fabg1.nucleotide_mutation == "c.-15C>T"
+    assert fabg1.amino_acid_mutation is None
 
 
 def test_mykrobe_empty():

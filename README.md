@@ -245,24 +245,24 @@ If you want to write multiple reports to one file, this `.write` method can acce
 
 Currently implemented parsers and the last tool version for which they have been validated:
 
-1. [abricate](hAMRonization/AbricateIO.py): last updated for v1.0.0
-2. [amrfinderplus](hAMRonization/AmrFinderPlusIO.py): last updated for v4.0.3
-3. [amrplusplus](hAMRonization/AmrPlusPlusIO.py): last updated for c6b097a
+1. [abricate](hAMRonization/AbricateIO.py): last updated for v1.4.0
+2. [amrfinderplus](hAMRonization/AmrFinderPlusIO.py): last updated for v4.2.7
+3. [amrplusplus](hAMRonization/AmrPlusPlusIO.py): last updated for v4 (MEGARes v4.00)
 4. [ariba](hAMRonization/AribaIO.py): last updated for v2.14.6
 5. [csstar](hAMRonization/CSStarIO.py): last updated for v2.1.0
-6. [deeparg](hAMRonization/DeepArgIO.py): last updated for v1.0.2
+6. [deeparg](hAMRonization/DeepArgIO.py): last updated for v2.0.0
 7. [fargene](hAMRonization/FARGeneIO.py): last updated for v0.1
 8. [groot](hAMRonization/GrootIO.py): last updated for v1.1.2
 9. [kmerresistance](hAMRonization/KmerResistanceIO.py): late updated for v2.2.0
 10. [mykrobe](test/data/raw_outputs/mykrobe/report.json): last updated for v0.8.1
 11. ~pointfinder~ (removed, PointFinder is now integrated in ResFinder)
 12. [resfams](hAMRonization/ResFamsIO.py): last updated for hmmer v3.3.2
-13. [resfinder](hAMRonization/ResFinderIO.py): last updated for v4.6.0
-14. [rgi](hAMRonization/RgiIO.py) (includes RGI-BWT) last updated for v5.2.0
+13. [resfinder](hAMRonization/ResFinderIO.py): last updated for v4.7.3
+14. [rgi](hAMRonization/RgiIO.py) (includes RGI-BWT) last updated for v6.0.8
 15. [srax](hAMRonization/SraxIO.py): last updated for v1.5
 16. [srst2](hAMRonization/Srst2IO.py): last updated for v0.2.0
-17. [staramr](hAMRonization/StarAmrIO.py): last updated for v0.8.0
-18. [tbprofilder](test/data/raw_outputs/tbprofiler/tbprofiler.json): last updated for v3.0.8
+17. [staramr](hAMRonization/StarAmrIO.py): last updated for v0.12.3
+18. [tbprofiler](hAMRonization/TBProfilerIO.py): last updated for v7.0.0 (also parses v3/v4 output)
 
 ## Implementation Details
 

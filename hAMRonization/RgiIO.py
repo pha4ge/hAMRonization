@@ -92,6 +92,12 @@ class RgiIterator(hAMRonizedResultIterator):
                     "Hit_End": "reference_gene_stop",
                     "Antibiotic": "antimicrobial_agent",
                 }
+                # columns added in RGI 6.0.3, so missing from older output
+                columns = header.rstrip("\r\n").split("\t")
+                for column in ["Hit_Start", "Hit_End", "Antibiotic"]:
+                    if column not in columns:
+                        self.field_mapping[column] = None
+
                 # if RGI is run on ORFs then Contig should be None
                 # and input_sequence_id should the ORF_ID i.e., reverse of
                 # rgi run on contig input
