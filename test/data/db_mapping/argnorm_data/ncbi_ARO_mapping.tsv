@@ -1,0 +1,55 @@
+Original ID	Gene Name in CARD	ARO	Cut_Off	Database
+0|WP_002892080.1|1|1|acrR|acrR|mutation|2|||transcriptional_regulator_AcrR	Escherichia coli AcrAB-TolC with AcrR mutation conferring resistance to ciprofloxacin, tetracycline, and ceftazidime	3003807	Loose	ncbi
+0|WP_004526226.1|1|1|bpeR|bpeR|mutation|2|||TetR_family_transcriptional_regulator_BpeR	Escherichia coli AcrAB-TolC with AcrR mutation conferring resistance to ciprofloxacin, tetracycline, and ceftazidime	3003807	Loose	ncbi
+0|WP_047924300.1|1|1|mtrR|mtrR|mutation|2|||multidrug_efflux_system_transcriptional_repressor_MtrR	Escherichia coli AcrAB-TolC with AcrR mutation conferring resistance to ciprofloxacin, tetracycline, and ceftazidime	3003807	Loose	ncbi
+1000909371|WP_061158039.1|NG_050200.1|1|1|blaTEM-156|blaTEM|hydrolase|2|BETA-LACTAM|BETA-LACTAM|class_A_beta-lactamase_TEM-156	TEM-156	3001022	Perfect	ncbi
+1028099835|WP_063856107.1|NG_048211.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028099839|WP_063856108.1|NG_048214.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028099841|WP_063856109.1|NG_048215.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028099842|WP_063856110.1|NG_048216.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028099855|WP_063856111.1|NG_048218.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028099858|WP_063856112.1|NG_048219.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028099861|WP_063856113.1|NG_048220.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028099865|WP_063856114.1|NG_048221.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028099868|WP_063856115.1|NG_048222.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Perfect	ncbi
+1028100159|WP_063856390.1|NG_048226.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028100160|WP_063856391.1|NG_048227.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028100162|WP_063856392.1|NG_048228.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028100163|WP_063856393.1|NG_048229.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028100171|WP_063856394.1|NG_048231.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028100174|WP_063856395.1|NG_048234.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028100183|WP_063856396.1|NG_048236.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028100184|WP_063856397.1|NG_048237.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028100185|WP_063856398.1|NG_048239.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028100186|WP_063856399.1|NG_048240.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028100187|WP_063856400.1|NG_048241.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028100199|WP_063856401.1|NG_048245.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028100202|WP_063856402.1|NG_048248.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+1028100223|WP_063856403.1|NG_048251.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+13183097|AAK15050.1|AF238479.1|1|1|ttgR|ttgR||1|EFFLUX|EFFLUX|efflux_transport_transcriptional_regulator_TtgR	Escherichia coli AcrAB-TolC with AcrR mutation conferring resistance to ciprofloxacin, tetracycline, and ceftazidime	3003807	Loose	ncbi
+16128448|WP_000101737.1|1|1|acrR|acrR|mutation|2|||transcriptional_regulator_AcrR	Escherichia coli AcrAB-TolC with AcrR mutation conferring resistance to ciprofloxacin, tetracycline, and ceftazidime	3003807	Strict	ncbi
+193934430|ACF30254.1|CP001050.1|1|1|mtrR|mtrR|efflux|1|EFFLUX|EFFLUX|multidrug_efflux_system_transcriptional_repressor_MtrR	Escherichia coli AcrAB-TolC with AcrR mutation conferring resistance to ciprofloxacin, tetracycline, and ceftazidime	3003807	Loose	ncbi
+2870407919|WP_408906775.1|NG_244126.1|1|1|blaNDM-77|blaNDM|hydrolase|2|CARBAPENEM|BETA-LACTAM|subclass_B1_metallo-beta-lactamase_NDM-77	NDM-1	3000589	Strict	ncbi
+300492223|ADK23698.1|GU565967.1|1|1|qacR|qacR||1|QUATERNARY_AMMONIUM|QUATERNARY_AMMONIUM|multidrug-binding_transcriptional_regulator_QacR	Escherichia coli AcrAB-TolC with AcrR mutation conferring resistance to ciprofloxacin, tetracycline, and ceftazidime	3003807	Loose	ncbi
+438189|CAA81047.1|Z25797.1|1|1|mtrR|mtrR|efflux|1|EFFLUX|EFFLUX|multidrug_efflux_system_transcriptional_repressor_MtrR	Escherichia coli AcrAB-TolC with AcrR mutation conferring resistance to ciprofloxacin, tetracycline, and ceftazidime	3003807	Loose	ncbi
+446614381|WP_000691727.1|NG_048250.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+446614383|WP_000691729.1|NG_048217.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+446614390|WP_000691736.1|NG_048223.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+446614391|WP_000691737.1|NG_048252.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+446614395|WP_000691741.1|NG_048253.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+446614397|WP_000691743.1|NG_048230.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+446614400|WP_000691746.1|NG_048232.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+446614403|WP_000691749.1|NG_048213.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+486295952|WP_001574275.1|NG_048233.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+488293728|WP_002364936.1|NG_048247.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+488345309|WP_002414694.1|NG_048235.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+490306043|WP_004201164.1|NG_049326.1|1|1|blaNDM-1|blaNDM|hydrolase|2|CARBAPENEM|BETA-LACTAM|subclass_B1_metallo-beta-lactamase_NDM-1	NDM-1	3000589	Perfect	ncbi
+490770108|WP_004632336.1|NG_048212.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+499429550|WP_011117014.1|NG_048225.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+500187484|WP_011860841.1|NG_048243.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+504199711|WP_014386813.1|NG_048242.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+568064907|WP_024052575.1|NG_048249.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+6560606|AAF16682.1|AF061937.1|1|1|srpR|srpR||1|EFFLUX|EFFLUX|solvent_efflux_transporter_antirepressor_SrpR	Escherichia coli AcrAB-TolC with AcrR mutation conferring resistance to ciprofloxacin, tetracycline, and ceftazidime	3003807	Loose	ncbi
+752377262|WP_041160408.1|NG_048238.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+758866324|WP_043029018.1|NG_048244.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi
+912687134|WP_050232631.1|NG_048246.1|1|1|tet(M)|tet(M)|target_protection|2|TETRACYCLINE|TETRACYCLINE|tetracycline_resistance_ribosomal_protection_protein_Tet(M)	tet(M)	3000186	Strict	ncbi

@@ -1,0 +1,349 @@
+{
+ "directed": true,
+ "graph": {},
+ "links": [
+  {
+   "coverage": 1.0,
+   "identity": 1.0,
+   "source": "card:ARO:3000589",
+   "target": "ncbi:WP_004201164.1",
+   "type": "RBH"
+  },
+  {
+   "coverage": 1.0,
+   "identity": 1.0,
+   "source": "card:ARO:3000589",
+   "target": "resfinder:blaNDM-1",
+   "type": "RBH"
+  },
+  {
+   "coverage": 1.0,
+   "identity": 1.0,
+   "source": "ncbi:WP_061158039.1",
+   "target": "card:ARO:3001022",
+   "type": "RBH"
+  },
+  {
+   "coverage": 1.0,
+   "identity": 1.0,
+   "source": "ncbi:WP_061158039.1",
+   "target": "resfinder:blaTEM-156",
+   "type": "RBH"
+  },
+  {
+   "coverage": 1.0,
+   "identity": 0.996,
+   "source": "ncbi:WP_001082319.1",
+   "target": "card:ARO:3002639",
+   "type": "RBH"
+  },
+  {
+   "coverage": 1.0,
+   "identity": 0.988,
+   "source": "ncbi:WP_001082319.1",
+   "target": "resfinder:aph(3'')-Ib",
+   "type": "RBH"
+  },
+  {
+   "coverage": 1.0,
+   "identity": 1.0,
+   "source": "ncbi:WP_061189306.1",
+   "target": "card:ARO:3006492",
+   "type": "RBH"
+  },
+  {
+   "coverage": 1.0,
+   "identity": 0.97,
+   "source": "ncbi:WP_061189306.1",
+   "target": "resfinder:blaPAO",
+   "type": "OWH"
+  },
+  {
+   "coverage": 0.9689922480620154,
+   "identity": 0.575,
+   "source": "ncbi:WP_061189306.1",
+   "target": "resfinder:blaCMY-8b",
+   "type": "OWH"
+  },
+  {
+   "coverage": 1.0,
+   "identity": 0.474,
+   "source": "ncbi:WP_061189306.1",
+   "target": "resfinder:blaADC-25",
+   "type": "OWH"
+  },
+  {
+   "coverage": 1.0,
+   "identity": 0.987,
+   "source": "resfinder:tet(M)",
+   "target": "card:ARO:3000186",
+   "type": "RBH"
+  },
+  {
+   "coverage": 1.0,
+   "identity": 0.987,
+   "source": "resfinder:tet(M)",
+   "target": "ncbi:WP_063856115.1",
+   "type": "RBH"
+  }
+ ],
+ "multigraph": false,
+ "nodes": [
+  {
+   "PMID": [
+    "19475445"
+   ],
+   "additional_phenotype": "confers resistance to drug class: tetracycline antibiotic",
+   "database": "card",
+   "id": "card:ARO:3000186",
+   "is_a": "ARO:0000002:tetracycline-resistant ribosomal protection protein",
+   "name": "tet(M)",
+   "phenotype": "confers resistance to antibiotic: chlortetracycline,demeclocycline,doxycycline,minocycline,oxytetracycline,tetracycline"
+  },
+  {
+   "alternative_id": {
+    "nucleotide_accession": "NG_048222.1"
+   },
+   "database": "ncbi",
+   "duplicate_allele_ids": {
+    "nucleotide_accessions": [
+     "NG_048221.1",
+     "NG_048250.1",
+     "NG_048220.1",
+     "NG_048225.1",
+     "NG_048223.1",
+     "NG_048226.1",
+     "NG_048227.1",
+     "NG_048228.1",
+     "NG_048246.1",
+     "NG_048238.1",
+     "NG_048239.1",
+     "NG_048240.1",
+     "NG_048243.1",
+     "NG_048245.1",
+     "NG_048229.1",
+     "NG_048230.1",
+     "NG_048231.1",
+     "NG_048232.1",
+     "NG_048233.1",
+     "NG_048234.1",
+     "NG_048235.1",
+     "NG_048236.1",
+     "NG_048237.1",
+     "NG_048241.1",
+     "NG_048242.1",
+     "NG_048244.1",
+     "NG_048247.1",
+     "NG_048248.1",
+     "NG_048249.1",
+     "NG_048251.1",
+     "NG_048252.1",
+     "NG_048253.1",
+     "NG_048214.1",
+     "NG_048213.1",
+     "NG_048216.1",
+     "NG_048218.1",
+     "NG_048219.1",
+     "NG_048212.1",
+     "NG_048211.1",
+     "NG_048215.1",
+     "NG_048217.1"
+    ],
+    "protein_accessions": [
+     "WP_063856114.1",
+     "WP_000691727.1",
+     "WP_063856113.1",
+     "WP_011117014.1",
+     "WP_000691736.1",
+     "WP_063856390.1",
+     "WP_063856391.1",
+     "WP_063856392.1",
+     "WP_050232631.1",
+     "WP_041160408.1",
+     "WP_063856398.1",
+     "WP_063856399.1",
+     "WP_011860841.1",
+     "WP_063856401.1",
+     "WP_063856393.1",
+     "WP_000691743.1",
+     "WP_063856394.1",
+     "WP_000691746.1",
+     "WP_001574275.1",
+     "WP_063856395.1",
+     "WP_002414694.1",
+     "WP_063856396.1",
+     "WP_063856397.1",
+     "WP_063856400.1",
+     "WP_014386813.1",
+     "WP_043029018.1",
+     "WP_002364936.1",
+     "WP_063856402.1",
+     "WP_024052575.1",
+     "WP_063856403.1",
+     "WP_000691737.1",
+     "WP_000691741.1",
+     "WP_063856108.1",
+     "WP_000691749.1",
+     "WP_063856110.1",
+     "WP_063856111.1",
+     "WP_063856112.1",
+     "WP_004632336.1",
+     "WP_063856107.1",
+     "WP_063856109.1",
+     "WP_000691729.1"
+    ]
+   },
+   "id": "ncbi:WP_063856115.1",
+   "name": "tet(M)",
+   "phenotype": "confers resistance to subclass TETRACYCLINE",
+   "product": "tetracycline resistance ribosomal protection protein Tet(M)"
+  },
+  {
+   "PMID": [
+    "19770275",
+    "21507902",
+    "21774017",
+    "24790993",
+    "27575913",
+    "29454953"
+   ],
+   "additional_phenotype": "confers resistance to drug class: carbapenem,cephalosporin,penicillin beta-lactam",
+   "database": "card",
+   "id": "card:ARO:3000589",
+   "is_a": "ARO:3000057:NDM beta-lactamase",
+   "name": "NDM-1",
+   "phenotype": "confers resistance to antibiotic: ertapenem,imipenem,meropenem"
+  },
+  {
+   "alternative_id": {
+    "nucleotide_accession": "NG_049326.1"
+   },
+   "database": "ncbi",
+   "duplicate_allele_ids": {
+    "nucleotide_accessions": [],
+    "protein_accessions": []
+   },
+   "id": "ncbi:WP_004201164.1",
+   "name": "blaNDM-1",
+   "phenotype": "confers resistance to subclass CARBAPENEM",
+   "product": "subclass B1 metallo-beta-lactamase NDM-1"
+  },
+  {
+   "additional_phenotype": "confers resistance to drug class: cephalosporin,monobactam,penicillin beta-lactam",
+   "database": "card",
+   "id": "card:ARO:3001022",
+   "is_a": "ARO:3000014:TEM beta-lactamase",
+   "name": "TEM-156",
+   "phenotype": "confers resistance to antibiotic: ampicillin,ceftazidime"
+  },
+  {
+   "alternative_id": {
+    "nucleotide_accession": "NG_050200.1"
+   },
+   "database": "ncbi",
+   "duplicate_allele_ids": {
+    "nucleotide_accessions": [],
+    "protein_accessions": []
+   },
+   "id": "ncbi:WP_061158039.1",
+   "name": "blaTEM-156",
+   "phenotype": "confers resistance to subclass BETA-LACTAM",
+   "product": "class A beta-lactamase TEM-156"
+  },
+  {
+   "PMID": [
+    "2653965"
+   ],
+   "database": "card",
+   "id": "card:ARO:3002639",
+   "is_a": "ARO:3007414:APH(3'')-I",
+   "name": "APH(3'')-Ib",
+   "phenotype": "confers resistance to antibiotic: streptomycin"
+  },
+  {
+   "alternative_id": {
+    "nucleotide_accession": "NG_047413.1"
+   },
+   "database": "ncbi",
+   "duplicate_allele_ids": {
+    "nucleotide_accessions": [
+     "NG_047415.1",
+     "NG_047414.1",
+     "NG_047412.1"
+    ],
+    "protein_accessions": [
+     "WP_010794532.1",
+     "WP_032490182.1",
+     "WP_010890156.1"
+    ]
+   },
+   "id": "ncbi:WP_001082319.1",
+   "name": "aph(3'')-Ib",
+   "phenotype": "confers resistance to subclass STREPTOMYCIN",
+   "product": "aminoglycoside O-phosphotransferase APH(3'')-Ib"
+  },
+  {
+   "database": "card",
+   "id": "card:ARO:3006492",
+   "is_a": "ARO:3000098:PDC beta-lactamase",
+   "name": "PDC-114",
+   "phenotype": "confers resistance to drug class: carbapenem,cephalosporin,monobactam"
+  },
+  {
+   "alternative_id": {
+    "nucleotide_accession": "NG_055478.1"
+   },
+   "database": "ncbi",
+   "duplicate_allele_ids": {
+    "nucleotide_accessions": [],
+    "protein_accessions": []
+   },
+   "id": "ncbi:WP_061189306.1",
+   "name": "blaPDC-114",
+   "phenotype": "confers resistance to subclass CEPHALOSPORIN",
+   "product": "class C beta-lactamase PDC-114"
+  },
+  {
+   "database": "resfinder",
+   "id": "resfinder:tet(M)",
+   "name": "tet(M)",
+   "phenotype": "confers resistance to Doxycycline, Tetracycline, Minocycline"
+  },
+  {
+   "database": "resfinder",
+   "id": "resfinder:blaNDM-1",
+   "name": "blaNDM-1",
+   "phenotype": "confers resistance to Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefepime, Cefixime, Cefotaxime, Cefoxitin, Ceftazidime, Ceftazidime+Avibactam, Ertapenem, Imipenem, Meropenem, Piperacillin, Piperacillin+Tazobactam, Temocillin"
+  },
+  {
+   "database": "resfinder",
+   "id": "resfinder:blaTEM-156",
+   "name": "blaTEM-156",
+   "phenotype": "confers resistance to Unknown Beta-lactam"
+  },
+  {
+   "database": "resfinder",
+   "id": "resfinder:blaPAO",
+   "name": "blaPAO",
+   "phenotype": "confers resistance to Amoxicillin, Ampicillin, Cefepime, Ceftazidime"
+  },
+  {
+   "database": "resfinder",
+   "id": "resfinder:aph(3'')-Ib",
+   "name": "aph(3'')-Ib",
+   "phenotype": "confers resistance to Streptomycin"
+  },
+  {
+   "database": "resfinder",
+   "id": "resfinder:blaADC-25",
+   "name": "blaADC-25",
+   "phenotype": "confers resistance to Unknown Beta-lactam"
+  },
+  {
+   "database": "resfinder",
+   "id": "resfinder:blaCMY-8b",
+   "name": "blaCMY-8b",
+   "phenotype": "confers resistance to Amoxicillin, Amoxicillin+Clavulanic acid, Ampicillin, Ampicillin+Clavulanic acid, Cefotaxime, Cefoxitin, Ceftazidime, Piperacillin, Piperacillin+Tazobactam, Ticarcillin, Ticarcillin+Clavulanic acid"
+  }
+ ]
+}

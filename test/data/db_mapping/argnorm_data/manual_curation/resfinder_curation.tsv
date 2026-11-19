@@ -1,0 +1,3 @@
+Original ID	Gene Name in CARD	ARO	Origin	Position in Cluster	Description
+VanHAX_1_FJ866609	glycopeptide resistance gene cluster VanA	3000236	https://www.ncbi.nlm.nih.gov/nuccore/M97297.1?report=fasta	6018-8624	"Part of VanA cluster (ARO:3000236). Contains: ARO:3002942, ARO:3000010, and ARO:3002949 "
+VanHAX_2_M97297	glycopeptide resistance gene cluster VanA	3000236	https://www.ncbi.nlm.nih.gov/nuccore/FJ866609?report=fasta	3762-6368	"Part of VanA cluster (ARO:3000236). Contains: ARO:3002942 and ARO:3002949. The vanA gene (ARO:3002949) is modified, 1 G substituded with 1 T  "
