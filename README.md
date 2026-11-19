@@ -125,6 +125,50 @@ and they will be concatenated appropriately (i.e. only one header for tsv)
 hamronize rgi --input_file_name rgi_report --analysis_software_version 6.0.0 --reference_database_version 3.2.5 test/data/raw_outputs/rgi/rgi.txt test/data/raw_outputs/rgibwt/Kp11_bwtoutput.gene_mapping_data.txt
 ```
 
+#### Mapping to other AMR databases (RGI, AMRFinderPlus, ResFinder)
+
+The results of `rgi` (CARD), `amrfinderplus` (NCBI Reference Gene Database) and
+`resfinder` (ResFinder) can optionally be mapped to the other two of these
+databases with `--db_mapping chamredb` or `--db_mapping argnorm`:
+
+```
+hamronize amrfinderplus --db_mapping chamredb --analysis_software_version 4.0.3 --reference_database_version 2024-07-22.1 --input_file_name sample1 amrfinderplus_report.tsv
+```
+
+This appends a `<database>_mapping` column for each of the other two databases
+(e.g. `card_mapping` and `resfinder_mapping` for AMRFinderPlus) and a
+`database_mapping_source` column recording which resource was used. Multiple
+mapped entries are separated by ` | `, and the columns are left empty where no
+mapping is found.
+
+- [chamredb](https://github.com/antunderwood/chamredb) uses a graph of
+  reciprocal best hits (RBH) between CARD, NCBI and ResFinder sequences. The
+  RBHs are reported for each database, or the one-way hits (OWH) where there is
+  no RBH, with their identity and coverage, e.g.
+  `ARO:3001022 (TEM-156; RBH; identity=1.0; coverage=1.0)`. Hits are looked up
+  by accession, then by gene name.
+- [argNorm](https://github.com/BigDataBiology/argNorm) maps NCBI and ResFinder
+  genes onto CARD ARO terms, e.g. `ARO:3001022 (TEM-156; Perfect)`. Mappings
+  from CARD, and between NCBI and ResFinder, go via the ARO term, e.g.
+  `blaTEM-156 (blaTEM-156_1_AM941159; via ARO:3001022; Perfect)`. argNorm's
+  `Loose` matches are not used for these indirect mappings, and only the best
+  available cut-off is reported. Alleles sharing a gene name are grouped
+  (`+N more`).
+
+Pinned copies of chamredb's
+[`graph.json`](https://github.com/antunderwood/chamredb/blob/master/chamredb/data/graph.json)
+(2026-11-09 graph) and argNorm's (v1.1.0)
+[mapping tables](https://github.com/BigDataBiology/argNorm/tree/main/argnorm/data)
+are downloaded, with their checksums verified, when hAMRonization is installed
+(see `hAMRonization/data_sources.py`). This needs network access at install
+time. Set `HAMRONIZATION_SKIP_DATA_DOWNLOAD=1` to install without them. To use
+a different copy, pass `--db_mapping_data` with the path to a `graph.json` or
+an argNorm `data` directory. Both resources were built against specific
+database releases, so genes added more recently may not map.
+
+When `--db_mapping` is used, `hamronize` prints what to cite to stderr (see
+[Citation](#citation)).
+
 You can summarize hAMRonized reports regardless of format using the 'summarize'
 function:
 
@@ -180,6 +224,17 @@ Alternatively, you can use the `.write` attribute to export all results left in 
 You can also output a `json` formatted hAMRonized report:
 
 `parsed_report.write('all_hAMRonized_abricate_report.json', output_format='json')`
+
+To add the database mapping columns (see above) when writing an `rgi`,
+`amrfinderplus` or `resfinder` report, pass a mapper; `mapper.map(result)` also
+returns the mapping for a single result as a dict:
+
+```
+from hAMRonization.DatabaseMapping import get_mapper
+mapper = get_mapper("argnorm", "rgi")  # or get_mapper("chamredb", "rgi", "path/to/graph.json")
+print(mapper.citation_message)  # what to cite for this mapping
+hAMRonization.parse("rgi.txt", metadata, "rgi").write(output_location="rgi.tsv", db_mapper=mapper)
+```
 
 If you want to write multiple reports to one file, this `.write` method can accept `append_mode=True` to append rather than overwrite the output file and not include the header (in tsv format).
 
@@ -344,6 +399,18 @@ Here are some known issues that we would welcome input on trying to solve!
 
 - `contig_id` isn't general enough when some tools this ID naturally corresponds to a `read_name` (deepARG), individual ORF (resfams), or protein sequence (AFP with protein input): *change to `query_id_name` or similar?*
 
+
+#### Limitations of cross-database mapping
+
+This is a highly messy and approximate process so any cross-mappings should be taken with a major grain of salt and directly validated if being used for important purposes.
+
 ## Citation
 If you use hAMRonization please cite the following publication:
 > I Mendes et al. 2024. "hAMRonization: Enhancing antimicrobial resistance prediction using the PHA4GE AMR detection specification and tooling". bioRxiv. https://doi.org/10.1101/2024.03.07.583950
+
+If you use `--db_mapping chamredb`, also reference [chamredb](https://github.com/antunderwood/chamredb). It has no separate publication or preprint at this point.
+
+If you use `--db_mapping argnorm`, please also cite:
+> S Ugarcina Perovic, V Ramji, H Chong, Y Duan, F Maguire, LP Coelho. 2025. "argNorm: normalization of antibiotic resistance gene annotations to the Antibiotic Resistance Ontology (ARO)". Bioinformatics. https://doi.org/10.1093/bioinformatics/btaf173
+
+`hamronize` prints the relevant citations to stderr whenever `--db_mapping` is used.
