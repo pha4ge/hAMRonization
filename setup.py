@@ -1,5 +1,8 @@
+import os
 import re
-from distutils.core import setup
+import runpy
+from setuptools import setup
+from setuptools.command.build_py import build_py
 
 with open('README.md') as fh:
     long_description = fh.read()
@@ -8,6 +11,26 @@ with open('hAMRonization/__init__.py') as fh:
     info = fh.read()
     version = re.search('^__version__\\s*=\\s*"(.*)"',
                         info, re.M).group(1)
+
+# stdlib-only module with the pinned chamredb/argNorm data to download
+data_sources = runpy.run_path(os.path.join('hAMRonization', 'data_sources.py'))
+
+
+class BuildWithData(build_py):
+    """Download the database mapping data into the package when building"""
+
+    def run(self):
+        super().run()
+        if os.environ.get(data_sources['SKIP_DOWNLOAD_ENV']):
+            print("hAMRonization: skipping database mapping data download")
+            return
+        if getattr(self, 'editable_mode', False):
+            # editable installs use the source tree
+            data_dir = data_sources['DATA_DIR']
+        else:
+            data_dir = os.path.join(self.build_lib, 'hAMRonization', 'data')
+        data_sources['download_data'](data_dir)
+
 
 setup(
     name='hAMRonization',
@@ -26,6 +49,7 @@ setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     install_requires=['pandas'],
+    cmdclass={'build_py': BuildWithData},
     entry_points={
         'console_scripts': [
             'hamronize = hAMRonization.hamronize:main'
@@ -49,5 +73,5 @@ setup(
         "Intended Audience :: Healthcare Industry",
         "Topic :: Scientific/Engineering :: Bio-Informatics"
         ],
-    zip_safe=True,
+    zip_safe=False,
     )

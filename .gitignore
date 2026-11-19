@@ -1,5 +1,7 @@
 .DS_Store
 *.egg-info
+# database mapping data downloaded at install (see hAMRonization/data_sources.py)
+hAMRonization/data/
 *.pyc
 build
 dist

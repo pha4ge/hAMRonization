@@ -11,6 +11,7 @@ import dataclasses
 from abc import ABC, abstractmethod
 import hAMRonization
 import hAMRonization.summarize
+from . import DatabaseMapping
 from .hAMRonizedResult import hAMRonizedResult
 
 logger = logging.getLogger(__name__)
@@ -117,13 +118,24 @@ class hAMRonizedResultIterator(ABC):
         total_report_count=1,
         output_location=None,
         output_format="tsv",
+        db_mapper=None,
     ):
         """
         Class to write to output the hAMRonized report (to either stdout or
         a filehandle) in TSV or json format
 
         Get number of reports and which report this one is
+
+        If db_mapper (a hAMRonization.DatabaseMapping.DatabaseMapper) is
+        given, columns mapping each result to the other primary AMR
+        databases are appended
         """
+
+        def to_row(result):
+            row = dataclasses.asdict(result)
+            if db_mapper is not None:
+                row.update(db_mapper.map(result))
+            return row
 
         if output_location:
             # appending if more than one report
@@ -139,6 +151,8 @@ class hAMRonizedResultIterator(ABC):
             try:
                 first_result = next(self)
                 fieldnames = [f.name for f in dataclasses.fields(type(first_result))]
+                if db_mapper is not None:
+                    fieldnames += db_mapper.columns
                 writer = csv.DictWriter(
                     out_fh,
                     delimiter="\t",
@@ -149,9 +163,9 @@ class hAMRonizedResultIterator(ABC):
                 # donly write header for first report
                 if report_number == 0:
                     writer.writeheader()
-                writer.writerow(dataclasses.asdict(first_result))
+                writer.writerow(to_row(first_result))
                 for result in self:
-                    writer.writerow(dataclasses.asdict(result))
+                    writer.writerow(to_row(result))
             # if the iterator is empty then do nothing
             except StopIteration:
                 pass
@@ -170,7 +184,7 @@ class hAMRonizedResultIterator(ABC):
                 # replace none entries with empty string for compatibility
                 # with csv and non-python
                 clean_results = {}
-                for key, value in dataclasses.asdict(result).items():
+                for key, value in to_row(result).items():
                     if value:
                         clean_results[key] = str(value)
                     else:
@@ -232,6 +246,24 @@ def generate_tool_subparser(subparser, analysis_tool):
             f"--{field}",
             required=True,
             help=f"Input string containing the {field} " f"for {analysis_tool}",
+        )
+
+    # optional mapping to the other primary AMR databases
+    source_db = DatabaseMapping.TOOL_SOURCE_DATABASE.get(analysis_tool)
+    if source_db:
+        other_dbs = [db for db in DatabaseMapping.DATABASES if db != source_db]
+        tool_parser.add_argument(
+            "--db_mapping",
+            choices=DatabaseMapping.MAPPING_METHODS,
+            default=None,
+            help=f"Add columns mapping each {source_db} hit to "
+            f"{' and '.join(other_dbs)} using chamredb or argnorm",
+        )
+        tool_parser.add_argument(
+            "--db_mapping_data",
+            default=None,
+            help="Path to chamredb's graph.json or argNorm's data directory "
+            "(default: the copy downloaded when hAMRonization was installed)",
         )
     return subparser
 
@@ -317,6 +349,23 @@ def generic_cli_interface():
             field: getattr(args, field) for field in required_mandatory_metadata
         }
 
+        db_mapper = None
+        db_mapping = getattr(args, "db_mapping", None)
+        db_mapping_data = getattr(args, "db_mapping_data", None)
+        if db_mapping_data and not db_mapping:
+            parser.error("--db_mapping_data requires --db_mapping")
+        if db_mapping:
+            try:
+                db_mapper = DatabaseMapping.get_mapper(
+                    db_mapping, args.analysis_tool, db_mapping_data
+                )
+            except (OSError, KeyError, ValueError) as e:
+                logger.error("Could not load %s database mapping: %s", db_mapping, e)
+                logger.debug("Full traceback:\n%s", traceback.format_exc())
+                sys.exit(1)
+            # stderr so it can't end up in the report
+            print(db_mapper.citation_message, file=sys.stderr)
+
         # parse reports and write as appropriate (only first report with head
         # in tsv mode)
         # check number of reports and append correctly if >1
@@ -329,6 +378,7 @@ def generic_cli_interface():
                 total_report_count=total_report_count,
                 output_location=args.output,
                 output_format=args.format,
+                db_mapper=db_mapper,
             )
 
     elif args.analysis_tool == "summarize":
